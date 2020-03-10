@@ -15,6 +15,18 @@ public class MirrorSelection : MonoBehaviour
         { BeatmapNote.NOTE_CUT_DIRECTION_RIGHT, BeatmapNote.NOTE_CUT_DIRECTION_LEFT },
         { BeatmapNote.NOTE_CUT_DIRECTION_LEFT, BeatmapNote.NOTE_CUT_DIRECTION_RIGHT },
     };
+	
+	private Dictionary<int, int> LaneRotationToMirrored = new Dictionary<int, int>
+    {
+        {0, 7},
+		{1, 6},
+		{2, 5},
+		{3, 4},
+		{4, 3},
+		{5, 2},
+		{6, 1},
+		{7, 0}
+    };
 
     public void Mirror()
     {
@@ -124,8 +136,10 @@ public class MirrorSelection : MonoBehaviour
             }
             else if (con is BeatmapEventContainer e)
             {
-                if (e.eventData.IsUtilityEvent) return;
-                if (e.eventData._value > 4 && e.eventData._value < 8) e.eventData._value -= 4;
+                //if (e.eventData.IsUtilityEvent) return;
+                if (e.eventData.IsRingEvent || e.eventData.IsLaserSpeedEvent) return;
+				if (e.eventData.IsRotationEvent) e.eventData._value = LaneRotationToMirrored[e.eventData._value];
+                else if (e.eventData._value > 4 && e.eventData._value < 8) e.eventData._value -= 4;
                 else if (e.eventData._value > 0 && e.eventData._value <= 4) e.eventData._value += 4;
                 eventAppearance.SetEventAppearance(e);
             }
