@@ -276,6 +276,16 @@ public class SelectionController : MonoBehaviour
         RefreshMap();
     }
 
+	public void SelectAllFromBeat(float beat){
+		DeselectAll();
+ 		foreach (BeatmapObjectContainerCollection collection in collections) {
+			foreach(BeatmapObjectContainer container in collection.LoadedContainers){
+                if (container.objectData._time != null && container.objectData._time >= beat) Select(container, true, false, false);
+			}
+		}
+		RefreshSelectionMaterial(true);
+	}
+	
     public void AssignTrack()
     {
         PersistentUI.Instance.ShowInputBox("Assign the selected objects to a track ID.\n\n" +

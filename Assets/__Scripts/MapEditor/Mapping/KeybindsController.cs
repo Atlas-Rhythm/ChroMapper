@@ -59,6 +59,7 @@ public class KeybindsController : MonoBehaviour {
         if (notePlacement.IsActive) NotesKeybinds(); //Present when placing a note
         if (eventPlacement.IsActive) EventsKeybinds(); //Present when placing an event.
         if (SelectionController.HasSelectedObjects()) SelectionKeybinds(); //Present if objects are selected
+		else if (CtrlHeld && Input.GetKeyDown(KeyCode.A)) sc.SelectAllFromBeat(0); // Can't go in global keybindings or everything will just be deselected during SelectionKeybinds()
     }
 
     void GlobalKeybinds()
@@ -114,6 +115,9 @@ public class KeybindsController : MonoBehaviour {
                         case KeyCode.S:
                             platformSolo.UpdateSoloEventType();
                             break;
+						case KeyCode.End:
+							sc.SelectAllFromBeat(atsc.CurrentBeat);
+							break;
                     }
                 }
 
@@ -182,21 +186,66 @@ public class KeybindsController : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Delete) || Input.GetKeyDown(KeyCode.Backspace)) sc.Delete();
         if (CtrlHeld)
         {
-            if (Input.GetKeyDown(KeyCode.A)) SelectionController.DeselectAll();
-            if (Input.GetKeyDown(KeyCode.C)) sc.Copy();
-            if (Input.GetKeyDown(KeyCode.X)) sc.Copy(true);
+			foreach (KeyCode vKey in System.Enum.GetValues(typeof(KeyCode))) // Ctrl
+			{ 
+				if (Input.GetKeyDown(vKey))
+				{
+					switch (vKey)
+					{ // Ctrl held
+						case KeyCode.A:
+							SelectionController.DeselectAll();
+							break;
+						case KeyCode.C:
+							sc.Copy();
+							break;
+						case KeyCode.X:
+							sc.Copy(true);
+							break;
+					}
+				}
+			}
         }
         if (ShiftHeld)
         {
-            if (Input.GetKeyDown(KeyCode.UpArrow)) sc.MoveSelection(1f / atsc.gridMeasureSnapping);
-            else if (Input.GetKeyDown(KeyCode.DownArrow)) sc.MoveSelection(-1f / atsc.gridMeasureSnapping);
+			foreach (KeyCode vKey in System.Enum.GetValues(typeof(KeyCode)))
+			{ 
+				if (Input.GetKeyDown(vKey))
+				{
+					switch (vKey)
+					{ // Shift held
+						case KeyCode.UpArrow:
+							sc.MoveSelection(1f / atsc.gridMeasureSnapping);
+							break;
+						case KeyCode.DownArrow:
+							sc.MoveSelection(-1f / atsc.gridMeasureSnapping);
+							break;
+					}
+				}
+			}
         }
         else
-        {
-            if (Input.GetKeyDown(KeyCode.LeftArrow)) sc.ShiftSelection(-1, 0);
-            if (Input.GetKeyDown(KeyCode.RightArrow)) sc.ShiftSelection(1, 0);
-            if (Input.GetKeyDown(KeyCode.UpArrow)) sc.ShiftSelection(0, 1);
-            if (Input.GetKeyDown(KeyCode.DownArrow)) sc.ShiftSelection(0, -1);
+        { 
+			foreach (KeyCode vKey in System.Enum.GetValues(typeof(KeyCode)))
+			{
+				if (Input.GetKeyDown(vKey))
+				{
+					switch (vKey)
+					{ // No input modifers held
+						case KeyCode.LeftArrow:
+							sc.ShiftSelection(-1, 0);
+							break;
+						case KeyCode.RightArrow:
+							sc.ShiftSelection(1, 0);
+							break;
+						case KeyCode.UpArrow:
+							sc.ShiftSelection(0, 1);
+							break;
+						case KeyCode.DownArrow:
+							sc.ShiftSelection(0, -1);
+							break;
+					}
+				}
+			}
         }
     }
 
