@@ -20,7 +20,8 @@ public abstract class BeatmapObjectContainer : MonoBehaviour {
     }
 
     public Track AssignedTrack { get; private set; } = null;
-
+	internal AudioTimeSyncController audioTimeSyncController;
+	
     [SerializeField]
     public abstract BeatmapObject objectData { get; set; }
 
@@ -58,7 +59,29 @@ public abstract class BeatmapObjectContainer : MonoBehaviour {
 
     internal virtual void OnMouseOver()
     {
-        if (!KeybindsController.ShiftHeld) {
+		if (KeybindsController.ShiftHeld) 
+		{
+			if (KeybindsController.AltHeld) 
+			{
+				if (Input.GetMouseButtonDown(0)) audioTimeSyncController.MoveToTimeInBeats(objectData._time);
+			} else 
+			{ // Alt not held, but shift is
+				if (Input.GetMouseButton(0) && !selectionStateChanged)
+				{ //Selects if it's not already selected, deselect if it is and the user just clicked down.
+					if (!SelectionController.IsObjectSelected(this)) SelectionController.Select(this, true);
+					else if (Input.GetMouseButtonDown(0)) SelectionController.Deselect(this);
+					selectionStateChanged = true;
+				}
+				else if (Input.GetMouseButtonDown(2))
+					FlaggedForDeletionEvent?.Invoke(this, true, "Deleted by a Middle Mouse event.");
+			}
+		} else 
+		{ // Shift not held
+			if (Input.GetMouseButtonDown(0) && NotePlacementUI.delete)
+                FlaggedForDeletionEvent?.Invoke(this, true, "Deleted with the Delete Tool.");
+            return;
+		}
+        /* if (!KeybindsController.ShiftHeld) {
             if (Input.GetMouseButtonDown(0) && NotePlacementUI.delete)
                 FlaggedForDeletionEvent?.Invoke(this, true, "Deleted with the Delete Tool.");
             return;
@@ -70,7 +93,7 @@ public abstract class BeatmapObjectContainer : MonoBehaviour {
             selectionStateChanged = true;
         }
         else if (Input.GetMouseButtonDown(2))
-            FlaggedForDeletionEvent?.Invoke(this, true, "Deleted by a Middle Mouse event.");
+            FlaggedForDeletionEvent?.Invoke(this, true, "Deleted by a Middle Mouse event."); */
     }
 
     internal virtual void SafeSetActive(bool active)

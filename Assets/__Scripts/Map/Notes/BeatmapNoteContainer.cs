@@ -57,7 +57,7 @@ public class BeatmapNoteContainer : BeatmapObjectContainer {
         if (swingArcRenderer != null) swingArcRenderer.enabled = ShowArcVisualizer;
     }
 
-    public static BeatmapNoteContainer SpawnBeatmapNote(BeatmapNote noteData, ref GameObject notePrefab, ref GameObject bombPrefab, ref NoteAppearanceSO appearanceSO) {
+    public static BeatmapNoteContainer SpawnBeatmapNote(BeatmapNote noteData, AudioTimeSyncController atsc, ref GameObject notePrefab, ref GameObject bombPrefab, ref NoteAppearanceSO appearanceSO) {
         bool isBomb = noteData._type == BeatmapNote.NOTE_TYPE_BOMB;
         BeatmapNoteContainer container = Instantiate(isBomb ? bombPrefab : notePrefab).GetComponent<BeatmapNoteContainer>();
         container.isBomb = isBomb;
@@ -65,6 +65,7 @@ public class BeatmapNoteContainer : BeatmapObjectContainer {
         appearanceSO.SetNoteAppearance(container);
         container.noteAppearance = appearanceSO;
         container.Directionalize(noteData._cutDirection);
+		container.audioTimeSyncController = atsc;
         return container;
     }
 
@@ -97,7 +98,7 @@ public class BeatmapNoteContainer : BeatmapObjectContainer {
             else Debug.LogWarning("Data attached to this note object is somehow null! This shouldn't happen!");
             noteAppearance.SetNoteAppearance(this);
         }else if (Input.GetAxis("Mouse ScrollWheel") != 0)
-        {
+        { // Edit existing note directions with Alt + Mouse Scroll
             if (KeybindsController.AltHeld)
             {
                 if (mapNoteData._cutDirection == BeatmapNote.NOTE_CUT_DIRECTION_ANY) return;
@@ -106,7 +107,31 @@ public class BeatmapNoteContainer : BeatmapObjectContainer {
                 else if (mapNoteData._cutDirection == 8) mapNoteData._cutDirection = 0;
                 Directionalize(mapNoteData._cutDirection);
             }
-        }
+        } else if (KeybindsController.AltHeld && !KeybindsController.ShiftHeld && !KeybindsController.CtrlHeld && mapNoteData._type != BeatmapNote.NOTE_TYPE_BOMB) { // Edit existing note directions with Alt + WASD
+			int oldCutDirection = mapNoteData._cutDirection;
+			Debug.Log("oldCutDirection Initial: " + oldCutDirection);
+			Debug.Log("mapNoteData._cutDirection Initial: " + mapNoteData._cutDirection);
+			if (Input.GetKeyDown(KeyCode.W)) {
+				if (Input.GetKey(KeyCode.A)) mapNoteData._cutDirection = BeatmapNote.NOTE_CUT_DIRECTION_UP_LEFT;
+				else if (Input.GetKey(KeyCode.D)) mapNoteData._cutDirection = BeatmapNote.NOTE_CUT_DIRECTION_UP_RIGHT;
+				else mapNoteData._cutDirection = BeatmapNote.NOTE_CUT_DIRECTION_UP;
+			} else if (Input.GetKeyDown(KeyCode.S)) {
+				if (Input.GetKey(KeyCode.A)) mapNoteData._cutDirection = BeatmapNote.NOTE_CUT_DIRECTION_DOWN_LEFT;
+				else if (Input.GetKey(KeyCode.D)) mapNoteData._cutDirection = BeatmapNote.NOTE_CUT_DIRECTION_DOWN_RIGHT;
+				else mapNoteData._cutDirection = BeatmapNote.NOTE_CUT_DIRECTION_DOWN;
+			} else if (Input.GetKeyDown(KeyCode.A)) {
+				if (Input.GetKey(KeyCode.W)) mapNoteData._cutDirection = BeatmapNote.NOTE_CUT_DIRECTION_UP_LEFT;
+				else if (Input.GetKey(KeyCode.S)) mapNoteData._cutDirection = BeatmapNote.NOTE_CUT_DIRECTION_DOWN_LEFT;
+				else mapNoteData._cutDirection = BeatmapNote.NOTE_CUT_DIRECTION_LEFT;
+			} else if (Input.GetKeyDown(KeyCode.D)) {
+				if (Input.GetKey(KeyCode.W)) mapNoteData._cutDirection = BeatmapNote.NOTE_CUT_DIRECTION_UP_RIGHT;
+				else if (Input.GetKey(KeyCode.S)) mapNoteData._cutDirection = BeatmapNote.NOTE_CUT_DIRECTION_DOWN_RIGHT;
+				else mapNoteData._cutDirection = BeatmapNote.NOTE_CUT_DIRECTION_RIGHT;
+			} else if (Input.GetKeyDown(KeyCode.F)) mapNoteData._cutDirection = BeatmapNote.NOTE_CUT_DIRECTION_ANY;
+			Debug.Log("oldCutDirection Final: " + oldCutDirection);
+			Debug.Log("mapNoteData._cutDirection Final: " + mapNoteData._cutDirection);
+			if (oldCutDirection != mapNoteData._cutDirection) Directionalize(mapNoteData._cutDirection);
+		}
         else base.OnMouseOver();
     }
 }

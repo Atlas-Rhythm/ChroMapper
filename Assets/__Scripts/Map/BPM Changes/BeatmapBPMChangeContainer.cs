@@ -8,11 +8,12 @@ public class BeatmapBPMChangeContainer : BeatmapObjectContainer {
 
     public BeatmapBPMChange bpmData;
 
-    public static BeatmapBPMChangeContainer SpawnBPMChange(BeatmapBPMChange data, ref GameObject prefab)
+    public static BeatmapBPMChangeContainer SpawnBPMChange(BeatmapBPMChange data, AudioTimeSyncController atsc, ref GameObject prefab)
     {
         BeatmapBPMChangeContainer container = Instantiate(prefab).GetComponent<BeatmapBPMChangeContainer>();
         container.bpmData = data;
         container.GetComponentInChildren<TextMeshProUGUI>().text = data._BPM.ToString(CultureInfo.InvariantCulture);
+		container.audioTimeSyncController = atsc;
         return container;
     }
 

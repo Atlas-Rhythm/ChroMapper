@@ -37,7 +37,7 @@ public class CustomEventsContainer : BeatmapObjectContainerCollection
             customEventTypes.Add((obj as BeatmapCustomEvent)?._type);
             RefreshTrack();
         }
-        BeatmapCustomEventContainer beatmapCustomEvent = BeatmapCustomEventContainer.SpawnCustomEvent(obj as BeatmapCustomEvent, this, ref customEventPrefab);
+        BeatmapCustomEventContainer beatmapCustomEvent = BeatmapCustomEventContainer.SpawnCustomEvent(obj as BeatmapCustomEvent, AudioTimeSyncController, this, ref customEventPrefab);
         beatmapCustomEvent.transform.SetParent(GridTransform);
         beatmapCustomEvent.UpdateGridPosition();
         LoadedContainers.Add(beatmapCustomEvent);

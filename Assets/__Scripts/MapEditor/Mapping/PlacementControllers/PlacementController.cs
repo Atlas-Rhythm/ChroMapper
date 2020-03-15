@@ -48,7 +48,7 @@ public abstract class PlacementController<BO, BOC, BOCC> : MonoBehaviour where B
 
     internal virtual void Update()
     {
-        if (KeybindsController.AltHeld && Input.GetMouseButtonDown(0) && CanClickAndDrag)
+        if (KeybindsController.AltHeld && !KeybindsController.ShiftHeld && Input.GetMouseButtonDown(0) && CanClickAndDrag)
         {
             Ray dragRay = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(dragRay, out RaycastHit dragHit, 999f, 1 << 9))

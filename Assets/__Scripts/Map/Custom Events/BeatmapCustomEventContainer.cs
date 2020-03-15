@@ -7,11 +7,12 @@ public class BeatmapCustomEventContainer : BeatmapObjectContainer
     public BeatmapCustomEvent customEventData;
     private CustomEventsContainer collection;
 
-    public static BeatmapCustomEventContainer SpawnCustomEvent(BeatmapCustomEvent data, CustomEventsContainer collection, ref GameObject prefab)
+    public static BeatmapCustomEventContainer SpawnCustomEvent(BeatmapCustomEvent data, AudioTimeSyncController atsc, CustomEventsContainer collection, ref GameObject prefab)
     {
         BeatmapCustomEventContainer container = Instantiate(prefab).GetComponent<BeatmapCustomEventContainer>();
         container.customEventData = data;
         container.collection = collection;
+		container.audioTimeSyncController = atsc;
         return container;
     }
 

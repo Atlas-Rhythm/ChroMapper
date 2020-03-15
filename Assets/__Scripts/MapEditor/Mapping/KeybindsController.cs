@@ -80,7 +80,7 @@ public class KeybindsController : MonoBehaviour {
                     }
 
                     switch (vKey)
-                    {
+                    { // Ctrl held
                         case KeyCode.T:
                             if (Settings.Instance.AdvancedShit)
                             {
@@ -111,7 +111,7 @@ public class KeybindsController : MonoBehaviour {
                 if (ShiftHeld && !Input.GetMouseButton(1))
                 {
                     switch (vKey)
-                    {
+                    { // Shift held
                         case KeyCode.S:
                             platformSolo.UpdateSoloEventType();
                             break;
@@ -122,7 +122,7 @@ public class KeybindsController : MonoBehaviour {
                 }
 
                 switch (vKey) 
-                {
+                { // No specific input modifier
                     case KeyCode.Tab:
                         if (!NodeEditorController.IsActive) workflowToggle.UpdateWorkflowGroup();
                         break;
@@ -160,7 +160,7 @@ public class KeybindsController : MonoBehaviour {
                     case KeyCode.S:
                     case KeyCode.D:
                     case KeyCode.F:
-                        wasdCase(vKey);
+                        if (!AnyCriticalKeys) wasdCase(vKey);
                         break;
                     case KeyCode.R:
                         if (!AnyCriticalKeys) eventPlacementUI.UpdatePrecisionRotationValue();
@@ -174,6 +174,15 @@ public class KeybindsController : MonoBehaviour {
                     case KeyCode.L:
                         toggleDisableableObjects.UpdateDisableableObjects();
                         break;
+					case KeyCode.X:
+						if (!AnyCriticalKeys) atsc.SwapGridMeasureSnappingAlternative();
+						break;
+					case KeyCode.LeftBracket:
+						bookmarkManager.JumpToPreviousBookmark();
+						break;
+					case KeyCode.RightBracket:
+						bookmarkManager.JumpToNextBookmark();
+						break;
                 }
             }
         }
@@ -258,35 +267,38 @@ public class KeybindsController : MonoBehaviour {
 
         if (!notePlacement.IsValid) return;
 
-        if (Input.GetKeyDown(KeyCode.Keypad8) || Input.GetKeyDown(KeyCode.W))
-            notePlacement.UpdateCut(InvertNoteKeybinds ? BN.NOTE_CUT_DIRECTION_UP : BN.NOTE_CUT_DIRECTION_DOWN);
-        else if (Input.GetKeyDown(KeyCode.Keypad9) || (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D)))
-            notePlacement.UpdateCut(InvertNoteKeybinds ? BN.NOTE_CUT_DIRECTION_UP_RIGHT : BN.NOTE_CUT_DIRECTION_DOWN_LEFT);
-        else if (Input.GetKeyDown(KeyCode.Keypad6) || Input.GetKeyDown(KeyCode.D))
-            notePlacement.UpdateCut(InvertNoteKeybinds ? BN.NOTE_CUT_DIRECTION_RIGHT : BN.NOTE_CUT_DIRECTION_LEFT);
-        else if (Input.GetKeyDown(KeyCode.Keypad3) || (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D)))
-            notePlacement.UpdateCut(InvertNoteKeybinds ? BN.NOTE_CUT_DIRECTION_DOWN_RIGHT : BN.NOTE_CUT_DIRECTION_UP_LEFT);
-        else if (Input.GetKeyDown(KeyCode.Keypad2) || Input.GetKeyDown(KeyCode.S))
-            notePlacement.UpdateCut(InvertNoteKeybinds ? BN.NOTE_CUT_DIRECTION_DOWN : BN.NOTE_CUT_DIRECTION_UP);
-        else if (Input.GetKeyDown(KeyCode.Keypad1) || (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A)))
-            notePlacement.UpdateCut(InvertNoteKeybinds ? BN.NOTE_CUT_DIRECTION_DOWN_LEFT : BN.NOTE_CUT_DIRECTION_UP_RIGHT);
-        else if (Input.GetKeyDown(KeyCode.Keypad4) || Input.GetKeyDown(KeyCode.A))
-            notePlacement.UpdateCut(InvertNoteKeybinds ? BN.NOTE_CUT_DIRECTION_LEFT : BN.NOTE_CUT_DIRECTION_RIGHT);
-        else if (Input.GetKeyDown(KeyCode.Keypad7) || (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A)))
-            notePlacement.UpdateCut(InvertNoteKeybinds ? BN.NOTE_CUT_DIRECTION_UP_LEFT : BN.NOTE_CUT_DIRECTION_DOWN_RIGHT);
-        else if (Input.GetKeyDown(KeyCode.Keypad5) || Input.GetKeyDown(KeyCode.F))
-            notePlacement.UpdateCut(BN.NOTE_CUT_DIRECTION_ANY);
-        /*else if ((!CtrlHeld && Input.GetKeyDown(KeyCode.Keypad0)) || Input.GetKeyDown(KeyCode.E))
-        {
-            notePlacement.ChangeChromaToggle(true);
-            notePlacement.UpdateChromaValue(BeatmapChromaNote.DEFLECT);
-        }
-        else if ((!CtrlHeld && Input.GetKeyDown(KeyCode.KeypadPeriod)) || Input.GetKeyDown(KeyCode.Q))
-        {
-            notePlacement.ChangeChromaToggle(true);
-            notePlacement.UpdateChromaValue(BeatmapChromaNote.BIDIRECTIONAL);
-        }*/ //ChromaToggle is currently not a thing atm so disabling these
-        if (Input.GetKeyDown(KeyCode.R)) notePlacement.ChangeChromaToggle(false);
+		if (!AnyCriticalKeys)
+		{
+			if (Input.GetKeyDown(KeyCode.Keypad8) || Input.GetKeyDown(KeyCode.W))
+				notePlacement.UpdateCut(InvertNoteKeybinds ? BN.NOTE_CUT_DIRECTION_UP : BN.NOTE_CUT_DIRECTION_DOWN);
+			else if (Input.GetKeyDown(KeyCode.Keypad9) || (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D)))
+				notePlacement.UpdateCut(InvertNoteKeybinds ? BN.NOTE_CUT_DIRECTION_UP_RIGHT : BN.NOTE_CUT_DIRECTION_DOWN_LEFT);
+			else if (Input.GetKeyDown(KeyCode.Keypad6) || Input.GetKeyDown(KeyCode.D))
+				notePlacement.UpdateCut(InvertNoteKeybinds ? BN.NOTE_CUT_DIRECTION_RIGHT : BN.NOTE_CUT_DIRECTION_LEFT);
+			else if (Input.GetKeyDown(KeyCode.Keypad3) || (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D)))
+				notePlacement.UpdateCut(InvertNoteKeybinds ? BN.NOTE_CUT_DIRECTION_DOWN_RIGHT : BN.NOTE_CUT_DIRECTION_UP_LEFT);
+			else if (Input.GetKeyDown(KeyCode.Keypad2) || Input.GetKeyDown(KeyCode.S))
+				notePlacement.UpdateCut(InvertNoteKeybinds ? BN.NOTE_CUT_DIRECTION_DOWN : BN.NOTE_CUT_DIRECTION_UP);
+			else if (Input.GetKeyDown(KeyCode.Keypad1) || (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A)))
+				notePlacement.UpdateCut(InvertNoteKeybinds ? BN.NOTE_CUT_DIRECTION_DOWN_LEFT : BN.NOTE_CUT_DIRECTION_UP_RIGHT);
+			else if (Input.GetKeyDown(KeyCode.Keypad4) || Input.GetKeyDown(KeyCode.A))
+				notePlacement.UpdateCut(InvertNoteKeybinds ? BN.NOTE_CUT_DIRECTION_LEFT : BN.NOTE_CUT_DIRECTION_RIGHT);
+			else if (Input.GetKeyDown(KeyCode.Keypad7) || (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A)))
+				notePlacement.UpdateCut(InvertNoteKeybinds ? BN.NOTE_CUT_DIRECTION_UP_LEFT : BN.NOTE_CUT_DIRECTION_DOWN_RIGHT);
+			else if (Input.GetKeyDown(KeyCode.Keypad5) || Input.GetKeyDown(KeyCode.F))
+				notePlacement.UpdateCut(BN.NOTE_CUT_DIRECTION_ANY);
+			/*else if ((!CtrlHeld && Input.GetKeyDown(KeyCode.Keypad0)) || Input.GetKeyDown(KeyCode.E))
+			{
+				notePlacement.ChangeChromaToggle(true);
+				notePlacement.UpdateChromaValue(BeatmapChromaNote.DEFLECT);
+			}
+			else if ((!CtrlHeld && Input.GetKeyDown(KeyCode.KeypadPeriod)) || Input.GetKeyDown(KeyCode.Q))
+			{
+				notePlacement.ChangeChromaToggle(true);
+				notePlacement.UpdateChromaValue(BeatmapChromaNote.BIDIRECTIONAL);
+			}*/ //ChromaToggle is currently not a thing atm so disabling these
+			if (Input.GetKeyDown(KeyCode.R)) notePlacement.ChangeChromaToggle(false);
+		}
     }
 
     void EventsKeybinds()

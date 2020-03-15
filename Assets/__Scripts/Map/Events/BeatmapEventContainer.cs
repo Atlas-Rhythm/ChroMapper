@@ -28,7 +28,7 @@ public class BeatmapEventContainer : BeatmapObjectContainer {
         base.Awake();
     }
 
-    public static BeatmapEventContainer SpawnEvent(EventsContainer eventsContainer, MapEvent data, ref GameObject prefab, ref EventAppearanceSO eventAppearanceSO,
+    public static BeatmapEventContainer SpawnEvent(EventsContainer eventsContainer, MapEvent data, AudioTimeSyncController atsc, ref GameObject prefab, ref EventAppearanceSO eventAppearanceSO,
         ref TracksManager tracksManager)
     {
         BeatmapEventContainer container = Instantiate(prefab).GetComponent<BeatmapEventContainer>();
@@ -38,6 +38,7 @@ public class BeatmapEventContainer : BeatmapObjectContainer {
         container.transform.localEulerAngles = Vector3.zero;
         container.tracksManager = tracksManager;
         eventAppearanceSO.SetEventAppearance(container);
+		container.audioTimeSyncController = atsc;
         return container;
     }
 

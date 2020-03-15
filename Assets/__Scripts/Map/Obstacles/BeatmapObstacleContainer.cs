@@ -19,6 +19,7 @@ public class BeatmapObstacleContainer : BeatmapObjectContainer {
         container.obstacleAppearance = appearanceSO;
         container.atsc = atsc;
         appearanceSO.SetObstacleAppearance(container);
+		container.audioTimeSyncController = atsc;
         return container;
     }
 
@@ -66,7 +67,7 @@ public class BeatmapObstacleContainer : BeatmapObjectContainer {
 
     internal override void OnMouseOver()
     {
-        if (Input.GetMouseButtonDown(2) && !KeybindsController.ShiftHeld)
+        if ((Input.GetMouseButtonDown(2) && !KeybindsController.ShiftHeld) || (KeybindsController.CtrlHeld && Input.GetKeyDown(KeyCode.F)))
         {
             obstacleData._time += obstacleData._duration;
             obstacleData._duration *= -1;

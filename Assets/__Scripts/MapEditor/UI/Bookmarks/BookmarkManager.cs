@@ -36,4 +36,18 @@ public class BookmarkManager : MonoBehaviour
         bookmarkContainers.Add(container.GetComponent<BookmarkContainer>());
         BeatSaberSongContainer.Instance.map._bookmarks = bookmarkContainers.Select(x => x.data).ToList();
     }
+	
+	public void JumpToNextBookmark()
+	{
+		BookmarkContainer targetBookmark = bookmarkContainers.FindAll(f => f.data._time > atsc.CurrentBeat).OrderBy(o => o.data._time).FirstOrDefault();
+		if (targetBookmark != null) atsc.MoveToTimeInBeats(targetBookmark.data._time);
+		else Debug.Log("No future bookmarks found");
+	}
+	
+	public void JumpToPreviousBookmark()
+	{
+		BookmarkContainer targetBookmark = bookmarkContainers.FindAll(f => f.data._time < atsc.CurrentBeat).OrderByDescending(o => o.data._time).FirstOrDefault();
+		if (targetBookmark != null) atsc.MoveToTimeInBeats(targetBookmark.data._time);
+		else Debug.Log("No past bookmarks found");
+	}
 }

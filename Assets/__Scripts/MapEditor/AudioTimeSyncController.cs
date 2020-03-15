@@ -24,11 +24,12 @@ public class AudioTimeSyncController : MonoBehaviour {
             if (_gridMeasureSnapping != old) GridMeasureSnappingChanged?.Invoke(value);
         }
     }
-
+	
     private int gridStep = 0;
     private AudioClip clip;
     [HideInInspector] public BeatSaberSong song;
     private int _gridMeasureSnapping = 1;
+    private int _gridMeasureSnappingAlternate = 3;
 
     [SerializeField] private float currentBeat;
     [SerializeField] private float currentSeconds;
@@ -66,7 +67,7 @@ public class AudioTimeSyncController : MonoBehaviour {
     
     private static readonly int Offset = Shader.PropertyToID("_Offset");
     private static readonly int GridSpacing = Shader.PropertyToID("_GridSpacing");
-
+	
     // Use this for initialization
     void Start() {
         try
@@ -132,6 +133,14 @@ public class AudioTimeSyncController : MonoBehaviour {
             Debug.LogException(e);
         }
     }
+	
+	public void SwapGridMeasureSnappingAlternative()
+	{
+		int snappingBackup = _gridMeasureSnappingAlternate;
+		_gridMeasureSnappingAlternate = gridMeasureSnapping;
+		gridMeasureSnapping = snappingBackup;
+		
+	}
 
     private void UpdateMovables() {
         float position = currentBeat * EditorScaleController.EditorScale;
