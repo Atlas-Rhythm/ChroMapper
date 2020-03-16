@@ -1,0 +1,14 @@
+name: Acquire activation file
+on: [push]
+jobs:
+  activation:
+    runs-on: ubuntu-latest
+    steps:
+    - id: getManualLicenseFile
+      uses: webbertakken/unity-request-manual-activation-file@v1.1
+      with:
+        unityVersion: 2019.3.0f6
+    - uses: actions/upload-artifact@v1
+      with:
+        name: ${{ steps.getManualLicenseFile.outputs.filePath }}
+        path: ${{ steps.getManualLicenseFile.outputs.filePath }}
