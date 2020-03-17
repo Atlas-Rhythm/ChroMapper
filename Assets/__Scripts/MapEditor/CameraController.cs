@@ -74,7 +74,7 @@ public class CameraController : MonoBehaviour {
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.X) && _rotationCallbackController.IsActive)
+        if (Input.GetKeyDown(KeyCode.X) && _rotationCallbackController.IsActive && KeybindsController.ShiftHeld)
         {
             LockedOntoNoteGrid = !LockedOntoNoteGrid;
         }
