@@ -35,7 +35,7 @@ public class CameraController : MonoBehaviour {
 
         _camera.fieldOfView = Settings.Instance.CameraFOV;
         
-        if (Input.GetKeyDown(KeyCode.X) && KeybindsController.ShiftHeld)
+        if (Input.GetKeyDown(KeyCode.X))
         {
             if (transform.parent != null) transform.SetParent(null);
             else transform.SetParent(noteGridTransform);
