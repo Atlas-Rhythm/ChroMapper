@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using SimpleJSON;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -76,7 +77,14 @@ public class EventPlacement : PlacementController<MapEvent, BeatmapEventContaine
             if (propID >= 0)
             {
                 if (queuedData._customData is null) queuedData._customData = new SimpleJSON.JSONObject();
-                queuedData._customData["_propID"] = propID;
+                if (queuedData._customData["_propID"] is null)
+                {
+                    queuedData._customData.Add("_propID", new JSONNumber(propID));
+                }
+                else
+                {
+                    queuedData._customData["_propID"].AsInt = propID;
+                }
             }
             else queuedData._customData?.Remove("_propID");
         }
@@ -141,11 +149,10 @@ public class EventPlacement : PlacementController<MapEvent, BeatmapEventContaine
             if (container == null) return;
             BeatmapActionContainer.AddAction(new BeatmapObjectPlacementAction(new List<BeatmapObjectContainer>() { conflicting2 },
                 new List<BeatmapObjectContainer>() { container }, "Placed a Chroma event." ));
-            SelectionController.RefreshMap();
             queuedData = BeatmapObject.GenerateCopy(queuedData);
             return;
         }
-        BeatmapEventContainer spawned = objectContainerCollection.SpawnObject(BeatmapObject.GenerateCopy(queuedData), out BeatmapObjectContainer conflicting) as BeatmapEventContainer;
+        BeatmapEventContainer spawned = objectContainerCollection.SpawnObject(BeatmapObject.GenerateCopy(queuedData), out BeatmapObjectContainer conflicting, true, false) as BeatmapEventContainer;
         if (spawned == null) return;
         BeatmapEventContainer chroma = null;
         if (Settings.Instance.PlaceChromaEvents && !queuedData.IsUtilityEvent && (queuedValue != MapEvent.LIGHT_VALUE_OFF))
@@ -153,7 +160,7 @@ public class EventPlacement : PlacementController<MapEvent, BeatmapEventContaine
             MapEvent chromaData = BeatmapObject.GenerateCopy(queuedData);
             chromaData._time -= 1 / 64f;
             chromaData._value = ColourManager.ColourToInt(colorPicker.CurrentColor);
-            chroma = objectContainerCollection.SpawnObject(chromaData, out _) as BeatmapEventContainer;
+            chroma = objectContainerCollection.SpawnObject(chromaData, out _, true, false) as BeatmapEventContainer;
         }
         BeatmapActionContainer.AddAction(new BeatmapObjectPlacementAction(new List<BeatmapObjectContainer>() { conflicting },
             new List<BeatmapObjectContainer>() { spawned, chroma }, "Placed an Event with an attached Chroma event."));

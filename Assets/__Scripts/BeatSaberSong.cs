@@ -59,7 +59,7 @@ public class BeatSaberSong
             if (requiredArray.Count > 0 || suggestedArray.Count > 0)
             {
                 if (customData == null) customData = new JSONObject();
-                customData["_warnings"] = suggestedArray;
+                customData["_suggestions"] = suggestedArray;
                 customData["_requirements"] = requiredArray;
             }
         }
@@ -119,8 +119,6 @@ public class BeatSaberSong
     public string songFilename = "song.ogg"; // .egg file extension is a problem solely beat saver deals with, work with .ogg for the mapper
     public string coverImageFilename = "cover.png";
     public string environmentName = "DefaultEnvironment";
-    public string customEnvironmentName = "DefaultEnvironment";
-    public string platformName = "DefaultEnvironment";
     public string allDirectionsEnvironmentName = "GlassDesertEnvironment";
     public string editor = "chromapper"; //BeatMapper started doing this so might as well do it for CM too
     public JSONNode customData;
@@ -180,8 +178,6 @@ public class BeatSaberSong
             json["_songFilename"] = songFilename;
 
             json["_environmentName"] = environmentName;
-            json["_customEnvironmentName"] = customEnvironmentName;
-            json["_platformName"] = platformName;
             json["_allDirectionsEnvironmentName"] = allDirectionsEnvironmentName;
             json["_customData"] = customData;
             json["_customData"]["_editor"] = editor;
@@ -190,12 +186,9 @@ public class BeatSaberSong
             contributors.DistinctBy(x => x.ToJSONNode().ToString()).ToList().ForEach(x => contributorArrayFUCKYOUGIT.Add(x.ToJSONNode()));
             json["_customData"]["_contributors"] = contributorArrayFUCKYOUGIT;
 
-            //BeatSaver schema changes, see below comment.
-            if (string.IsNullOrEmpty(customData["_editor"])) json["_customData"]["_editor"] = "chromapper";
-            if (string.IsNullOrEmpty(customData["_contributors"])) json["_customData"].Remove("_contributors");
-            if (string.IsNullOrEmpty(customData["_customEnvironment"])) json["_customData"].Remove("_customEnvironment");
-            if (string.IsNullOrEmpty(customData["_customEnvironmentHash"])) json["_customData"].Remove("_customEnvironmentHash");
-            if (json["_customData"].Linq.Count() <= 0) json.Remove("_customData");
+            //BeatSaver schema changes, CleanObject function
+            json["_customData"] = CleanObject(json["_customData"]);
+            if (json["_customData"] is null || json["_customData"].Count <= 0) json.Remove("_customData");
 
             JSONArray sets = new JSONArray();
             foreach (DifficultyBeatmapSet set in difficultyBeatmapSets)
@@ -219,15 +212,15 @@ public class BeatSaberSong
                     subNode["_customData"] = diff.customData;
 
                     if (diff.colorLeft != DEFAULT_LEFTNOTE)
-                        subNode["_customData"]["_colorLeft"] = GetJSONNodeFromColor(diff.colorLeft);
+                        subNode["_customData"]["_colorLeft"] = diff.colorLeft;
                     if (diff.colorRight != DEFAULT_RIGHTNOTE)
-                        subNode["_customData"]["_colorRight"] = GetJSONNodeFromColor(diff.colorRight);
+                        subNode["_customData"]["_colorRight"] = diff.colorRight;
                     if (diff.envColorLeft != DEFAULT_LEFTCOLOR && diff.envColorLeft != diff.colorLeft)
-                        subNode["_customData"]["_envColorLeft"] = GetJSONNodeFromColor(diff.envColorLeft);
+                        subNode["_customData"]["_envColorLeft"] = diff.envColorLeft;
                     if (diff.envColorRight != DEFAULT_RIGHTCOLOR && diff.envColorRight != diff.colorRight)
-                        subNode["_customData"]["_envColorRight"] = GetJSONNodeFromColor(diff.envColorRight);
+                        subNode["_customData"]["_envColorRight"] = diff.envColorRight;
                     if (diff.obstacleColor != DEFAULT_LEFTCOLOR)
-                        subNode["_customData"]["_obstacleColor"] = GetJSONNodeFromColor(diff.obstacleColor);
+                        subNode["_customData"]["_obstacleColor"] = diff.obstacleColor;
 
                     /*
                      * More BeatSaver Schema changes, yayyyyy! (fuck)
@@ -238,20 +231,8 @@ public class BeatSaberSong
                      */
                     if (subNode["_customData"] != null)
                     {
-                        if (string.IsNullOrEmpty(diff.customData["_difficultyLabel"])) subNode["_customData"].Remove("_difficultyLabel");
-                        if (diff.customData["_editorOldOffset"] != null && diff.customData["_editorOldOffset"].AsFloat <= 0)
-                            subNode["_customData"].Remove("_editorOldOffset"); //For some reason these are used by MM but not by CM
-                        if (diff.customData["_editorOffset"] != null && diff.customData["_editorOffset"].AsFloat <= 0)
-                            subNode["_customData"].Remove("_editorOffset"); //So we're just gonna yeet them. Sorry squanksers.
-                        if (diff.customData["_warnings"] != null && diff.customData["_warnings"].AsArray.Count <= 0)
-                            subNode["_customData"].Remove("_warnings");
-                        if (diff.customData["_information"] != null && diff.customData["_information"].AsArray.Count <= 0)
-                            subNode["_customData"].Remove("_information");
-                        if (diff.customData["_suggestions"] != null && diff.customData["_suggestions"].AsArray.Count <= 0)
-                            subNode["_customData"].Remove("_suggestions");
-                        if (diff.customData["_requirements"] != null && diff.customData["_requirements"].AsArray.Count <= 0)
-                            subNode["_customData"].Remove("_requirements");
-                        if (subNode["_customData"].Linq.Count() <= 0) subNode.Remove("_customData");
+                        subNode["_customData"] = CleanObject(subNode["_customData"]);
+                        if (subNode["_customData"].Count <= 0) subNode.Remove("_customData");
                     }
                     else subNode.Remove("_customData"); //Just remove it if it's null lmao
 
@@ -273,6 +254,24 @@ public class BeatSaberSong
         {
             Debug.LogException(e);
         }
+    }
+
+    /// <summary>
+    /// Loops through all children of a JSON object, and remove any that are null or empty. 
+    /// This help makes _customData objects compliant with BeatSaver schema in a reusable and smart way.
+    /// </summary>
+    /// <param name="obj">Object of which to loop through and remove all empty children from.</param>
+    private JSONNode CleanObject(JSONNode obj)
+    {
+        if (obj is null) return null;
+        foreach (JSONNode node in obj.Clone())
+        {
+            if (node is null || node.AsArray?.Count <= 0 || string.IsNullOrEmpty(node.Value))
+            {
+                obj.Remove(node);
+            }
+        }
+        return obj;
     }
 
     public static BeatSaberSong GetSongFromFolder(string directory)
@@ -310,8 +309,6 @@ public class BeatSaberSong
                     case "_coverImageFilename": song.coverImageFilename = node.Value; break;
                     case "_songFilename": song.songFilename = node.Value; break;
                     case "_environmentName": song.environmentName = node.Value; break;
-                    case "_customEnvironmentName": song.customEnvironmentName = node.Value; break;
-                    case "_PlatformName": song.platformName = node.Value; break;
                     //Because there is only one option, I wont load from file.
                     //case "_allDirectionsEnvironmentName": song.allDirectionsEnvironmentName = node.Value; break;
 
@@ -344,17 +341,17 @@ public class BeatSaberSong
                                     customData = d["_customData"],
                                 };
                                 if (d["_customData"]["_colorLeft"] != null)
-                                    beatmap.colorLeft = GetColorFromJSONNode(d["_customData"]["_colorLeft"]);
+                                    beatmap.colorLeft = d["_customData"]["_colorLeft"].AsObject.ReadColor();
                                 if (d["_customData"]["_colorRight"] != null)
-                                    beatmap.colorRight = GetColorFromJSONNode(d["_customData"]["_colorRight"]);
+                                    beatmap.colorRight = d["_customData"]["_colorRight"].AsObject.ReadColor();
                                 if (d["_customData"]["_envColorLeft"] != null)
-                                    beatmap.envColorLeft = GetColorFromJSONNode(d["_customData"]["_envColorLeft"]);
+                                    beatmap.envColorLeft = d["_customData"]["_envColorLeft"].AsObject.ReadColor();
                                 else if (d["_customData"]["_colorLeft"] != null) beatmap.envColorLeft = beatmap.colorLeft;
                                 if (d["_customData"]["_envColorRight"] != null)
-                                    beatmap.envColorRight = GetColorFromJSONNode(d["_customData"]["_envColorRight"]);
+                                    beatmap.envColorRight = d["_customData"]["_envColorRight"].AsObject.ReadColor();
                                 else if (d["_customData"]["_colorRight"] != null) beatmap.envColorRight = beatmap.colorRight;
                                 if (d["_customData"]["_obstacleColor"] != null)
-                                    beatmap.obstacleColor = GetColorFromJSONNode(d["_customData"]["_obstacleColor"]);
+                                    beatmap.obstacleColor = d["_customData"]["_obstacleColor"].AsObject.ReadColor();
                                 beatmap.UpdateName(d["_beatmapFilename"]);
                                 set.difficultyBeatmaps.Add(beatmap);
                             }
@@ -386,20 +383,6 @@ public class BeatSaberSong
         }
 
         return BeatSaberMap.GetBeatSaberMapFromJSON(mainNode, directory + "/" + data.beatmapFilename);
-    }
-
-    private static Color GetColorFromJSONNode(JSONNode node)
-    {
-        return new Color(node["r"].AsFloat, node["g"].AsFloat, node["b"].AsFloat);
-    }
-
-    private JSONNode GetJSONNodeFromColor(Color color)
-    {
-        JSONObject obj = new JSONObject();
-        obj["r"] = color.r;
-        obj["g"] = color.g;
-        obj["b"] = color.b;
-        return obj;
     }
 
     private static JSONNode GetNodeFromFile(string file)
