@@ -17,6 +17,10 @@ public class BeatSaberMap {
     /// Time (in Minutes) that the user has worked on this map.
     /// </summary>
     public float _time = 0;
+	/// <summary>
+    /// Hacky fix for Bongo Cat intermittently causing issues
+    /// </summary>
+    public uint _bongoHash = 0;
     public List<MapEvent> _events = new List<MapEvent>();
     public List<BeatmapNote> _notes = new List<BeatmapNote>();
     public List<BeatmapObstacle> _obstacles = new List<BeatmapObstacle>();
@@ -78,6 +82,7 @@ public class BeatSaberMap {
             if (_bookmarks.Any()) mainNode["_customData"]["_bookmarks"] = bookmarks;
             if (_customEvents.Any()) mainNode["_customEvents"] = customEvents;
             if (_time > 0) mainNode["_customData"]["_time"] = Math.Round(_time, 3);
+			if (_bongoHash > 0) mainNode["_customData"]["_bongoHash"] = _bongoHash;
 
             using (StreamWriter writer = new StreamWriter(directoryAndFile, false))
             {
@@ -152,6 +157,9 @@ public class BeatSaberMap {
                                     break;
                                 case "_time":
                                     map._time = dataNode.AsFloat;
+                                    break;
+								case "_bongoHash":
+                                    map._bongoHash = (uint)dataNode.AsInt;
                                     break;
                             }
                         }
