@@ -120,7 +120,7 @@ public class BeatSaberSong
     public string coverImageFilename = "cover.png";
     public string environmentName = "DefaultEnvironment";
     public string allDirectionsEnvironmentName = "GlassDesertEnvironment";
-    public string editor = "chromapper"; //BeatMapper started doing this so might as well do it for CM too
+    public string editor = "Atlas-ChroMapper"; //BeatMapper started doing this so might as well do it for CM too
     public JSONNode customData;
 
     private bool isWIPMap = false;
@@ -131,6 +131,7 @@ public class BeatSaberSong
     public List<string> suggestions = new List<string>();
     public List<string> requirements = new List<string>();
     public List<MapContributor> contributors = new List<MapContributor>();
+	public uint _atlasRhythmData = 0;
 
     public BeatSaberSong(string directory, JSONNode json)
     {
@@ -181,6 +182,7 @@ public class BeatSaberSong
             json["_allDirectionsEnvironmentName"] = allDirectionsEnvironmentName;
             json["_customData"] = customData;
             json["_customData"]["_editor"] = editor;
+            json["_customData"]["_atlasRhythmData"] = _atlasRhythmData;
 
             JSONArray contributorArrayFUCKYOUGIT = new JSONArray();
             contributors.DistinctBy(x => x.ToJSONNode().ToString()).ToList().ForEach(x => contributorArrayFUCKYOUGIT.Add(x.ToJSONNode()));
@@ -322,6 +324,7 @@ public class BeatSaberSong
                                     song.contributors.Add(new MapContributor(contributor));
                             }
                             if (n["_editor"]?.Value != null) song.editor = n["_editor"].Value;
+                            if (n["_atlasRhythmData"]?.Value != null) song._atlasRhythmData = (uint)(n["_atlasRhythmData"].AsInt);
                         }
                         break;
 
