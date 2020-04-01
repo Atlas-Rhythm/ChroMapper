@@ -132,6 +132,7 @@ public class BeatSaberSong
     public List<string> requirements = new List<string>();
     public List<MapContributor> contributors = new List<MapContributor>();
 	public uint _atlasRhythmData = 0;
+	public uint _atlasOrigin = 0;
 
     public BeatSaberSong(string directory, JSONNode json)
     {
@@ -183,6 +184,7 @@ public class BeatSaberSong
             json["_customData"] = customData;
             json["_customData"]["_editor"] = editor;
             json["_customData"]["_atlasRhythmData"] = _atlasRhythmData;
+            json["_customData"]["_atlasOrigin"] = _atlasOrigin;
 
             JSONArray contributorArrayFUCKYOUGIT = new JSONArray();
             contributors.DistinctBy(x => x.ToJSONNode().ToString()).ToList().ForEach(x => contributorArrayFUCKYOUGIT.Add(x.ToJSONNode()));
@@ -324,7 +326,8 @@ public class BeatSaberSong
                                     song.contributors.Add(new MapContributor(contributor));
                             }
                             if (n["_editor"]?.Value != null) song.editor = n["_editor"].Value;
-                            if (n["_atlasRhythmData"]?.Value != null) song._atlasRhythmData = (uint)(n["_atlasRhythmData"].AsInt);
+                            if (n["_atlasRhythmData"]?.Value != null) song._atlasRhythmData = song.checkUIntParse(n["_atlasRhythmData"].Value);
+                            if (n["_atlasOrigin"]?.Value != null) song._atlasOrigin = song.checkUIntParse(n["_atlasOrigin"].Value);
                         }
                         break;
 
@@ -405,5 +408,20 @@ public class BeatSaberSong
         }
         return null;
     }
+	
+	public uint checkUIntParse(string input) {
+		uint val = 0;
+        try { 
+            val = UInt32.Parse(input); 
+            Debug.Log(input + " parsed as " + val);
+        } 
+        catch (OverflowException) { 
+            Debug.Log("Can't Parse " + input + " - Overflow"); 
+        } 
+        catch (FormatException) { 
+            Debug.Log("Can't Parse " + input + " - Format Error"); 
+        }
+		return val;		
+    } 
 
 }

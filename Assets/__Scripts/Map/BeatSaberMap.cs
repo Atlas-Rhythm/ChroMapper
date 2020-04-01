@@ -156,7 +156,7 @@ public class BeatSaberMap {
                                     map._time = dataNode.AsFloat;
                                     break;
 								case "_atlasBeatsMap":
-                                    map._atlasBeatsMap = (uint)dataNode.AsInt;
+                                    map._atlasBeatsMap = map.checkUIntParse(dataNode.ToString());
                                     break;
                             }
                         }
@@ -189,5 +189,20 @@ public class BeatSaberMap {
             return null;
         }
     }
+	
+	public uint checkUIntParse(string input) {
+		uint val = 0;
+        try { 
+            val = UInt32.Parse(input); 
+            Debug.Log(input + " parsed as " + val);
+        } 
+        catch (OverflowException) { 
+            Debug.Log("Can't Parse " + input + " - Overflow"); 
+        } 
+        catch (FormatException) { 
+            Debug.Log("Can't Parse " + input + " - Format Error"); 
+        }
+		return val;		
+    } 
 
 }

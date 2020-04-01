@@ -60,6 +60,7 @@ public class MapEditorUI : MonoBehaviour {
     public void SaveButton()
     {
         PersistentUI.Instance.DisplayMessage(BeatSaberSongContainer.Instance.map.Save() ? "Map Saved!" : "Error Saving Map!", PersistentUI.DisplayMessageType.CENTER);
+		BeatSaberSongContainer.Instance.song.SaveSong();
     }
 
     IEnumerator FadeCanvasGroup(CanvasGroup group, float start, float end, float time = 1f) {
