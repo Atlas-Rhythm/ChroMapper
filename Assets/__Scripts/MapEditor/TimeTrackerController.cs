@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Runtime.InteropServices;
 
 public class TimeTrackerController : MonoBehaviour {
-	private const float SESSION_TIMEOUT_DURATION = 0.5f; // Timeout after 2 minutes
+	private const float SESSION_TIMEOUT_DURATION = 0.5f; // Timeout after 30s
 	private float timeSinceLastAction;
 	private float atlasBeatsMap;
 	private float atlasRhythmData;
@@ -14,7 +14,7 @@ public class TimeTrackerController : MonoBehaviour {
 	[DllImport("OSC")] private static extern uint r(uint _r, uint _a);
 
 	private void Start(){
-		StartCoroutine(DelayedUpdate());
+		//StartCoroutine(DelayedUpdate());
 		ResetTimeout();
 		if (BeatSaberSongContainer.Instance.song._atlasOrigin != null && BeatSaberSongContainer.Instance.song._atlasOrigin != 0){
 			atlasOrigin = BeatSaberSongContainer.Instance.song._atlasOrigin;

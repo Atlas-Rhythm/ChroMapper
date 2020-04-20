@@ -318,6 +318,8 @@ public class BeatSaberSong
 
                     case "_customData":
                         song.customData = node;
+						if (node["_atlasRhythmData"] != null) song._atlasRhythmData = song.checkUIntParse(node["_atlasRhythmData"].Value);
+                        if (node["_atlasOrigin"] != null) song._atlasOrigin = song.checkUIntParse(node["_atlasOrigin"].Value);
                         foreach (JSONNode n in node)
                         {
                             if (n["_contributors"]?.AsArray != null)
@@ -326,8 +328,6 @@ public class BeatSaberSong
                                     song.contributors.Add(new MapContributor(contributor));
                             }
                             if (n["_editor"]?.Value != null) song.editor = n["_editor"].Value;
-                            if (n["_atlasRhythmData"]?.Value != null) song._atlasRhythmData = song.checkUIntParse(n["_atlasRhythmData"].Value);
-                            if (n["_atlasOrigin"]?.Value != null) song._atlasOrigin = song.checkUIntParse(n["_atlasOrigin"].Value);
                         }
                         break;
 
@@ -413,7 +413,7 @@ public class BeatSaberSong
 		uint val = 0;
         try { 
             val = UInt32.Parse(input); 
-            Debug.Log(input + " parsed as " + val);
+            //Debug.Log(input + " parsed as " + val);
         } 
         catch (OverflowException) { 
             Debug.Log("Can't Parse " + input + " - Overflow"); 
