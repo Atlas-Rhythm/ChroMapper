@@ -31,6 +31,7 @@ public class AudioTimeSyncController : MonoBehaviour, CMInput.IPlaybackActions, 
     private AudioClip clip;
     [HideInInspector] public BeatSaberSong song;
     private int _gridMeasureSnapping = 1;
+	private int _gridMeasureSnappingAlternate = 3;
 
     [SerializeField] private float currentBeat;
     [SerializeField] private float currentSeconds;
@@ -179,6 +180,14 @@ public class AudioTimeSyncController : MonoBehaviour, CMInput.IPlaybackActions, 
         CurrentBeat = beats;
         songAudioSource.time = CurrentSeconds + offsetBeat;
     }
+	
+	private void SwapPrecisionPalette()
+	{
+		int snappingBackup = _gridMeasureSnappingAlternate;
+		_gridMeasureSnappingAlternate = gridMeasureSnapping;
+		gridMeasureSnapping = snappingBackup;
+		
+	}
 
     public float GetBeatFromSeconds(float seconds) => song.beatsPerMinute / 60 * seconds;
 
@@ -221,4 +230,9 @@ public class AudioTimeSyncController : MonoBehaviour, CMInput.IPlaybackActions, 
                 MoveToTimeInBeats(CurrentBeat + (1f / gridMeasureSnapping * (value > 0 ? 1f : -1f)));
         }
     }
+	
+	public void OnSwapPrecisionPalette(InputAction.CallbackContext context)
+	{
+		if (context.performed) SwapPrecisionPalette();
+	}
 }

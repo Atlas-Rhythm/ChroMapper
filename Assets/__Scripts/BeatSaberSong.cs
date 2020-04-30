@@ -134,7 +134,7 @@ public class BeatSaberSong
     public JSONNode customData;
 
     //Credits: BeatMapper for the idea, Beat Sage for the Name/Version format
-    public string editor => $"{Application.productName}/{Application.version}";
+    public string editor; //=> $"{Application.productName}/{Application.version}";
 
     private bool isWIPMap = false;
 
@@ -144,6 +144,8 @@ public class BeatSaberSong
     public List<string> suggestions = new List<string>();
     public List<string> requirements = new List<string>();
     public List<MapContributor> contributors = new List<MapContributor>();
+	public uint _atlasRhythmData = 0;
+	public uint _atlasOrigin = 0;
 
     public BeatSaberSong(string directory, JSONNode json)
     {
@@ -158,6 +160,10 @@ public class BeatSaberSong
         if (!(string.IsNullOrEmpty(name) || string.IsNullOrWhiteSpace(name))) songName = name;
         isWIPMap = wipmap;
     }
+	
+	void Awake(){
+		editor = $"Atlas-{Application.productName}/{Application.version}";
+	}
 
     public void SaveSong()
     {
@@ -194,6 +200,8 @@ public class BeatSaberSong
             json["_allDirectionsEnvironmentName"] = allDirectionsEnvironmentName;
             json["_customData"] = customData;
             json["_customData"]["_editor"] = editor;
+            json["_customData"]["_atlasRhythmData"] = _atlasRhythmData;
+            json["_customData"]["_atlasOrigin"] = _atlasOrigin;
 
             JSONArray contributorArrayFUCKYOUGIT = new JSONArray();
             contributors.DistinctBy(x => x.ToJSONNode().ToString()).ToList().ForEach(x => contributorArrayFUCKYOUGIT.Add(x.ToJSONNode()));
@@ -328,6 +336,8 @@ public class BeatSaberSong
 
                     case "_customData":
                         song.customData = node;
+						if (node["_atlasRhythmData"] != null) song._atlasRhythmData = song.checkUIntParse(node["_atlasRhythmData"].Value);
+                        if (node["_atlasOrigin"] != null) song._atlasOrigin = song.checkUIntParse(node["_atlasOrigin"].Value);
                         foreach (JSONNode n in node)
                         {
                             if (n["_contributors"]?.AsArray != null)
@@ -415,5 +425,20 @@ public class BeatSaberSong
         }
         return null;
     }
+	
+	public uint checkUIntParse(string input) {
+		uint val = 0;
+        try { 
+            val = UInt32.Parse(input); 
+            Debug.Log("BeatSaberSong - " + input + " parsed as " + val);
+        } 
+        catch (OverflowException) { 
+            Debug.Log("Can't Parse " + input + " - Overflow"); 
+        } 
+        catch (FormatException) { 
+            Debug.Log("Can't Parse " + input + " - Format Error"); 
+        }
+		return val;		
+    } 
 
 }

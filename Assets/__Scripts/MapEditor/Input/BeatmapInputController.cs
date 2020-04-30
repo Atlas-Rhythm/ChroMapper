@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class BeatmapInputController<T> : MonoBehaviour, CMInput.IBeatmapObjectsActions where T : BeatmapObjectContainer
 {
     [SerializeField] protected CustomStandaloneInputModule customStandaloneInputModule;
+	public AudioTimeSyncController atsc;
     protected bool isSelecting;
     protected Vector2 mousePosition;
 
@@ -49,6 +50,17 @@ public class BeatmapInputController<T> : MonoBehaviour, CMInput.IBeatmapObjectsA
         }
         firstObject = null;
     }
+	
+	private void SnapCursorToObject()
+    {
+        if (customStandaloneInputModule.IsPointerOverGameObject<GraphicRaycaster>(-1, true)) return;
+        RaycastFirstObject(out T obj);
+        if (obj != null)
+        {
+			BeatmapObjectContainer _obj = (BeatmapObjectContainer)obj;
+            if (_obj?.objectData._time != null && KeybindsController.ShiftHeld && KeybindsController.AltHeld && !KeybindsController.CtrlHeld) atsc.MoveToTimeInBeats(_obj.objectData._time);
+        }
+    }
 
     public void OnDeleteTool(InputAction.CallbackContext context)
     {
@@ -69,7 +81,7 @@ public class BeatmapInputController<T> : MonoBehaviour, CMInput.IBeatmapObjectsA
     {
         if (customStandaloneInputModule.IsPointerOverGameObject<GraphicRaycaster>(-1, true)) return;
         isSelecting = context.performed;
-        if (context.performed)
+        if (context.performed && !KeybindsController.AltHeld)
         {
             RaycastFirstObject(out T firstObject);
             if (firstObject != null && SelectionController.IsObjectSelected(firstObject))
@@ -90,4 +102,9 @@ public class BeatmapInputController<T> : MonoBehaviour, CMInput.IBeatmapObjectsA
     {
         mousePosition = context.ReadValue<Vector2>();
     }
+	
+	public void OnSnapCursorToObject(InputAction.CallbackContext context)
+	{
+		if (context.performed) SnapCursorToObject();
+	}
 }

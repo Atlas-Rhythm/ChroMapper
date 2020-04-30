@@ -4,10 +4,24 @@ using UnityEngine.UI;
 
 public class BeatmapObstacleInputController : BeatmapInputController<BeatmapObstacleContainer>, CMInput.IObstacleObjectsActions
 {
-    [SerializeField] private AudioTimeSyncController atsc;
+    //[SerializeField] private AudioTimeSyncController atsc;
     [SerializeField] private ObstacleAppearanceSO obstacleAppearanceSO;
 
-    public void OnChangeWallDuration(InputAction.CallbackContext context)
+    private void ToggleRealFakeWall()
+    {
+        if (!KeybindsController.CtrlHeld || KeybindsController.ShiftHeld || KeybindsController.AltHeld) return;
+        if (customStandaloneInputModule.IsPointerOverGameObject<GraphicRaycaster>(-1, true)) return;
+        RaycastFirstObject(out BeatmapObstacleContainer obs);
+        if (obs != null)
+        {
+            obs.obstacleData._time += obs.obstacleData._duration;
+            obs.obstacleData._duration *= -1f;
+            obstacleAppearanceSO.SetObstacleAppearance(obs);
+            obs.UpdateGridPosition();
+        }
+    }
+	
+	public void OnChangeWallDuration(InputAction.CallbackContext context)
     {
         if (!KeybindsController.AltHeld) return;
         if (customStandaloneInputModule.IsPointerOverGameObject<GraphicRaycaster>(-1, true)) return;
@@ -34,5 +48,10 @@ public class BeatmapObstacleInputController : BeatmapInputController<BeatmapObst
             obstacleAppearanceSO.SetObstacleAppearance(obs);
             obs.UpdateGridPosition();
         }
+    }
+	
+	public void OnToggleRealFakeWall(InputAction.CallbackContext context)
+    {
+		ToggleRealFakeWall();
     }
 }

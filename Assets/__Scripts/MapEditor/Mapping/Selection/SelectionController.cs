@@ -115,6 +115,29 @@ public class SelectionController : MonoBehaviour, CMInput.ISelectingActions, CMI
             }
         }
     }
+	
+	/// <summary>
+    /// Deselect all objects, or select all objects if none are already selected
+    /// </summary>
+	private void SelectDeselectAll(){
+		if (HasSelectedObjects()) DeselectAll();
+		else SelectAllFromBeat(0);
+	}
+	
+	/// <summary>
+    /// Select all objects on or after the specified beat
+    /// </summary>
+	private void SelectAllFromBeat(float beat){
+		DeselectAll();
+ 		foreach (BeatmapObjectContainerCollection collection in collections) {
+			foreach(BeatmapObjectContainer container in collection.LoadedContainers){
+                if (container.objectData._time != null && container.objectData._time >= beat) Select(container, true, false, false);
+			}
+		}
+		RefreshSelectionMaterial(true);
+	}
+	
+	
 
     /// <summary>
     /// Can be very taxing. Use sparringly.
@@ -312,11 +335,21 @@ public class SelectionController : MonoBehaviour, CMInput.ISelectingActions, CMI
     }
 
     #endregion
-
+	
+	public void OnSelectDeselectAll(InputAction.CallbackContext context)
+    {
+        if (context.performed) SelectDeselectAll();
+    }
+	
     public void OnDeselectAll(InputAction.CallbackContext context)
     {
         if (context.performed) DeselectAll();
     }
+	
+	public void OnSelectAllFromBeat(InputAction.CallbackContext context)
+	{
+		if (context.performed) SelectAllFromBeat(atsc.CurrentBeat);
+	}
 
     public void OnPaste(InputAction.CallbackContext context)
     {

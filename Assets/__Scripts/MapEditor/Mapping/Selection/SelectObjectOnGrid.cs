@@ -16,6 +16,7 @@ public class SelectObjectOnGrid : MonoBehaviour {
     {
         if (!KeybindsController.CtrlHeld || Settings.Instance.BoxSelect) return; //Only do mass selection on ctrl
         if (SelectionController.SelectedObjects.Count() < 2 && !KeybindsController.AltHeld) return;
+		if(KeybindsController.AltHeld && KeybindsController.ShiftHeld) return;
         List<BeatmapObjectContainer> containers = new List<BeatmapObjectContainer>(SelectionController.SelectedObjects);
         List<BeatmapEventContainer> events = containers.Where(x => x is BeatmapEventContainer).Cast<BeatmapEventContainer>().ToList(); //Filter containers
         List<BeatmapNoteContainer> notes = containers.Where(x => x is BeatmapNoteContainer).Cast<BeatmapNoteContainer>().ToList();

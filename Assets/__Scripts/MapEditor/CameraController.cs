@@ -175,7 +175,7 @@ public class CameraController : MonoBehaviour, CMInput.ICameraActions {
     {
         if (_rotationCallbackController.IsActive && context.performed)
         {
-            LockedOntoNoteGrid = !LockedOntoNoteGrid;
+            if(KeybindsController.ShiftHeld && !KeybindsController.AltHeld && !KeybindsController.CtrlHeld) LockedOntoNoteGrid = !LockedOntoNoteGrid;
         }
     }
 

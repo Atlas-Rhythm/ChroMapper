@@ -17,6 +17,7 @@ public class BeatSaberMap {
     /// Time (in Minutes) that the user has worked on this map.
     /// </summary>
     public float _time = 0;
+    public uint _atlasBeatsMap = 0;
     public List<MapEvent> _events = new List<MapEvent>();
     public List<BeatmapNote> _notes = new List<BeatmapNote>();
     public List<BeatmapObstacle> _obstacles = new List<BeatmapObstacle>();
@@ -78,6 +79,7 @@ public class BeatSaberMap {
             if (_bookmarks.Any()) mainNode["_customData"]["_bookmarks"] = bookmarks;
             if (_customEvents.Any()) mainNode["_customEvents"] = customEvents;
             if (_time > 0) mainNode["_customData"]["_time"] = Math.Round(_time, 3);
+			if (_atlasBeatsMap > 0) mainNode["_customData"]["_atlasBeatsMap"] = _atlasBeatsMap;
 
             using (StreamWriter writer = new StreamWriter(directoryAndFile, false))
             {
@@ -153,6 +155,9 @@ public class BeatSaberMap {
                                 case "_time":
                                     map._time = dataNode.AsFloat;
                                     break;
+								case "_atlasBeatsMap":
+                                    map._atlasBeatsMap = map.checkUIntParse(dataNode.ToString());
+                                    break;
                             }
                         }
                         break;
@@ -184,5 +189,20 @@ public class BeatSaberMap {
             return null;
         }
     }
+	
+	public uint checkUIntParse(string input) {
+		uint val = 0;
+        try { 
+            val = UInt32.Parse(input); 
+            Debug.Log("BeatSaberMap - " + input + " parsed as " + val);
+        } 
+        catch (OverflowException) { 
+            Debug.Log("Can't Parse " + input + " - Overflow"); 
+        } 
+        catch (FormatException) { 
+            Debug.Log("Can't Parse " + input + " - Format Error"); 
+        }
+		return val;		
+    } 
 
 }

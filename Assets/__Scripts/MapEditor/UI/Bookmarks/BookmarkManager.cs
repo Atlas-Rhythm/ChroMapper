@@ -20,6 +20,20 @@ public class BookmarkManager : MonoBehaviour, CMInput.IBookmarksActions
             bookmarkContainers.Add(container.GetComponent<BookmarkContainer>());
         }   
     }
+	
+	private void JumpToNextBookmark()
+	{
+		BookmarkContainer targetBookmark = bookmarkContainers.FindAll(f => f.data._time > atsc.CurrentBeat).OrderBy(o => o.data._time).FirstOrDefault();
+		if (targetBookmark != null) atsc.MoveToTimeInBeats(targetBookmark.data._time);
+		else Debug.Log("No future bookmarks found");
+	}
+	
+	private void JumpToPreviousBookmark()
+	{
+		BookmarkContainer targetBookmark = bookmarkContainers.FindAll(f => f.data._time < atsc.CurrentBeat).OrderByDescending(o => o.data._time).FirstOrDefault();
+		if (targetBookmark != null) atsc.MoveToTimeInBeats(targetBookmark.data._time);
+		else Debug.Log("No past bookmarks found");
+	}
 
     public void OnCreateNewBookmark(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
@@ -39,4 +53,14 @@ public class BookmarkManager : MonoBehaviour, CMInput.IBookmarksActions
         bookmarkContainers.Add(container.GetComponent<BookmarkContainer>());
         BeatSaberSongContainer.Instance.map._bookmarks = bookmarkContainers.Select(x => x.data).ToList();
     }
+	
+	public void OnJumpToNextBookmark(UnityEngine.InputSystem.InputAction.CallbackContext context)
+	{
+		if (context.performed) JumpToNextBookmark();
+	}
+	
+	public void OnJumpToPreviousBookmark(UnityEngine.InputSystem.InputAction.CallbackContext context)
+	{
+		if (context.performed) JumpToPreviousBookmark();
+	}
 }
