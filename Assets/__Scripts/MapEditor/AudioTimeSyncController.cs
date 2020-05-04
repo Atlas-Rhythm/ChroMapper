@@ -1,7 +1,9 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class AudioTimeSyncController : MonoBehaviour {
+public class AudioTimeSyncController : MonoBehaviour, CMInput.IPlaybackActions, CMInput.ITimelineActions
+{
     [SerializeField] public AudioSource songAudioSource;
     [SerializeField] AudioSource waveformSource;
 
@@ -24,12 +26,12 @@ public class AudioTimeSyncController : MonoBehaviour {
             if (_gridMeasureSnapping != old) GridMeasureSnappingChanged?.Invoke(value);
         }
     }
-	
+
     private int gridStep = 0;
     private AudioClip clip;
     [HideInInspector] public BeatSaberSong song;
     private int _gridMeasureSnapping = 1;
-    private int _gridMeasureSnappingAlternate = 3;
+	private int _gridMeasureSnappingAlternate = 3;
 
     [SerializeField] private float currentBeat;
     [SerializeField] private float currentSeconds;
@@ -67,7 +69,7 @@ public class AudioTimeSyncController : MonoBehaviour {
     
     private static readonly int Offset = Shader.PropertyToID("_Offset");
     private static readonly int GridSpacing = Shader.PropertyToID("_GridSpacing");
-	
+
     // Use this for initialization
     void Start() {
         try
@@ -109,38 +111,11 @@ public class AudioTimeSyncController : MonoBehaviour {
                 CurrentSeconds = songAudioSource.time - offsetMS;
                 if (!songAudioSource.isPlaying) TogglePlaying();
             }
-            else if (!(PauseManager.IsPaused || OptionsController.IsActive) && !NodeEditorController.IsActive)
-            {
-                if (Input.GetAxisRaw("Mouse ScrollWheel") != 0 && !KeybindsController.AltHeld)
-                {
-                    if (KeybindsController.CtrlHeld)
-                    {
-                        float scrollDirection;
-                        if (Settings.Instance.InvertPrecisionScroll) scrollDirection = Input.GetAxisRaw("Mouse ScrollWheel") > 0 ? 0.5f : 2;
-                        else scrollDirection = Input.GetAxisRaw("Mouse ScrollWheel") > 0 ? 2 : 0.5f;
-                        gridMeasureSnapping = Mathf.Clamp(Mathf.RoundToInt(gridMeasureSnapping * scrollDirection), 1, 64);
-                    }
-                    else
-                        MoveToTimeInBeats(CurrentBeat + (1f / gridMeasureSnapping * (Input.GetAxisRaw("Mouse ScrollWheel") > 0 ? 1f : -1f)));
-                }
-            }
-
-            if (Input.GetKeyDown(KeyCode.Space) && !Input.GetMouseButton(1) && 
-                !NodeEditorController.IsActive && !PersistentUI.Instance.InputBox_IsEnabled) TogglePlaying();
-            if (Input.GetKeyDown(KeyCode.Semicolon)) ResetTime();
 
         } catch (Exception e) {
             Debug.LogException(e);
         }
     }
-	
-	public void SwapGridMeasureSnappingAlternative()
-	{
-		int snappingBackup = _gridMeasureSnappingAlternate;
-		_gridMeasureSnappingAlternate = gridMeasureSnapping;
-		gridMeasureSnapping = snappingBackup;
-		
-	}
 
     private void UpdateMovables() {
         float position = currentBeat * EditorScaleController.EditorScale;
@@ -205,6 +180,14 @@ public class AudioTimeSyncController : MonoBehaviour {
         CurrentBeat = beats;
         songAudioSource.time = CurrentSeconds + offsetBeat;
     }
+	
+	private void SwapPrecisionPalette()
+	{
+		int snappingBackup = _gridMeasureSnappingAlternate;
+		_gridMeasureSnappingAlternate = gridMeasureSnapping;
+		gridMeasureSnapping = snappingBackup;
+		
+	}
 
     public float GetBeatFromSeconds(float seconds) => song.beatsPerMinute / 60 * seconds;
 
@@ -220,4 +203,36 @@ public class AudioTimeSyncController : MonoBehaviour {
         }
     }
 
+    public void OnTogglePlaying(InputAction.CallbackContext context)
+    {
+        if (context.performed) TogglePlaying();
+    }
+
+    public void OnResetTime(InputAction.CallbackContext context)
+    {
+        if (context.performed) ResetTime();
+    }
+
+    public void OnChangeTimeandPrecision(InputAction.CallbackContext context)
+    {
+        float value = context.ReadValue<float>();
+        if (Settings.Instance.InvertPrecisionScroll) value *= -1;
+        if (!KeybindsController.AltHeld && context.performed)
+        {
+            if (KeybindsController.CtrlHeld)
+            {
+                float scrollDirection;
+                if (Settings.Instance.InvertPrecisionScroll) scrollDirection = value > 0 ? 0.5f : 2;
+                else scrollDirection = value > 0 ? 2 : 0.5f;
+                gridMeasureSnapping = Mathf.Clamp(Mathf.RoundToInt(gridMeasureSnapping * scrollDirection), 1, 64);
+            }
+            else
+                MoveToTimeInBeats(CurrentBeat + (1f / gridMeasureSnapping * (value > 0 ? 1f : -1f)));
+        }
+    }
+	
+	public void OnSwapPrecisionPalette(InputAction.CallbackContext context)
+	{
+		if (context.performed) SwapPrecisionPalette();
+	}
 }

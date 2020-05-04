@@ -9,13 +9,14 @@ public class ObstacleAppearanceSO : ScriptableObject
     [SerializeField] private Color negativeWidthColor = Color.green;
     [SerializeField] private Color negativeDurationColor = Color.yellow;
 
-    public void SetObstacleAppearance(BeatmapObstacleContainer obj)
+    public void SetObstacleAppearance(BeatmapObstacleContainer obj, PlatformDescriptor platform = null)
     {
+        if (platform != null) defaultObstacleColor = platform.ObstacleColor;
         Renderer[] renderers = obj.GetComponentsInChildren<Renderer>();
         foreach (Renderer renderer in renderers)
         {
             Material mat = renderer.material;
-            if (obj.obstacleData._duration < 0)
+            if (obj.obstacleData._duration < 0 && Settings.Instance.ColorFakeWalls)
             {
                 mat.SetColor(ColorTint, negativeDurationColor);
             }
@@ -24,16 +25,20 @@ public class ObstacleAppearanceSO : ScriptableObject
                 if (obj.obstacleData._customData != null)
                 {
                     Vector2 wallSize = obj.obstacleData._customData["_scale"]?.ReadVector2() ?? Vector2.one;
-                    if (wallSize.x < 0 || wallSize.y < 0)
+                    if (wallSize.x < 0 || wallSize.y < 0 && Settings.Instance.ColorFakeWalls)
                     {
                         mat.SetColor(ColorTint, negativeWidthColor);
+                    }
+                    else
+                    {
+                        mat.SetColor(ColorTint, defaultObstacleColor);
                     }
                     if (obj.obstacleData._customData["_color"] != null)
                     {
                         mat.SetColor(ColorTint, obj.obstacleData._customData["_color"].ReadColor(defaultObstacleColor));
                     }
                 }
-                else if (obj.obstacleData._width < 0)
+                else if (obj.obstacleData._width < 0 && Settings.Instance.ColorFakeWalls)
                 {
                     mat.SetColor(ColorTint, negativeWidthColor);
                 }

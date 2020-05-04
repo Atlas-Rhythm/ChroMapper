@@ -697,6 +697,7 @@ public class CustomPlatformsLoader : MonoBehaviour
 
                 newLightsManager.ControllingLights = currentLightsManager.ControllingLights;
                 newLightsManager.RotatingLights = currentLightsManager.RotatingLights;
+                newLightsManager.GroupLightsBasedOnZ();
 
                 Destroy(currentLightsManager);
 
@@ -720,6 +721,7 @@ public class CustomPlatformsLoader : MonoBehaviour
 
             newLightsManager.ControllingLights = tubeLightsManager.ControllingLights;
             newLightsManager.RotatingLights = tubeLightsManager.RotatingLights;
+            newLightsManager.GroupLightsBasedOnZ();
 
             Destroy(tubeLightsManager);
             platformDescriptor.LightingManagers[MapEvent.EVENT_TYPE_RING_LIGHTS] = newLightsManager;
@@ -744,7 +746,7 @@ public class CustomPlatformsLoader : MonoBehaviour
         }
         ringManager.moveSpeed = trackRings.moveSpeed;
         ringManager.rotationStep = trackRings.rotationStep;
-        ringManager.propagationSpeed = trackRings.rotationPropagationSpeed;
+        ringManager.propagationSpeed = Mathf.RoundToInt(trackRings.rotationPropagationSpeed);
         ringManager.flexySpeed = trackRings.rotationFlexySpeed;
 
         if (trackRings.useRotationEffect)
@@ -755,7 +757,7 @@ public class CustomPlatformsLoader : MonoBehaviour
             rotationEffect.manager = ringManager;
             rotationEffect.startupRotationAngle = trackRings.startupRotationAngle;
             rotationEffect.startupRotationStep = trackRings.startupRotationStep;
-            rotationEffect.startupRotationPropagationSpeed = trackRings.startupRotationPropagationSpeed;
+            rotationEffect.startupRotationPropagationSpeed = Mathf.RoundToInt(trackRings.startupRotationPropagationSpeed);
             rotationEffect.startupRotationFlexySpeed = trackRings.startupRotationFlexySpeed;
         }
     }

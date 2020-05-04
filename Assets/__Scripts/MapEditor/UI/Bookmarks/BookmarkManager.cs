@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BookmarkManager : MonoBehaviour
+public class BookmarkManager : MonoBehaviour, CMInput.IBookmarksActions
 {
     internal List<BookmarkContainer> bookmarkContainers = new List<BookmarkContainer>();
     [SerializeField] private GameObject bookmarkContainerPrefab;
@@ -20,10 +20,27 @@ public class BookmarkManager : MonoBehaviour
             bookmarkContainers.Add(container.GetComponent<BookmarkContainer>());
         }   
     }
+	
+	private void JumpToNextBookmark()
+	{
+		BookmarkContainer targetBookmark = bookmarkContainers.FindAll(f => f.data._time > atsc.CurrentBeat).OrderBy(o => o.data._time).FirstOrDefault();
+		if (targetBookmark != null) atsc.MoveToTimeInBeats(targetBookmark.data._time);
+		else Debug.Log("No future bookmarks found");
+	}
+	
+	private void JumpToPreviousBookmark()
+	{
+		BookmarkContainer targetBookmark = bookmarkContainers.FindAll(f => f.data._time < atsc.CurrentBeat).OrderByDescending(o => o.data._time).FirstOrDefault();
+		if (targetBookmark != null) atsc.MoveToTimeInBeats(targetBookmark.data._time);
+		else Debug.Log("No past bookmarks found");
+	}
 
-    public void AddNewBookmark()
+    public void OnCreateNewBookmark(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-        PersistentUI.Instance.ShowInputBox("Enter the name of this new Bookmark.", HandleNewBookmarkName, "New Bookmark");
+        if (context.performed)
+        {
+            PersistentUI.Instance.ShowInputBox("Enter the name of this new Bookmark.", HandleNewBookmarkName, "New Bookmark");
+        }
     }
 
     private void HandleNewBookmarkName(string res)
@@ -37,17 +54,13 @@ public class BookmarkManager : MonoBehaviour
         BeatSaberSongContainer.Instance.map._bookmarks = bookmarkContainers.Select(x => x.data).ToList();
     }
 	
-	public void JumpToNextBookmark()
+	public void OnJumpToNextBookmark(UnityEngine.InputSystem.InputAction.CallbackContext context)
 	{
-		BookmarkContainer targetBookmark = bookmarkContainers.FindAll(f => f.data._time > atsc.CurrentBeat).OrderBy(o => o.data._time).FirstOrDefault();
-		if (targetBookmark != null) atsc.MoveToTimeInBeats(targetBookmark.data._time);
-		else Debug.Log("No future bookmarks found");
+		if (context.performed) JumpToNextBookmark();
 	}
 	
-	public void JumpToPreviousBookmark()
+	public void OnJumpToPreviousBookmark(UnityEngine.InputSystem.InputAction.CallbackContext context)
 	{
-		BookmarkContainer targetBookmark = bookmarkContainers.FindAll(f => f.data._time < atsc.CurrentBeat).OrderByDescending(o => o.data._time).FirstOrDefault();
-		if (targetBookmark != null) atsc.MoveToTimeInBeats(targetBookmark.data._time);
-		else Debug.Log("No past bookmarks found");
+		if (context.performed) JumpToPreviousBookmark();
 	}
 }

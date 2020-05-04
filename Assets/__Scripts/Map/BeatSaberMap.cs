@@ -102,7 +102,6 @@ public class BeatSaberMap {
     public static BeatSaberMap GetBeatSaberMapFromJSON(JSONNode mainNode, string directoryAndFile) {
 
         try {
-			Debug.Log("Loading...");
 
             BeatSaberMap map = new BeatSaberMap();
             map.mainNode = mainNode;
@@ -195,7 +194,7 @@ public class BeatSaberMap {
 		uint val = 0;
         try { 
             val = UInt32.Parse(input); 
-            //Debug.Log(input + " parsed as " + val);
+            Debug.Log("BeatSaberMap - " + input + " parsed as " + val);
         } 
         catch (OverflowException) { 
             Debug.Log("Can't Parse " + input + " - Overflow"); 

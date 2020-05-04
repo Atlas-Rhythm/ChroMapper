@@ -10,19 +10,22 @@ public class BeatmapObstacleContainer : BeatmapObjectContainer {
 
     [SerializeField] private ObstacleAppearanceSO obstacleAppearance;
     [SerializeField] private AudioTimeSyncController atsc;
+    [SerializeField] private TracksManager manager;
 
     public BeatmapObstacle obstacleData;
 
     public int ChunkEnd { get; private set; }
 
-    public static BeatmapObstacleContainer SpawnObstacle(BeatmapObstacle data, AudioTimeSyncController atsc, ref GameObject prefab, ref ObstacleAppearanceSO appearanceSO)
+    public bool IsRotatedByNoodleExtensions => obstacleData._customData != null && obstacleData._customData?["_rotation"] != null;
+
+    public static BeatmapObstacleContainer SpawnObstacle(BeatmapObstacle data, AudioTimeSyncController atsc, TracksManager manager, ref GameObject prefab, ref ObstacleAppearanceSO appearanceSO)
     {
         BeatmapObstacleContainer container = Instantiate(prefab).GetComponent<BeatmapObstacleContainer>();
         container.obstacleData = data;
         container.obstacleAppearance = appearanceSO;
         container.atsc = atsc;
+        container.manager = manager;
         appearanceSO.SetObstacleAppearance(container);
-		container.audioTimeSyncController = atsc;
         return container;
     }
 
@@ -59,20 +62,27 @@ public class BeatmapObstacleContainer : BeatmapObjectContainer {
         if (obstacleData._customData != null)
         {
             Vector2 wallPos = obstacleData._customData["_position"]?.ReadVector2() ?? Vector2.zero;
-            Vector2 wallSize = obstacleData._customData["_scale"]?.ReadVector2() ?? Vector2.one;
+            if (obstacleData._customData.HasKey("_scale"))
+            {
+                Vector2 wallSize = obstacleData._customData["_scale"]?.ReadVector2() ?? Vector2.one;
+                width = wallSize.x;
+                height = wallSize.y;
+            }
             position = wallPos.x;
             startHeight = wallPos.y;
-            width = wallSize.x;
-            height = wallSize.y;
             if (obstacleData._customData["_localRotation"] != null)
             {
                 localRotation = obstacleData._customData["_localRotation"]?.ReadVector3() ?? Vector3.zero;
             }
-            else
+            if (obstacleData._customData["_rotation"] != null)
             {
-                //_rotation is defined in world space, not local space. We need to convert it to local space.
-                //We are defaulting to the world-space Y rotation so it hopefully doesn't change anything if _rotation doesn't exist
-                localRotation = transform.InverseTransformDirection(new Vector3(0, obstacleData._customData["_rotation"]?.AsFloat ?? transform.eulerAngles.y, 0));
+                float? rotation = obstacleData._customData["_rotation"]?.AsInt;
+                if (rotation is null)
+                {
+                    rotation = obstacleData._customData["_rotation"]?.AsFloat;
+                }
+                Track track = manager.CreateTrack(rotation ?? 0);
+                track.AttachContainer(this);
             }
         }
         else
@@ -112,30 +122,19 @@ public class BeatmapObstacleContainer : BeatmapObjectContainer {
             height,
             duration * EditorScaleController.EditorScale
             );
-        transform.localEulerAngles = localRotation;
+        if (localRotation != Vector3.zero) {
+            Rect rect = new Rect(0, 0, width, height);
+            Vector3 rectCenter = rect.center;
+            Vector3 side = transform.right.normalized * rectCenter.x;
+            Vector3 up = transform.up.normalized * rectCenter.y;
+            Vector3 forward = transform.forward.normalized * rectCenter.z;
+            Vector3 rectWorldPos = transform.position + side + up + forward;
+            transform.RotateAround(rectWorldPos, transform.right, localRotation.x);
+            transform.RotateAround(rectWorldPos, transform.up, localRotation.y);
+            transform.RotateAround(rectWorldPos, transform.forward, localRotation.z);
+        }
 
         ChunkEnd = (int)Math.Round((objectData._time + obstacleData._duration) / (double)BeatmapObjectContainerCollection.ChunkSize,
                  MidpointRounding.AwayFromZero);
-    }
-
-    internal override void OnMouseOver()
-    {
-        if ((Input.GetMouseButtonDown(2) && !KeybindsController.ShiftHeld) || (KeybindsController.CtrlHeld && Input.GetKeyDown(KeyCode.F)))
-        {
-            obstacleData._time += obstacleData._duration;
-            obstacleData._duration *= -1;
-            obstacleAppearance.SetObstacleAppearance(this);
-            UpdateGridPosition();
-        }
-        else if (Input.GetAxis("Mouse ScrollWheel") != 0)
-        {
-            if (KeybindsController.AltHeld)
-            {
-                float measureSnapping = 1f / atsc.gridMeasureSnapping;
-                obstacleData._duration += (Input.GetAxis("Mouse ScrollWheel") > 0 ? -measureSnapping : measureSnapping);
-                UpdateGridPosition();
-            }
-        }
-        else base.OnMouseOver();
     }
 }

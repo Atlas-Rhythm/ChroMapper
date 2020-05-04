@@ -53,9 +53,10 @@ public class BeatSaberSong
             //Saving Map Requirement Info
             JSONArray requiredArray = new JSONArray(); //Generate suggestions and requirements array
             JSONArray suggestedArray = new JSONArray();
-            if (HasChromaEvents(map)) suggestedArray.Add(new JSONString("Chroma Lighting Events"));
-            if (HasMappingExtensions(map)) requiredArray.Add(new JSONString("Mapping Extensions"));
-            if (HasChromaToggle(map)) requiredArray.Add(new JSONString("ChromaToggle"));
+            if (HasChromaEvents(map)) suggestedArray.Add("Chroma");
+            if (HasLegacyChromaEvents(map)) suggestedArray.Add("Chroma Lighting Events");
+            if (HasNoodleExtensions(map)) requiredArray.Add("Noodle Extensions");
+            if (HasMappingExtensions(map)) requiredArray.Add("Mapping Extensions");
             if (requiredArray.Count > 0 || suggestedArray.Count > 0)
             {
                 if (customData == null) customData = new JSONObject();
@@ -64,7 +65,23 @@ public class BeatSaberSong
             }
         }
 
+        private bool HasNoodleExtensions(BeatSaberMap map)
+        {
+            if (map is null) return false;
+            return map._obstacles.Any(ob => ob._customData?["_position"] != null || ob._customData?["_scale"] != null ||
+                        ob._customData?["_rotation"] != null || ob._customData?["_localRotation"] != null) ||
+                   map._notes.Any(ob => ob._customData?["_position"] != null || ob._customData?["_cutDirection"] != null);
+        }
+
         private bool HasChromaEvents(BeatSaberMap map)
+        {
+            if (map is null) return false;
+            return map._notes.Any(note => note._customData?["_color"] != null) ||
+                    map._obstacles.Any(ob => ob._customData?["_color"] != null) ||
+                    map._events.Any(ob => ob._customData?["_color"] != null || ob._customData?["_lightGradient"] != null);
+        }
+
+        private bool HasLegacyChromaEvents(BeatSaberMap map)
         {
             if (map is null) return false;
             return map?._events?.Any(mapevent => mapevent._value > ColourManager.RGB_INT_OFFSET) ?? false;
@@ -73,15 +90,9 @@ public class BeatSaberSong
         private bool HasMappingExtensions(BeatSaberMap map)
         {
             if (map is null) return false;
-            return map._notes.Any(note => note._lineIndex < 0 || note._lineIndex > 3) ||
+            return map._notes.Any(note => note._lineIndex < 0 || note._lineIndex > 3 || note._lineLayer < 0 || note._lineLayer > 2) ||
                    map._obstacles.Any(ob => ob._lineIndex < 0 || ob._lineIndex > 3 || ob._type >= 2 || ob._width >= 1000) ||
                    map._events.Any(ob => ob.IsRotationEvent && ob._value >= 1000 && ob._value <= 1720);
-        }
-
-        private bool HasChromaToggle(BeatSaberMap map)
-        {
-            //TODO when CustomJSONData CT notes exist
-            return false;
         }
     }
 
@@ -120,8 +131,10 @@ public class BeatSaberSong
     public string coverImageFilename = "cover.png";
     public string environmentName = "DefaultEnvironment";
     public string allDirectionsEnvironmentName = "GlassDesertEnvironment";
-    public string editor = "Atlas-ChroMapper"; //BeatMapper started doing this so might as well do it for CM too
     public JSONNode customData;
+
+    //Credits: BeatMapper for the idea, Beat Sage for the Name/Version format
+    public string editor; //=> $"{Application.productName}/{Application.version}";
 
     private bool isWIPMap = false;
 
@@ -147,6 +160,10 @@ public class BeatSaberSong
         if (!(string.IsNullOrEmpty(name) || string.IsNullOrWhiteSpace(name))) songName = name;
         isWIPMap = wipmap;
     }
+	
+	void Awake(){
+		editor = $"Atlas-{Application.productName}/{Application.version}";
+	}
 
     public void SaveSong()
     {
@@ -268,11 +285,12 @@ public class BeatSaberSong
     private JSONNode CleanObject(JSONNode obj)
     {
         if (obj is null) return null;
-        foreach (JSONNode node in obj.Clone())
+        JSONNode clone = obj.Clone();
+        foreach (string key in clone.Keys)
         {
-            if (node is null || node.AsArray?.Count <= 0 || string.IsNullOrEmpty(node.Value))
+            if (obj.HasKey(key) && (obj[key].IsNull || obj[key].AsArray?.Count <= 0 || string.IsNullOrEmpty(obj[key].Value)))
             {
-                obj.Remove(node);
+                obj.Remove(key);
             }
         }
         return obj;
@@ -327,7 +345,6 @@ public class BeatSaberSong
                                 foreach (JSONNode contributor in n["_contributors"].AsArray)
                                     song.contributors.Add(new MapContributor(contributor));
                             }
-                            if (n["_editor"]?.Value != null) song.editor = n["_editor"].Value;
                         }
                         break;
 
@@ -413,7 +430,7 @@ public class BeatSaberSong
 		uint val = 0;
         try { 
             val = UInt32.Parse(input); 
-            //Debug.Log(input + " parsed as " + val);
+            Debug.Log("BeatSaberSong - " + input + " parsed as " + val);
         } 
         catch (OverflowException) { 
             Debug.Log("Can't Parse " + input + " - Overflow"); 
