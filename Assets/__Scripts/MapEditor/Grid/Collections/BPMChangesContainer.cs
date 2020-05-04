@@ -46,7 +46,7 @@ public class BPMChangesContainer : BeatmapObjectContainerCollection {
     public override BeatmapObjectContainer SpawnObject(BeatmapObject obj, out BeatmapObjectContainer conflicting, bool removeConflicting = true, bool refreshMap = true)
     {
         conflicting = null;
-        BeatmapBPMChangeContainer beatmapBPMChange = BeatmapBPMChangeContainer.SpawnBPMChange(obj as BeatmapBPMChange, AudioTimeSyncController, ref bpmPrefab);
+        BeatmapBPMChangeContainer beatmapBPMChange = BeatmapBPMChangeContainer.SpawnBPMChange(obj as BeatmapBPMChange, ref bpmPrefab);
         beatmapBPMChange.transform.SetParent(GridTransform);
         beatmapBPMChange.UpdateGridPosition();
         LoadedContainers.Add(beatmapBPMChange);
