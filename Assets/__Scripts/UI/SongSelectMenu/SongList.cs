@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using TMPro;
@@ -8,39 +10,35 @@ using UnityEngine.UI;
 
 public class SongList : MonoBehaviour {
 
-    private static int lastVisitedPage = 0;
-    private static bool lastVisited_WasWIP = true;
+    public enum SortingOption
+    {
+        [Description("Song Name")]
+        SONG,
+        [Description("Artist Name")]
+        ARTIST,
+        [Description("Last Modified")]
+        MODIFIED
+    }
+    private SortingOption lastSortingOption = SortingOption.SONG;
 
     [SerializeField]
-    InputField searchField;
+    TMP_InputField searchField;
 
     [SerializeField]
-    SongListItem[] items;
+    EnumPicker sortingOptions;
 
     [SerializeField]
-    LocalizeStringEvent pageTextString;
+    Transform itemContainer;
 
     [SerializeField]
-    int currentPage = 0;
+    SongListItem songListItemPrefrab;
 
-    [SerializeField]
-    int maxPage = 0;
-
-    // For localization
-    public int CurrentPage { get { return currentPage + 1; } }
-    public int MaxPage { get { return maxPage + 1; } }
+    private List<SongListItem> items = new List<SongListItem>();
+    private Stack<SongListItem> unusedItems = new Stack<SongListItem>();
 
     [SerializeField]
     public List<BeatSaberSong> songs = new List<BeatSaberSong>();
-
-    [SerializeField]
-    Button firstButton;
-    [SerializeField]
-    Button prevButton;
-    [SerializeField]
-    Button nextButton;
-    [SerializeField]
-    Button lastButton;
+    
     [SerializeField]
     LocalizeStringEvent songLocationToggleText;
 
@@ -49,14 +47,16 @@ public class SongList : MonoBehaviour {
 
     private void Start()
     {
-        WIPLevels = lastVisited_WasWIP;
+        //WIPLevels = lastVisited_WasWIP;
         RefreshSongList(false);
+        sortingOptions.Initialize(typeof(SortingOption));
+        sortingOptions.onClick += SortBy;
     }
 
     public void ToggleSongLocation()
     {
         WIPLevels = !WIPLevels;
-        lastVisited_WasWIP = WIPLevels;
+        //lastVisited_WasWIP = WIPLevels;
         RefreshSongList(true);
     }
 
@@ -95,72 +95,62 @@ public class SongList : MonoBehaviour {
         //Sort by song name, and filter by search text.
         if (FilteredBySearch)
             songs = songs.Where(x => searchField.text != "" ? x.songName.AllIndexOf(searchField.text).Any() : true).ToList();
-        songs = songs.OrderBy(x => x.songName).ToList();
-        maxPage = Mathf.Max(0, Mathf.CeilToInt((songs.Count - 1) / items.Length));
-        SetPage(lastVisitedPage);
+        SortBy(lastSortingOption);
     }
 
-    public void SetPage(int page) {
-        if (page < 0 || page > maxPage)
+    public void SortBy(Enum sortingOption)
+    {
+        lastSortingOption = (SortingOption) sortingOption;
+        switch (lastSortingOption)
         {
-            page = 0;
+            case SortingOption.SONG:
+                songs = songs.OrderBy(x => x.songName).ToList();
+                break;
+            case SortingOption.ARTIST:
+                songs = songs.OrderBy(x => x.songAuthorName).ToList();
+                break;
+            case SortingOption.MODIFIED:
+                songs = songs.OrderByDescending(x => Directory.GetLastWriteTime(x.directory)).ToList();
+                break;
         }
-        lastVisitedPage = page;
-        currentPage = page;
-        LoadPage();
-        pageTextString.StringReference.RefreshString();
-
-
-        firstButton.interactable = currentPage != 0;
-        prevButton.interactable = currentPage - 1 >= 0;
-        nextButton.interactable = currentPage + 1 <= maxPage;
-        lastButton.interactable = currentPage != maxPage;
+        UpdateList();
     }
 
-    public void LoadPage() {
-        int offset = currentPage * items.Length;
-        for (int i = 0; i < 10; i++) { // && (i + offset) < songs.Count; i++) {
-            if (items[i] == null) continue;
-            if (i + offset < songs.Count) {
-                string name = songs[i + offset].songName;
-                if (searchField.text != "" && FilteredBySearch)
-                {
-                    List<int> index = name.AllIndexOf(searchField.text).ToList();
-                    if (index.Any())
-                    {
-                        string newName = name.Substring(0, index.First());
-                        int length = searchField.text.Length;
-                        for (int j = 0; j < index.Count(); j++)
-                        {
-                            newName += $"<u>{name.Substring(index[j], length)}</u>";
-                            if (j != index.Count() - 1)
-                                newName += $"{name.Substring(index[j] + length, index[j + 1] - (index[j] + length))}";
-                            else break;
-                        }
-                        int lastIndex = index.Last() + (length - 1);
-                        name = newName + name.Substring(lastIndex + 1, name.Length - lastIndex - 1);
-                    }
-                }
-                items[i].gameObject.SetActive(true);
-                items[i].AssignSong(songs[i + offset]);
-            } else items[i].gameObject.SetActive(false);
+    public void UpdateList()
+    {
+        RecycleItems();
+        foreach (BeatSaberSong song in songs)
+        {
+            AddItem(song);
         }
     }
 
-    public void FirstPage() {
-        SetPage(0);
+    private void RecycleItems()
+    {
+        foreach(SongListItem item in items)
+        {
+            item.gameObject.SetActive(false);
+            unusedItems.Push(item);
+        }
+        items.Clear();
     }
 
-    public void PrevPage() {
-        SetPage(currentPage - 1);
+    private void AddItem(BeatSaberSong song)
+    {
+        SongListItem item = null;
+        if(unusedItems.Count > 0)
+        {
+            item = unusedItems.Pop();
+            item.transform.SetAsLastSibling();
+            item.gameObject.SetActive(true);
+        }
+        else
+        {
+            item = Instantiate(songListItemPrefrab, itemContainer);
+        }
+        if (item == null)
+            throw new System.Exception("Could not create SongListItem");
+        items.Add(item);
+        item.AssignSong(song);
     }
-
-    public void NextPage() {
-        SetPage(currentPage + 1);
-    }
-
-    public void LastPage() {
-        SetPage(maxPage);
-    }
-
 }
