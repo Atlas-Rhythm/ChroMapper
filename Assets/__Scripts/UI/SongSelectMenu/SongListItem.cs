@@ -32,12 +32,13 @@ public class SongListItem : MonoBehaviour {
         button.onClick.AddListener(ButtonClicked);
         mainText.text = $"{song.songName.StripTMPTags()} <size=10>{song.songSubName.StripTMPTags()}";
         subText.text = $"{song.songAuthorName.StripTMPTags()}";
-        StartCoroutine(LoadImage());
+        string fullPath = Path.Combine(song.directory, song.coverImageFilename);
+        if(File.Exists(fullPath))
+            StartCoroutine(LoadImage(fullPath));
     }
 
-    IEnumerator LoadImage()
+    IEnumerator LoadImage(string fullPath)
     {
-        string fullPath = Path.Combine(song.directory, song.coverImageFilename);
         if(cachedSprites.TryGetValue(fullPath, out Sprite existingSprite))
         {
             cover.sprite = existingSprite;

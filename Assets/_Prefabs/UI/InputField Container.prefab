@@ -403,7 +403,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 3095889799
-  m_fontColor: {r: 0.5294118, g: 0.5294118, b: 0.5294118, a: 0.72156864}
+  m_fontColor: {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 0.69411767}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -733,6 +733,7 @@ GameObject:
   - component: {fileID: 557563448843811264}
   - component: {fileID: 8747731723591050963}
   - component: {fileID: 6213553444693116753}
+  - component: {fileID: 8533874571951975131}
   m_Layer: 5
   m_Name: InputField
   m_TagString: Untagged
@@ -781,13 +782,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.11764706, g: 0.12156863, b: 0.13725491, a: 0.7490196}
+  m_Color: {r: 0.37254903, g: 0.4156863, b: 0.43921572, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 69e9b74b7f41b684a9971e1f71a7b245, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -907,6 +908,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   normal: {r: 0.11764706, g: 0.12156863, b: 0.13725491, a: 1}
   selected: {r: 0.44705883, g: 0.5372549, b: 0.85490197, a: 1}
+--- !u!114 &8533874571951975131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3477219412470796296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adb30198aa32dd140b5750692dd48104, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: 68b9a414913410a46abcdd5a10666679, type: 2}
+  mat: {fileID: 0}
+  cloneMaterial: 1
+  radius: 15
 --- !u!1 &8160762592624740743
 GameObject:
   m_ObjectHideFlags: 0
