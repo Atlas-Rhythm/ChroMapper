@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BeatSaberSongContainer : MonoBehaviour {
     public static BeatSaberSongContainer Instance { get; private set; }
@@ -18,6 +19,10 @@ public class BeatSaberSongContainer : MonoBehaviour {
 
     public void SelectSongForEditing(BeatSaberSong song) {
         this.song = song;
-        SceneTransitionManager.Instance.LoadScene(2);
+        AnimationTransitionManager.instance.TransitionAway(() =>
+        {
+            SceneManager.LoadSceneAsync(2);
+        });
+        //SceneTransitionManager.Instance.LoadScene(2);
     }
 }

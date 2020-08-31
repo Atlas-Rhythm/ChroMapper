@@ -9,6 +9,7 @@ public class CharacteristicSelect : MonoBehaviour
     [SerializeField] private Color selectedColor;
     [SerializeField] private Color normalColor;
     [SerializeField] private DifficultySelect difficultySelect;
+    [SerializeField] private TextMeshProUGUI currentCharacteristic;
     private Transform selected;
 
     BeatSaberSong Song
@@ -43,6 +44,7 @@ public class CharacteristicSelect : MonoBehaviour
         selected = obj;
         var image = selected.GetComponent<Image>();
         image.color = selectedColor;
+        currentCharacteristic.text = obj.name;
         difficultySelect.SetCharacteristic(obj.name, firstLoad);
     }
 
