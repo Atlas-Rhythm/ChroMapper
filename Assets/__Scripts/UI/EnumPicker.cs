@@ -11,6 +11,10 @@ public class EnumPicker : MonoBehaviour
     public GameObject optionPrefab;
     public event Action<Enum> onClick;
 
+    public bool shouldBold = true;
+    public Color normalColor = Color.white;
+    public Color selectedColor = Color.white;
+
     private Type type;
     private List<TextMeshProUGUI> items = new List<TextMeshProUGUI>();
 
@@ -24,14 +28,26 @@ public class EnumPicker : MonoBehaviour
             items.Add(textMesh);
             option.GetComponent<Button>().onClick.AddListener(() =>
             {
-                foreach (TextMeshProUGUI text in items)
-                    text.fontStyle = FontStyles.Normal;
-                textMesh.fontStyle = FontStyles.Bold;
+                Select(textMesh);
                 onClick?.Invoke(enumValue);
             });
             option.SetActive(true);
         }
-        items.First().fontStyle = FontStyles.Bold;
+        TextMeshProUGUI defaultSelected = items.First(); //todo maybe add an optional default selected parameter
+        Select(defaultSelected);
+    }
+
+    private void Select(TextMeshProUGUI toSelect)
+    {
+        foreach (TextMeshProUGUI text in items)
+        {
+            if (shouldBold)
+                text.fontStyle = FontStyles.Normal;
+            text.color = normalColor;
+        }
+        if (shouldBold)
+            toSelect.fontStyle = FontStyles.Bold;
+        toSelect.color = selectedColor;
     }
 
     private static string GetDescription(Enum GenericEnum)

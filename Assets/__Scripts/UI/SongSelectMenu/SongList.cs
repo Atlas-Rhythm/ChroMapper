@@ -118,6 +118,7 @@ public class SongList : MonoBehaviour {
 
     public void UpdateList()
     {
+        SongListItem.ResetCoverLoadBuffer();
         RecycleItems();
         foreach (BeatSaberSong song in songs)
         {

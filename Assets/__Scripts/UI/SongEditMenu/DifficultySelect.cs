@@ -222,6 +222,7 @@ public class DifficultySelect : MonoBehaviour
         {
             var selImage = selected.Background;
             selImage.color = new Color(selImage.color.r, selImage.color.g, selImage.color.b, 0.0f);
+            selected.ButtonBackground.enabled = true;
 
             // Clean the UI, if we're selecting a new item they'll be repopulated
             BeatSaberSongContainer.Instance.difficultyData = null;
@@ -263,6 +264,7 @@ public class DifficultySelect : MonoBehaviour
         }
         var selImage = selected.Background;
         selImage.color = new Color(selImage.color.r, selImage.color.g, selImage.color.b, 1.0f);
+        selected.ButtonBackground.enabled = false;
 
         var diff = diffs[row.Name];
         BeatSaberSongContainer.Instance.difficultyData = diff.DifficultyBeatmap;

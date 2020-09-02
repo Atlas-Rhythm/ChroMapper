@@ -6,6 +6,7 @@ public class DifficultyRow
 {
     public Transform Obj { get; private set; }
     public Image Background { get; private set; }
+    public Image ButtonBackground { get; private set; }
     public string Name { get; private set; }
     public Toggle Toggle { get; private set; }
     public Button Button { get; private set; }
@@ -21,6 +22,7 @@ public class DifficultyRow
         Obj = obj;
         Name = obj.name;
         Background = obj.GetComponent<Image>();
+        ButtonBackground = obj.Find("Button").GetComponent<Image>();
         Toggle = obj.Find("Button/Toggle").GetComponent<Toggle>();
         Button = obj.Find("Button").GetComponent<Button>();
         NameInput = obj.Find("Button/Name").GetComponent<TMP_InputField>();
