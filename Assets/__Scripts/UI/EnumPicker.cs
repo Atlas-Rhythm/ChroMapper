@@ -16,7 +16,7 @@ public class EnumPicker : MonoBehaviour
     public Color selectedColor = Color.white;
 
     private Type type;
-    private List<TextMeshProUGUI> items = new List<TextMeshProUGUI>();
+    private Dictionary<Enum, TextMeshProUGUI> items = new Dictionary<Enum, TextMeshProUGUI>();
 
     public void Initialize(Type type)
     {
@@ -25,7 +25,7 @@ public class EnumPicker : MonoBehaviour
             GameObject option = Instantiate(optionPrefab, optionPrefab.transform.parent);
             TextMeshProUGUI textMesh = option.GetComponent<TextMeshProUGUI>();
             textMesh.text = GetDescription(enumValue);
-            items.Add(textMesh);
+            items.Add(enumValue, textMesh);
             option.GetComponent<Button>().onClick.AddListener(() =>
             {
                 Select(textMesh);
@@ -33,22 +33,24 @@ public class EnumPicker : MonoBehaviour
             });
             option.SetActive(true);
         }
-        TextMeshProUGUI defaultSelected = items.First(); //todo maybe add an optional default selected parameter
+        TextMeshProUGUI defaultSelected = items.First().Value; //todo maybe add an optional default selected parameter
         Select(defaultSelected);
     }
 
     private void Select(TextMeshProUGUI toSelect)
     {
-        foreach (TextMeshProUGUI text in items)
+        foreach (TextMeshProUGUI text in items.Values)
         {
             if (shouldBold)
-                text.fontStyle = FontStyles.Normal;
+                text.fontStyle &= ~FontStyles.Bold;
             text.color = normalColor;
         }
         if (shouldBold)
-            toSelect.fontStyle = FontStyles.Bold;
+            toSelect.fontStyle |= FontStyles.Bold;
         toSelect.color = selectedColor;
     }
+
+    private void Select(Enum enumValue) => Select(items[enumValue]);
 
     private static string GetDescription(Enum GenericEnum)
     {
