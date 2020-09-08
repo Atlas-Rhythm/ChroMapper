@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlacementModeController : MonoBehaviour
 {
-    private enum PlacementMode
+    public enum PlacementMode
     {
         [Description("Note")]
         NOTE,
@@ -26,20 +26,22 @@ public class PlacementModeController : MonoBehaviour
     void Start()
     {
         modePicker.Initialize(typeof(PlacementMode));
-        modePicker.onClick += SetMode;
-        SetMode(PlacementMode.NOTE);
+        modePicker.onClick += UpdateMode;
+        UpdateMode(PlacementMode.NOTE);
     }
 
     public void SetMode(Enum placementMode)
     {
+        modePicker.Select(placementMode);
+        UpdateMode(placementMode);
+    }
+
+    private void UpdateMode(Enum placementMode)
+    {
         PlacementMode mode = (PlacementMode)placementMode;
-        notePlacement.IsActive =  mode == PlacementMode.NOTE;
+        notePlacement.IsActive = mode == PlacementMode.NOTE;
         bombPlacement.IsActive = mode == PlacementMode.BOMB;
         obstaclePlacement.IsActive = mode == PlacementMode.WALL;
         deleteToolController.UpdateDeletion(mode == PlacementMode.DELETE);
-        foreach(Transform child in transform)
-        {
-            child.gameObject.SetActive(child.name == mode.ToString());
-        }
     }
 }

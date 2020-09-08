@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class NoteTypeController : MonoBehaviour
+public class ColorTypeController : MonoBehaviour
 {
     [SerializeField] private NotePlacement notePlacement;
     [SerializeField] private Outline leftSelected;
@@ -9,8 +9,6 @@ public class NoteTypeController : MonoBehaviour
 
     void OnEnable()
     {
-        if (notePlacement.queuedData._type == BeatmapNote.NOTE_TYPE_BOMB)
-            BlueNote(true);
         UpdateUI();
     }
 

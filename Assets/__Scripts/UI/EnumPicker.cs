@@ -50,7 +50,7 @@ public class EnumPicker : MonoBehaviour
         toSelect.color = selectedColor;
     }
 
-    private void Select(Enum enumValue) => Select(items[enumValue]);
+    public void Select(Enum enumValue) => Select(items[enumValue]);
 
     private static string GetDescription(Enum GenericEnum)
     {

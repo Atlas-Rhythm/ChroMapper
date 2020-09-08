@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
@@ -7,7 +8,7 @@ using UnityEngine.UI;
 
 public class LaserSpeedController : MonoBehaviour
 {
-    [SerializeField] private InputField laserSpeed;
+    [SerializeField] private TMP_InputField laserSpeed;
     private float timeSinceLastInput = 0;
     private float delayBeforeReset = 0.5f;
 
