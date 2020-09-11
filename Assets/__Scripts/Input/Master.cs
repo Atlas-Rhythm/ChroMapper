@@ -738,6 +738,22 @@ public class @CMInput : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""Place 15 Degree Right Rotation"",
+                    ""type"": ""Button"",
+                    ""id"": ""723b6f71-0cbb-4208-86cd-58faace64972"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""Place 15 Degree Left Rotation"",
+                    ""type"": ""Button"",
+                    ""id"": ""228cfffb-7859-4833-91cd-3afd5b28b868"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
                 }
             ],
             ""bindings"": [
@@ -793,6 +809,28 @@ public class @CMInput : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""ChroMapper Default"",
                     ""action"": ""Negative Rotation Modifier"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""deed87c0-d29d-48b5-bccb-88f5ae457443"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""ChroMapper Default"",
+                    ""action"": ""Place 15 Degree Right Rotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0838f099-f949-4bec-84ce-9618a332a5e1"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""ChroMapper Default"",
+                    ""action"": ""Place 15 Degree Left Rotation"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -2617,6 +2655,8 @@ public class @CMInput : IInputActionCollection, IDisposable
         m_EventPlacement_Rotation45Degrees = m_EventPlacement.FindAction("Rotation: 45 Degrees", throwIfNotFound: true);
         m_EventPlacement_Rotation60Degrees = m_EventPlacement.FindAction("Rotation: 60 Degrees", throwIfNotFound: true);
         m_EventPlacement_NegativeRotationModifier = m_EventPlacement.FindAction("Negative Rotation Modifier", throwIfNotFound: true);
+        m_EventPlacement_Place15DegreeRightRotation = m_EventPlacement.FindAction("Place 15 Degree Right Rotation", throwIfNotFound: true);
+        m_EventPlacement_Place15DegreeLeftRotation = m_EventPlacement.FindAction("Place 15 Degree Left Rotation", throwIfNotFound: true);
         // Workflows
         m_Workflows = asset.FindActionMap("Workflows", throwIfNotFound: true);
         m_Workflows_ChangeWorkflows = m_Workflows.FindAction("Change Workflows", throwIfNotFound: true);
@@ -3074,6 +3114,8 @@ public class @CMInput : IInputActionCollection, IDisposable
     private readonly InputAction m_EventPlacement_Rotation45Degrees;
     private readonly InputAction m_EventPlacement_Rotation60Degrees;
     private readonly InputAction m_EventPlacement_NegativeRotationModifier;
+    private readonly InputAction m_EventPlacement_Place15DegreeRightRotation;
+    private readonly InputAction m_EventPlacement_Place15DegreeLeftRotation;
     public struct EventPlacementActions
     {
         private @CMInput m_Wrapper;
@@ -3083,6 +3125,8 @@ public class @CMInput : IInputActionCollection, IDisposable
         public InputAction @Rotation45Degrees => m_Wrapper.m_EventPlacement_Rotation45Degrees;
         public InputAction @Rotation60Degrees => m_Wrapper.m_EventPlacement_Rotation60Degrees;
         public InputAction @NegativeRotationModifier => m_Wrapper.m_EventPlacement_NegativeRotationModifier;
+        public InputAction @Place15DegreeRightRotation => m_Wrapper.m_EventPlacement_Place15DegreeRightRotation;
+        public InputAction @Place15DegreeLeftRotation => m_Wrapper.m_EventPlacement_Place15DegreeLeftRotation;
         public InputActionMap Get() { return m_Wrapper.m_EventPlacement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -3107,6 +3151,12 @@ public class @CMInput : IInputActionCollection, IDisposable
                 @NegativeRotationModifier.started -= m_Wrapper.m_EventPlacementActionsCallbackInterface.OnNegativeRotationModifier;
                 @NegativeRotationModifier.performed -= m_Wrapper.m_EventPlacementActionsCallbackInterface.OnNegativeRotationModifier;
                 @NegativeRotationModifier.canceled -= m_Wrapper.m_EventPlacementActionsCallbackInterface.OnNegativeRotationModifier;
+                @Place15DegreeRightRotation.started -= m_Wrapper.m_EventPlacementActionsCallbackInterface.OnPlace15DegreeRightRotation;
+                @Place15DegreeRightRotation.performed -= m_Wrapper.m_EventPlacementActionsCallbackInterface.OnPlace15DegreeRightRotation;
+                @Place15DegreeRightRotation.canceled -= m_Wrapper.m_EventPlacementActionsCallbackInterface.OnPlace15DegreeRightRotation;
+                @Place15DegreeLeftRotation.started -= m_Wrapper.m_EventPlacementActionsCallbackInterface.OnPlace15DegreeLeftRotation;
+                @Place15DegreeLeftRotation.performed -= m_Wrapper.m_EventPlacementActionsCallbackInterface.OnPlace15DegreeLeftRotation;
+                @Place15DegreeLeftRotation.canceled -= m_Wrapper.m_EventPlacementActionsCallbackInterface.OnPlace15DegreeLeftRotation;
             }
             m_Wrapper.m_EventPlacementActionsCallbackInterface = instance;
             if (instance != null)
@@ -3126,6 +3176,12 @@ public class @CMInput : IInputActionCollection, IDisposable
                 @NegativeRotationModifier.started += instance.OnNegativeRotationModifier;
                 @NegativeRotationModifier.performed += instance.OnNegativeRotationModifier;
                 @NegativeRotationModifier.canceled += instance.OnNegativeRotationModifier;
+                @Place15DegreeRightRotation.started += instance.OnPlace15DegreeRightRotation;
+                @Place15DegreeRightRotation.performed += instance.OnPlace15DegreeRightRotation;
+                @Place15DegreeRightRotation.canceled += instance.OnPlace15DegreeRightRotation;
+                @Place15DegreeLeftRotation.started += instance.OnPlace15DegreeLeftRotation;
+                @Place15DegreeLeftRotation.performed += instance.OnPlace15DegreeLeftRotation;
+                @Place15DegreeLeftRotation.canceled += instance.OnPlace15DegreeLeftRotation;
             }
         }
     }
@@ -4296,6 +4352,8 @@ public class @CMInput : IInputActionCollection, IDisposable
         void OnRotation45Degrees(InputAction.CallbackContext context);
         void OnRotation60Degrees(InputAction.CallbackContext context);
         void OnNegativeRotationModifier(InputAction.CallbackContext context);
+        void OnPlace15DegreeRightRotation(InputAction.CallbackContext context);
+        void OnPlace15DegreeLeftRotation(InputAction.CallbackContext context);
     }
     public interface IWorkflowsActions
     {

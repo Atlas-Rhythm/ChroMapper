@@ -725,6 +725,22 @@
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "Press"
+                },
+                {
+                    "name": "Place 15 Degree Right Rotation",
+                    "type": "Button",
+                    "id": "723b6f71-0cbb-4208-86cd-58faace64972",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
+                },
+                {
+                    "name": "Place 15 Degree Left Rotation",
+                    "type": "Button",
+                    "id": "228cfffb-7859-4833-91cd-3afd5b28b868",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
                 }
             ],
             "bindings": [
@@ -780,6 +796,28 @@
                     "processors": "",
                     "groups": "ChroMapper Default",
                     "action": "Negative Rotation Modifier",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "deed87c0-d29d-48b5-bccb-88f5ae457443",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "ChroMapper Default",
+                    "action": "Place 15 Degree Right Rotation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0838f099-f949-4bec-84ce-9618a332a5e1",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "ChroMapper Default",
+                    "action": "Place 15 Degree Left Rotation",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

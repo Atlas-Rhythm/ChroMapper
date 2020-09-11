@@ -9,7 +9,7 @@ public class ColorTypeController : MonoBehaviour
 
     void OnEnable()
     {
-        UpdateUI();
+        //BlueNote(true);
     }
 
     public void RedNote(bool active)

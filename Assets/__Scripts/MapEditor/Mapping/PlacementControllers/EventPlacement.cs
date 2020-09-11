@@ -188,6 +188,33 @@ public class EventPlacement : PlacementController<MapEvent, BeatmapEventContaine
         }
     }
 
+    internal void PlaceRotationNow(bool right)
+    {
+        if (!gridRotation?.IsActive ?? false)
+        {
+            PersistentUI.Instance.ShowDialogBox("Mapper", "360warning", null, PersistentUI.DialogBoxPresetType.Ok);
+            return;
+        }
+        float epsilon = 1f / Mathf.Pow(10, Settings.Instance.TimeValueDecimalPrecision);
+        MapEvent mapEvent = objectContainerCollection.AllRotationEvents.Find(x => x._time - epsilon < atsc.CurrentBeat && x._time + epsilon > atsc.CurrentBeat);
+        int startingValue = right ? 4 : 3;
+        if (mapEvent != null)
+        {
+            //todo add some logic for custom rotation values
+            startingValue = mapEvent._value;
+            objectContainerCollection.DeleteObject(mapEvent);//todo combine actions so that undoing makes this object come back
+        }
+        if (startingValue == 4 && !right || startingValue == 3 && right) return;
+        if(mapEvent != null) startingValue += right ? 1 : -1;
+
+        MapEvent objectData = new MapEvent(atsc.CurrentBeat, MapEvent.EVENT_TYPE_EARLY_ROTATION, startingValue);
+
+        objectContainerCollection.SpawnObject(objectData, out List<BeatmapObject> conflicting);
+        BeatmapActionContainer.AddAction(GenerateAction(objectData, conflicting));
+        queuedData = BeatmapObject.GenerateCopy(queuedData);
+        tracksManager.RefreshTracks();
+    }
+
     public override void TransferQueuedToDraggedObject(ref MapEvent dragged, MapEvent queued)
     {
         dragged._time = queued._time;
@@ -224,5 +251,15 @@ public class EventPlacement : PlacementController<MapEvent, BeatmapEventContaine
     public void OnNegativeRotationModifier(InputAction.CallbackContext context)
     {
         negativeRotations = context.performed;
+    }
+
+    public void OnPlace15DegreeRightRotation(InputAction.CallbackContext context)
+    {
+        if (context.performed) PlaceRotationNow(true);
+    }
+
+    public void OnPlace15DegreeLeftRotation(InputAction.CallbackContext context)
+    {
+        if (context.performed) PlaceRotationNow(false);
     }
 }
