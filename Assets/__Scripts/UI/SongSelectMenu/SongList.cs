@@ -28,13 +28,7 @@ public class SongList : MonoBehaviour {
     EnumPicker sortingOptions;
 
     [SerializeField]
-    Transform itemContainer;
-
-    [SerializeField]
-    SongListItem songListItemPrefrab;
-
-    private List<SongListItem> items = new List<SongListItem>();
-    private Stack<SongListItem> unusedItems = new Stack<SongListItem>();
+    RecyclingListView listView;
 
     [SerializeField]
     public List<BeatSaberSong> songs = new List<BeatSaberSong>();
@@ -48,6 +42,7 @@ public class SongList : MonoBehaviour {
     private void Start()
     {
         //WIPLevels = lastVisited_WasWIP;
+        listView.ItemCallback = SetupCell;
         RefreshSongList(false);
         sortingOptions.Initialize(typeof(SortingOption));
         sortingOptions.onClick += SortBy;
@@ -118,40 +113,14 @@ public class SongList : MonoBehaviour {
 
     public void UpdateList()
     {
-        SongListItem.ResetCoverLoadBuffer();
-        RecycleItems();
-        foreach (BeatSaberSong song in songs)
-        {
-            AddItem(song);
-        }
-    }
-
-    private void RecycleItems()
-    {
-        foreach(SongListItem item in items)
-        {
-            item.gameObject.SetActive(false);
-            unusedItems.Push(item);
-        }
-        items.Clear();
-    }
-
-    private void AddItem(BeatSaberSong song)
-    {
-        SongListItem item = null;
-        if(unusedItems.Count > 0)
-        {
-            item = unusedItems.Pop();
-            item.transform.SetAsLastSibling();
-            item.gameObject.SetActive(true);
-        }
+        if(listView.RowCount != songs.Count)
+            listView.RowCount = songs.Count;
         else
-        {
-            item = Instantiate(songListItemPrefrab, itemContainer);
-        }
-        if (item == null)
-            throw new System.Exception("Could not create SongListItem");
-        items.Add(item);
-        item.AssignSong(song);
+            listView.Refresh();
+    }
+
+    private void SetupCell(RecyclingListViewItem item, int rowIndex)
+    {
+        item.GetComponent<SongListItem>().AssignSong(songs[rowIndex]);
     }
 }

@@ -1,15 +1,38 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using System.Linq;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class ColorTypeController : MonoBehaviour
 {
     [SerializeField] private NotePlacement notePlacement;
-    [SerializeField] private Outline leftSelected;
-    [SerializeField] private Outline rightSelected;
+    [SerializeField] private Image leftSelected;
+    [SerializeField] private Image rightSelected;
+    [SerializeField] private Image leftNote;
+    [SerializeField] private Image leftLight;
+    [SerializeField] private Image rightNote;
+    [SerializeField] private Image rightLight;
 
-    void OnEnable()
+    void Start()
     {
-        //BlueNote(true);
+        leftSelected.enabled = true;
+        rightSelected.enabled = false;
+        StartCoroutine(SetupColors());
+    }
+
+    private IEnumerator SetupColors()//PlatformDescriptor is in another scene so we have to find it, can probably change this get the colors from somewhere else in the future
+    {
+        PlatformDescriptor descriptor = null;
+        while(descriptor == null)
+        {
+            descriptor = Resources.FindObjectsOfTypeAll<PlatformDescriptor>().FirstOrDefault(x => x.isActiveAndEnabled);
+            yield return new WaitForFixedUpdate();
+        }
+        leftNote.color = descriptor.RedNoteColor;
+        leftLight.color = descriptor.RedColor;
+        rightNote.color = descriptor.BlueNoteColor;
+        rightLight.color = descriptor.BlueColor;
     }
 
     public void RedNote(bool active)

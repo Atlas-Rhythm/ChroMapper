@@ -34,10 +34,10 @@ public class SongListItem : MonoBehaviour {
         mainText.text = $"{song.songName.StripTMPTags()} <size=8>{song.songSubName.StripTMPTags()}";
         subText.text = $"{song.songAuthorName.StripTMPTags()}";
         string fullPath = Path.Combine(song.directory, song.coverImageFilename);
+        cover.sprite = cover.transform.parent.GetComponent<Image>().sprite; //The mask is the placeholder so we can yoink from that
+        gameObject.SetActive(true);
         if (File.Exists(fullPath))
             StartCoroutine(LoadImage(fullPath));
-        else
-            cover.sprite = cover.transform.parent.GetComponent<Image>().sprite; //The mask is the placeholder so we can yoink from that
     }
 
     IEnumerator LoadImage(string fullPath)
@@ -50,10 +50,7 @@ public class SongListItem : MonoBehaviour {
         else
         {
             UnityWebRequest www = UnityWebRequestTexture.GetTexture($"file:///{Uri.EscapeDataString($"{fullPath}")}");
-            loadingSprites++;
-            yield return new WaitForSeconds(loadingSprites * 0.05f); //Somewhat staggers image loading so they don't all happen at once if there's a lot to load
             yield return www.SendWebRequest();
-            loadingSprites--;
             Texture2D texture = ((DownloadHandlerTexture)www.downloadHandler).texture;
             Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0, 0), 100f);
             cover.sprite = sprite;
@@ -64,10 +61,4 @@ public class SongListItem : MonoBehaviour {
         Debug.Log("Edit button for song " + song.songName);
         if (BeatSaberSongContainer.Instance != null && song != null) BeatSaberSongContainer.Instance.SelectSongForEditing(song);
     }
-
-    public static void ResetCoverLoadBuffer()
-    {
-        loadingSprites = 0;
-    }
-
 }
