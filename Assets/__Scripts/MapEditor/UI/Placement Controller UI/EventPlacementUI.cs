@@ -1,8 +1,10 @@
 ﻿using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
 
-public class EventPlacementUI : MonoBehaviour, CMInput.IEventUIActions
+[Obsolete]
+public class EventPlacementUI : MonoBehaviour/*, CMInput.IEventUIActions*/
 {
     [SerializeField] private EventPlacement eventPlacement;
     [SerializeField] private Toggle redColorToggle;

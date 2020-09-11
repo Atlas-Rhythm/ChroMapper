@@ -37,6 +37,8 @@ public class PrecisionStepDisplayController : MonoBehaviour {
         UpdateManualPrecisionStep(first ? display.text : secondDisplay.text);
     }
 
+    public void SwapSelectedInterval() => SelectSnap(!firstActive);
+
     public void UpdateManualPrecisionStep(string result)
     {
         if (int.TryParse(result, out int newGridMeasureSnapping))

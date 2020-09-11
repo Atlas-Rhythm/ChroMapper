@@ -1007,6 +1007,14 @@
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "Press"
+                },
+                {
+                    "name": "Swap Cursor Interval",
+                    "type": "Button",
+                    "id": "60357567-32b2-4ce1-bc8b-61fbcd12e0ca",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
                 }
             ],
             "bindings": [
@@ -1062,6 +1070,17 @@
                     "processors": "",
                     "groups": "ChroMapper Default",
                     "action": "Toggle Precision Rotation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f531e1e7-75d2-4353-ae45-1a5f05d90961",
+                    "path": "<Keyboard>/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "ChroMapper Default",
+                    "action": "Swap Cursor Interval",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

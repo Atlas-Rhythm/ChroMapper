@@ -6,6 +6,7 @@ public class KeybindUpdateUIController : MonoBehaviour, CMInput.IWorkflowsAction
 {
     [SerializeField] private PlacementModeController placeMode;
     [SerializeField] private LightingModeController lightMode;
+    [SerializeField] private PrecisionStepDisplayController stepController;
 
     [SerializeField] private Toggle redToggle;
     [SerializeField] private Toggle blueToggle;
@@ -89,5 +90,11 @@ public class KeybindUpdateUIController : MonoBehaviour, CMInput.IWorkflowsAction
     {
         if (!context.performed) return;
         //UpdatePrecisionRotationValue(); todo
+    }
+
+    public void OnSwapCursorInterval(InputAction.CallbackContext context)
+    {
+        if (!context.performed) return;
+        stepController.SwapSelectedInterval();
     }
 }
