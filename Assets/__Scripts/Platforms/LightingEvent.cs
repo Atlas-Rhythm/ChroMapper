@@ -14,7 +14,10 @@ public class LightingEvent : MonoBehaviour {
     public float TargetAlpha { get; private set; } = 0;
 
     private Color currentColor = Color.white;
+    [SerializeField]
     private float currentAlpha = 0;
+    [SerializeField]
+    private float multiplyAlpha = 1;
     private float alphaTime = 0;
     private float colorTime = 0;
     private float timeToTransitionColor = 0;
@@ -45,8 +48,7 @@ public class LightingEvent : MonoBehaviour {
         }
 
         alphaTime += Time.deltaTime;
-        float alpha = Mathf.Lerp(currentAlpha, TargetAlpha, alphaTime / timeToTransitionAlpha);
-        alpha = Mathf.Min(color.a, alpha);
+        float alpha = Mathf.Lerp(currentAlpha, TargetAlpha, alphaTime / timeToTransitionAlpha) * multiplyAlpha;
         LightMaterial.SetColor("_BaseColor", Color.white * alpha);
 
         SetEmission(alpha > 0);
@@ -64,11 +66,17 @@ public class LightingEvent : MonoBehaviour {
     public void UpdateTargetAlpha(float target, float timeToTransition)
     {
         if (!CanBeTurnedOff) return;
-        //currentAlpha = targetAlpha; //I do not believe this is needed, but will leave it just incase.
+        currentAlpha = TargetAlpha; //I do not believe this is needed, but will leave it just incase.
         TargetAlpha = target;
         timeToTransitionAlpha = timeToTransition;
         alphaTime = 0;
         if (timeToTransition == 0) currentAlpha = target;
+    }
+
+    public void UpdateMultiplyAlpha(float target = 1)
+    {
+        if (!CanBeTurnedOff) return;
+        multiplyAlpha = target;
     }
 
     public void UpdateCurrentColor(Color color)

@@ -86,6 +86,14 @@ public class LightsManager : MonoBehaviour
         }
     }
 
+    public void ChangeMultiplierAlpha(float Alpha, IEnumerable<LightingEvent> lights)
+    {
+        foreach (LightingEvent light in lights)
+        {
+            light.UpdateMultiplyAlpha(Alpha);
+        }
+    }
+
     public void ChangeColor(Color color, float time, IEnumerable<LightingEvent> lights)
     {
         foreach (LightingEvent light in lights)
@@ -134,16 +142,12 @@ public class LightsManager : MonoBehaviour
 
         if (previousValue <= 3)
         {
-            (a, b) = (b, a);
+            a = b;
         }
 
         foreach (LightingEvent light in ControllingLights)
         {
-            if (light.UseInvertedPlatformColors)
-            {
-                SetTargets(light, b);
-            }
-            else
+            if (!light.UseInvertedPlatformColors)
             {
                 SetTargets(light, a);
             }
