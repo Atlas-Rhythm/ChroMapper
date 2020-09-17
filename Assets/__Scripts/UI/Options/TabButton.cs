@@ -14,9 +14,11 @@ public class TabButton : UIBehaviour, IPointerExitHandler, IPointerEnterHandler 
     [SerializeField] public RectTransform discordPopout;
     [SerializeField] public CanvasGroup discordPopoutCanvas;
     [SerializeField] public Image icon;
-    
-    private readonly Color _iconColorHover = new Color(0, 0.5f, 1, 1);
-    private readonly Color _iconColorSelected = new Color(.78f, 0.47f, 0, 1);
+    [SerializeField] public GameObject selectedHighlight;
+
+    private readonly Color _iconColor = Color.black;
+    private readonly Color _iconColorHover = Color.gray;
+    private readonly Color _iconColorSelected = Color.white;
 
     private Coroutine _discordPopoutCoroutine;
 
@@ -82,13 +84,14 @@ public class TabButton : UIBehaviour, IPointerExitHandler, IPointerEnterHandler 
     
     private void LateUpdate()
     {
+        selectedHighlight?.SetActive(_tabManager.selectedTab == this);
         if (_tabManager.selectedTab == this)
         {
             icon.color = _iconColorSelected;
         }
         else if(!hovering)
         {
-            icon.color = Color.white;
+            icon.color = _iconColor;
         }
     }
 }
