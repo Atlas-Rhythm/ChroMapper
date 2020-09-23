@@ -5,8 +5,6 @@ using System.IO;
 using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Localization.Components;
-using UnityEngine.UI;
 
 public class SongList : MonoBehaviour {
 
@@ -32,32 +30,26 @@ public class SongList : MonoBehaviour {
 
     [SerializeField]
     public List<BeatSaberSong> songs = new List<BeatSaberSong>();
-    
-    [SerializeField]
-    LocalizeStringEvent songLocationToggleText;
 
     public bool WIPLevels = true;
     public bool FilteredBySearch = false;
 
     private void Start()
     {
-        //WIPLevels = lastVisited_WasWIP;
         listView.ItemCallback = SetupCell;
         RefreshSongList(false);
         sortingOptions.Initialize(typeof(SortingOption));
         sortingOptions.onClick += SortBy;
     }
 
-    public void ToggleSongLocation()
+    public void SetSongLocation(bool wipLevels)
     {
-        WIPLevels = !WIPLevels;
-        //lastVisited_WasWIP = WIPLevels;
+        WIPLevels = wipLevels;
         RefreshSongList(true);
     }
 
-    public void RefreshSongList(bool search) {
-        songLocationToggleText.StringReference.TableEntryReference = WIPLevels ? "custom" : "wip";
-
+    public void RefreshSongList(bool search)
+    {
         FilteredBySearch = search;
         string[] directories;
         directories = Directory.GetDirectories(WIPLevels ? Settings.Instance.CustomWIPSongsFolder : Settings.Instance.CustomSongsFolder);
