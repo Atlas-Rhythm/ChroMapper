@@ -23,6 +23,7 @@ public class EnumPicker : MonoBehaviour
     private Type type;
     private Dictionary<Enum, TextMeshProUGUI> items = new Dictionary<Enum, TextMeshProUGUI>();
     private TextMeshProUGUI lastSelected;
+    private TextMeshProUGUI beforeLastSelected;
 
     public void Initialize(Type type)
     {
@@ -55,6 +56,8 @@ public class EnumPicker : MonoBehaviour
     private void Select(TextMeshProUGUI toSelect)
     {
         StopAllCoroutines();
+        if (beforeLastSelected != null && beforeLastSelected != toSelect && resizeSelected)
+            beforeLastSelected.fontSize = regularSize;
         if(lastSelected != null)
         {
             if (shouldBold)
@@ -68,6 +71,7 @@ public class EnumPicker : MonoBehaviour
         toSelect.color = selectedColor;
         if (resizeSelected)
             StartCoroutine(InterpolateToSize(toSelect, selectedSize));
+        beforeLastSelected = lastSelected;
         lastSelected = toSelect;
     }
 
