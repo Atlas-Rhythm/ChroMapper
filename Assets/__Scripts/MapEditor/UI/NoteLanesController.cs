@@ -4,6 +4,7 @@ public class NoteLanesController : MonoBehaviour {
 
     public Transform noteGrid;
     [SerializeField] private GridChild notePlacementGridChild;
+    [SerializeField] private MeshRenderer noteGridTileMesh;
 
     public float NoteLanes
     {
@@ -33,6 +34,10 @@ public class NoteLanesController : MonoBehaviour {
             noteLanes = noteLanes - (noteLanes % 2); //Sticks to even numbers for note lanes.
             notePlacementGridChild.Size = noteLanes / 2;
             noteGrid.localScale = new Vector3((float)noteLanes / 10 + 0.01f, 1, noteGrid.localScale.z);
+            if (noteGridTileMesh != null)
+            {
+                noteGridTileMesh.material.mainTextureScale = new Vector2(noteLanes, 3);
+            }
         }
     }
 }

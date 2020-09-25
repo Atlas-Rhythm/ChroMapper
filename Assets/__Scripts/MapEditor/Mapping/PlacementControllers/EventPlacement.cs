@@ -27,6 +27,7 @@ public class EventPlacement : PlacementController<MapEvent, BeatmapEventContaine
     [SerializeField] private EventPlacementUI eventPlacementUI;
     [SerializeField] private Toggle redEventToggle;
     [SerializeField] private ToggleColourDropdown dropdown;
+    [SerializeField] private MeshRenderer eventGridTileMesh;
 
     private int queuedValue = MapEvent.LIGHT_VALUE_RED_ON;
     private bool negativeRotations = false;
@@ -58,6 +59,10 @@ public class EventPlacement : PlacementController<MapEvent, BeatmapEventContaine
             }
         }
         gridChild.Size = gridSize;
+        if (eventGridTileMesh != null)
+        {
+            eventGridTileMesh.material.mainTextureScale = new Vector2(gridSize, 1);
+        }
     }
 
     public override BeatmapAction GenerateAction(BeatmapObject spawned, IEnumerable<BeatmapObject> container)
