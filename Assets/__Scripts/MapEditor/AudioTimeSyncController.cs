@@ -207,6 +207,7 @@ public class AudioTimeSyncController : MonoBehaviour, CMInput.IPlaybackActions, 
 
     public void OnChangeTimeandPrecision(InputAction.CallbackContext context)
     {
+        if (CMInputCallbackInstaller.IsActionMapDisabled(typeof(CMInput.IPlaybackActions))) return; //workaround for bug where ITimelineActions doesn't get disabled, line can be removed if that bug is fixed
         if (!KeybindsController.IsMouseInWindow) return;
         float value = context.ReadValue<float>();
         if (!KeybindsController.AltHeld && context.performed)
