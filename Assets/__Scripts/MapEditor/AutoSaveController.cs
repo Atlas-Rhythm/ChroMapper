@@ -3,7 +3,6 @@ using UnityEngine;
 using System.Threading;
 using System.Linq;
 using System;
-using UnityEngine.UI;
 using SimpleJSON;
 using System.Globalization;
 using UnityEngine.InputSystem;
@@ -11,20 +10,12 @@ using UnityEngine.InputSystem;
 public class AutoSaveController : MonoBehaviour, CMInput.ISavingActions
 {
     private float t;
-    [SerializeField] private Toggle autoSaveToggle;
-
-    public void ToggleAutoSave(bool enabled)
+    
+	void Start ()
     {
-        Settings.Instance.AutoSave = enabled;
-    }
-
-	// Use this for initialization
-	void Start () {
-        autoSaveToggle.isOn = Settings.Instance.AutoSave;
         t = 0;
 	}
 	
-	// Update is called once per frame
 	void Update () {
         if (!Settings.Instance.AutoSave || !Application.isFocused) return;
         t += Time.deltaTime;

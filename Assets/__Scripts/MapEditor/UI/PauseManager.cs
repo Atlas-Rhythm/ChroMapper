@@ -3,7 +3,8 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PauseManager : MonoBehaviour, CMInput.IPauseMenuActions
+[Obsolete]
+public class PauseManager : MonoBehaviour//, CMInput.IPauseMenuActions
 {
     [SerializeField] private CanvasGroup loadingCanvasGroup;
     [SerializeField] private AnimationCurve fadeInCurve;

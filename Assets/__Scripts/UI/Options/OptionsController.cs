@@ -4,8 +4,9 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
+using UnityEngine.InputSystem;
 
-public class OptionsController : MonoBehaviour
+public class OptionsController : MonoBehaviour, CMInput.IPauseMenuActions
 {
     [SerializeField] private CanvasGroup optionsCanvasGroup;
     [SerializeField] private AnimationCurve fadeInCurve;
@@ -26,6 +27,7 @@ public class OptionsController : MonoBehaviour
         if (IsActive) return;
         SceneManager.LoadScene(4, LoadSceneMode.Additive);
         CMInputCallbackInstaller.DisableActionMaps(typeof(CMInput).GetNestedTypes().Where(x => x.IsInterface));
+        CMInputCallbackInstaller.ClearDisabledActionMaps(new Type[] { typeof(CMInput.IPauseMenuActions) });
         OptionsLoadedEvent?.Invoke();
         IsActive = true;
     }
@@ -86,5 +88,10 @@ public class OptionsController : MonoBehaviour
     public void ToggleBongo()
     {
         FindObjectsOfType<BongoCat>().FirstOrDefault()?.ToggleBongo();
+    }
+
+    public void OnPauseEditor(InputAction.CallbackContext context)
+    {
+        if (context.performed) Close();
     }
 }

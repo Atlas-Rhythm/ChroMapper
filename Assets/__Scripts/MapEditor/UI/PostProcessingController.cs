@@ -1,48 +1,34 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering;
 
 public class PostProcessingController : MonoBehaviour {
 
     public Volume PostProcess;
-    [SerializeField] private Slider intensitySlider;
-    [SerializeField] private TextMeshProUGUI intensityLabel;
-    [SerializeField] private Toggle chromaticAberration;
 
     private void Start()
     {
-        float v = Settings.Instance.PostProcessingIntensity;
-        if (intensitySlider != null)
-        {
-            intensitySlider.value = v * 10;
-        }
-        if (intensityLabel != null)
-        {
-            intensityLabel.text = v.ToString();
-        }
-        PostProcess.profile.TryGet(out Bloom bloom);
-        bloom.intensity.value = v;
+        Settings.NotifyBySettingName("ChromaticAberration", (value) => UpdateChromaticAberration((bool)value));
+        Settings.NotifyBySettingName("PostProcessingIntensity", (value) => UpdatePostProcessIntensity((float)value));
+        UpdateChromaticAberration(Settings.Instance.ChromaticAberration);
+        UpdatePostProcessIntensity(Settings.Instance.PostProcessingIntensity);
+    }
 
-        if (chromaticAberration != null)
-        {
-            chromaticAberration.isOn = Settings.Instance.ChromaticAberration;
-        }
+    private void OnDestroy()
+    {
+        Settings.ClearSettingNotifications("ChromaticAberration");
+        Settings.ClearSettingNotifications("PostProcessingIntensity");
     }
 
     public void UpdatePostProcessIntensity(float v)
     {
         PostProcess.profile.TryGet(out Bloom bloom);
-        bloom.intensity.value = v / 10;
-        intensityLabel.text = (v / 10).ToString();
-        Settings.Instance.PostProcessingIntensity = v / 10;
+        bloom.intensity.value = v;
     }
 
     public void UpdateChromaticAberration(bool enabled)
     {
         PostProcess.profile.TryGet(out ChromaticAberration ca);
         ca.active = enabled;
-        Settings.Instance.ChromaticAberration = enabled;
     }
 }

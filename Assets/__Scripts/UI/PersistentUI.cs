@@ -133,8 +133,9 @@ public class PersistentUI : MonoBehaviour {
     #region loading
     public static void UpdateBackground(BeatSaberSong song)
     {
+        /* disabling background with this
         if (Instance.editorLoadingBackground.gameObject.activeSelf == false) Instance.editorLoadingBackground.gameObject.SetActive(true);
-        Instance.editorLoadingBackground.sprite = Instance.editorImageList.GetBGSprite(song);
+        Instance.editorLoadingBackground.sprite = Instance.editorImageList.GetBGSprite(song);*/
     }
 
     public Coroutine FadeInLoadingScreen() {

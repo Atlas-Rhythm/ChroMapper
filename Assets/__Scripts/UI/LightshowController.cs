@@ -12,11 +12,15 @@ public class LightshowController : MonoBehaviour {
     void Start()
     {
         atsc.OnPlayToggle += PlayToggled;
+        Settings.NotifyBySettingName("Lightshow", (val) => UpdateLightshow((bool)val));
+        if(Settings.NonPersistentSettings.TryGetValue("Lightshow", out object value))
+            UpdateLightshow((bool)value);
     }
 
     void OnDestroy()
     {
         atsc.OnPlayToggle -= PlayToggled;
+        Settings.ClearSettingNotifications("Lightshow");
     }
 
     private void PlayToggled(bool playing)
