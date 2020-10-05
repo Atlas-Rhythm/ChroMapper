@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class InputBoxFileValidator : MonoBehaviour
 {
-    [SerializeField] private GameObject inputMask;
+    //[SerializeField] private GameObject inputMask;
     [SerializeField] private GameObject validationImg;
 
     [SerializeField] private Sprite goodSprite;
@@ -14,7 +14,7 @@ public class InputBoxFileValidator : MonoBehaviour
     [SerializeField] private Color badColor;
 
     private Vector2 startOffset;
-
+    /*
     public void Awake()
     {
         var transform = inputMask.GetComponent<RectTransform>();
@@ -22,7 +22,7 @@ public class InputBoxFileValidator : MonoBehaviour
         // This will get un-done on start, but will stop negative text scroll
         // Shouldn't really be in awake but it needs to run before SongInfoEditUI sets the text value
         transform.offsetMax = new Vector2(startOffset.x - 16, startOffset.y);
-    }
+    }*/
 
     public void Start()
     {
@@ -31,6 +31,7 @@ public class InputBoxFileValidator : MonoBehaviour
 
     public void OnUpdate()
     {
+        return;
         BeatSaberSong song = BeatSaberSongContainer.Instance?.song;
 
         var input = GetComponent<TMP_InputField>();

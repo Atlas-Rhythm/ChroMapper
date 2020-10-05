@@ -88,5 +88,4 @@ public class PreviewSong : MonoBehaviour
         float position = time > length ? 0 : time / length;
         progressBar.fillAmount = position;
     }
-
 }
