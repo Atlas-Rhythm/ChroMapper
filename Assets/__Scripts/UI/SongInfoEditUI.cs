@@ -103,6 +103,8 @@ public class SongInfoEditUI : MenuBase
 
     [SerializeField] Image revertInfoButtonImage;
 
+    [SerializeField] Image coverImage;
+
     void Start() {
         if (BeatSaberSongContainer.Instance == null) {
             SceneManager.LoadScene(0);
@@ -216,6 +218,7 @@ public class SongInfoEditUI : MenuBase
             customPlatformsDropdown.captionText.text = "None";
         }
 
+        ReloadCover();
         ReloadAudio();
     }
 
@@ -627,6 +630,23 @@ public class SongInfoEditUI : MenuBase
             !NearlyEqual(Song.songTimeOffset, GetTextValue(offset)) ||
             environmentDropdown.value != GetEnvironmentIDFromString(Song.environmentName) ||
             customPlatformsDropdown.value != CustomPlatformFromSong();
+    }
+
+    public void ReloadCover()
+    {
+        string fullPath = Path.Combine(Song.directory, coverImageField.text);
+        coverImage.sprite = coverImage.transform.parent.GetComponent<Image>().sprite; //The mask is the placeholder so we can yoink from that
+        if (File.Exists(fullPath))
+            StartCoroutine(LoadCover(fullPath));
+    }
+
+    private IEnumerator LoadCover(string fullPath)
+    {
+        UnityWebRequest www = UnityWebRequestTexture.GetTexture($"file:///{Uri.EscapeDataString($"{fullPath}")}");
+        yield return www.SendWebRequest();
+        Texture2D texture = ((DownloadHandlerTexture)www.downloadHandler).texture;
+        Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0, 0), 100f);
+        coverImage.sprite = sprite;
     }
 
     private static bool NearlyEqual(float a, float b, float epsilon = 0.01f)

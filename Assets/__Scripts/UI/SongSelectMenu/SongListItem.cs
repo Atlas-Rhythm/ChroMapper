@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 public class SongListItem : MonoBehaviour {
 
-    private static Dictionary<string, Sprite> cachedSprites = new Dictionary<string, Sprite>();
+    public static Dictionary<string, Sprite> cachedSprites = new Dictionary<string, Sprite>();
     private static int loadingSprites;
 
     [SerializeField]
