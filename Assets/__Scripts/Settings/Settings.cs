@@ -83,6 +83,7 @@ public class Settings {
     public bool Reset360DisplayOnCompleteTurn = true;
     public string Language = "en";
     public bool HighContrastGrids = false;
+    public bool Lightshow = false;
 
     public string LastLoadedMap = "";
     public string LastLoadedChar = "";

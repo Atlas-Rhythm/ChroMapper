@@ -33,10 +33,14 @@ public class EditorButtons : MonoBehaviour
         if (result == 0) //Left button (ID 0) clicked; the user wants to Save before exiting.
         {
             Save();
+            OptionsController.IsActive = false;
             SceneTransitionManager.Instance.LoadScene(2);
         }
         else if (result == 1) //Middle button (ID 1) clicked; the user does not want to save before exiting.
+        {
+            OptionsController.IsActive = false;
             SceneTransitionManager.Instance.LoadScene(2);
+        }
         //Right button (ID 2) would be clicked; the user does not want to exit the editor after all, so we aint doing shit.
     }
 }
