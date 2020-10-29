@@ -32,10 +32,10 @@ public class NodeEditorController : MonoBehaviour, CMInput.INodeEditorActions
     private readonly Type[] actionMapsEnabledWhenNodeEditing = new Type[]
     {
         typeof(CMInput.ICameraActions),
-        typeof(CMInput.ISelectingActions),
         typeof(CMInput.IBeatmapObjectsActions),
         typeof(CMInput.INodeEditorActions),
         typeof(CMInput.ISavingActions),
+        typeof(CMInput.ITimelineActions)
     };
 
     // I can just apply this to the places that need them but im feeling lazy lmao

@@ -15,10 +15,6 @@ public class CameraController : MonoBehaviour, CMInput.ICameraActions {
 
     [SerializeField] float mouseSensitivity;
 
-    [SerializeField] float sprintMult;
-
-    [SerializeField] float sprintMultPerSecond;
-
     [SerializeField] Transform noteGridTransform;
 
     [SerializeField] private UIMode _uiMode;
@@ -77,7 +73,7 @@ public class CameraController : MonoBehaviour, CMInput.ICameraActions {
     {
         instance = this;
         camera.fieldOfView = Settings.Instance.CameraFOV;
-        GoToPreset(1);
+        OnLocation(0);
     }
 
     void Update () {
@@ -129,13 +125,6 @@ public class CameraController : MonoBehaviour, CMInput.ICameraActions {
             SetLockState(false);
         }
 
-    }
-
-    public void GoToPreset(int id) {
-        if (presetPositions.Length < id && presetRotations.Length < id) {
-            transform.position = presetPositions[id];
-            transform.rotation = Quaternion.Euler(presetRotations[id]);
-        }
     }
 
     public void SetLockState(bool lockMouse) {
@@ -198,5 +187,44 @@ public class CameraController : MonoBehaviour, CMInput.ICameraActions {
     private void OnDisable()
     {
         instance = null;
+    }
+
+    public void OnLocation1(CallbackContext context)
+    {
+        OnLocation(0);
+    }
+
+    public void OnLocation2(CallbackContext context)
+    {
+        OnLocation(1);
+    }
+
+    public void OnLocation3(CallbackContext context)
+    {
+        OnLocation(2);
+    }
+
+    public void OnLocation4(CallbackContext context)
+    {
+        OnLocation(3);
+    }
+
+    private void OnLocation(int id)
+    {
+        // Shift for second set of hotkeys (8 total)
+        if (KeybindsController.ShiftHeld)
+        {
+            id += 4;
+        }
+
+        if (KeybindsController.CtrlHeld)
+        {
+            Settings.Instance.savedPosititons[id] = new CameraPosition(transform.position, transform.rotation);
+        }
+        else if (Settings.Instance.savedPosititons[id] != null)
+        {
+            transform.position = Settings.Instance.savedPosititons[id].Position;
+            transform.rotation = Settings.Instance.savedPosititons[id].Rotation;
+        }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Runtime.CompilerServices;
 
 public class BookmarkManager : MonoBehaviour, CMInput.IBookmarksActions
 {
@@ -10,19 +11,27 @@ public class BookmarkManager : MonoBehaviour, CMInput.IBookmarksActions
     [SerializeField] private GameObject bookmarkContainerPrefab;
     public AudioTimeSyncController atsc;
 
+    [SerializeField] private RectTransform timelineCanvas;
+
+    private float previousCanvasWidth = 0;
+
+    // -10 twice for the distance from screen edges, -5 for half the width of one bookmark
+    private readonly float CANVAS_WIDTH_OFFSET = -20f;
+
     private IEnumerator Start()
     {
         yield return new WaitForSeconds(0.1f); //Wait for time
         foreach(BeatmapBookmark bookmark in BeatSaberSongContainer.Instance.map._bookmarks)
         {
-            GameObject container = Instantiate(bookmarkContainerPrefab, transform);
+            BookmarkContainer container = Instantiate(bookmarkContainerPrefab, transform).GetComponent<BookmarkContainer>();
             container.name = bookmark._name;
-            container.GetComponent<BookmarkContainer>().Init(this, bookmark);
-            bookmarkContainers.Add(container.GetComponent<BookmarkContainer>());
+            container.Init(this, bookmark);
+            container.RefreshPosition(timelineCanvas.sizeDelta.x + CANVAS_WIDTH_OFFSET);
+            bookmarkContainers.Add(container);
         }   
     }
 
-    public void OnCreateNewBookmark(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    public void OnCreateNewBookmark(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
@@ -34,10 +43,11 @@ public class BookmarkManager : MonoBehaviour, CMInput.IBookmarksActions
     {
         if (string.IsNullOrEmpty(res) || string.IsNullOrWhiteSpace(res)) return;
         BeatmapBookmark newBookmark = new BeatmapBookmark(atsc.CurrentBeat, res);
-        GameObject container = Instantiate(bookmarkContainerPrefab, transform);
+        BookmarkContainer container = Instantiate(bookmarkContainerPrefab, transform).GetComponent<BookmarkContainer>();
         container.name = newBookmark._name;
-        container.GetComponent<BookmarkContainer>().Init(this, newBookmark);
-        bookmarkContainers.Add(container.GetComponent<BookmarkContainer>());
+        container.Init(this, newBookmark);
+        container.RefreshPosition(timelineCanvas.sizeDelta.x + CANVAS_WIDTH_OFFSET);
+        bookmarkContainers.Add(container);
         BeatSaberSongContainer.Instance.map._bookmarks = bookmarkContainers.Select(x => x.data).ToList();
     }
 
@@ -54,4 +64,18 @@ public class BookmarkManager : MonoBehaviour, CMInput.IBookmarksActions
         BookmarkContainer bookmark = bookmarkContainers.LastOrDefault(x => x.data._time < atsc.CurrentBeat);
         if (bookmark != null) atsc.MoveToTimeInBeats(bookmark.data._time);
     }
+
+    private void LateUpdate()
+    {
+        if (previousCanvasWidth != timelineCanvas.sizeDelta.x)
+        {
+            previousCanvasWidth = timelineCanvas.sizeDelta.x;
+            foreach (BookmarkContainer bookmark in bookmarkContainers)
+            {
+                bookmark.RefreshPosition(timelineCanvas.sizeDelta.x + CANVAS_WIDTH_OFFSET);
+            }
+        }
+    }
+
+    private bool AreResolutionsEqual(Resolution a, Resolution b) => a.width == b.width && a.height == b.height;
 }

@@ -26,16 +26,16 @@ public class BeatmapCustomEvent : BeatmapObject
         return node;
     }
 
-    protected override bool IsConflictingWithObjectAtSameTime(BeatmapObject other)
+    protected override bool IsConflictingWithObjectAtSameTime(BeatmapObject other, bool deletion)
     {
-        // There exists a possible edge case where an effect might require 2 or more Custom Events
-        // of the same type to be triggered at the exact same time (Start animation, spawn from prefab, etc.)
-        // However, right now, they don't exist, so here's a way that they can conflict.
-        if (other is BeatmapCustomEvent customEvent)
+        if (deletion)
         {
-            return _type == customEvent._type;
+            return _type == (other as BeatmapCustomEvent)._type;
         }
-        return false;
+        else
+        {
+            return false;
+        }
     }
 
     public override Type beatmapType { get; set; } = Type.CUSTOM_EVENT;

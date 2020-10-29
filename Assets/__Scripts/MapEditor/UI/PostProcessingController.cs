@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering;
+using System;
 
 public class PostProcessingController : MonoBehaviour {
 
@@ -8,10 +9,11 @@ public class PostProcessingController : MonoBehaviour {
 
     private void Start()
     {
-        Settings.NotifyBySettingName("ChromaticAberration", (value) => UpdateChromaticAberration((bool)value));
-        Settings.NotifyBySettingName("PostProcessingIntensity", (value) => UpdatePostProcessIntensity((float)value));
-        UpdateChromaticAberration(Settings.Instance.ChromaticAberration);
+        Settings.NotifyBySettingName(nameof(Settings.PostProcessingIntensity), UpdatePostProcessIntensity);
+        Settings.NotifyBySettingName(nameof(Settings.ChromaticAberration), UpdateChromaticAberration);
+
         UpdatePostProcessIntensity(Settings.Instance.PostProcessingIntensity);
+        UpdateChromaticAberration(Settings.Instance.ChromaticAberration);
     }
 
     private void OnDestroy()
@@ -20,14 +22,16 @@ public class PostProcessingController : MonoBehaviour {
         Settings.ClearSettingNotifications("PostProcessingIntensity");
     }
 
-    public void UpdatePostProcessIntensity(float v)
+    public void UpdatePostProcessIntensity(object o)
     {
+        float v = Convert.ToSingle(o);
         PostProcess.profile.TryGet(out Bloom bloom);
         bloom.intensity.value = v;
     }
 
-    public void UpdateChromaticAberration(bool enabled)
+    public void UpdateChromaticAberration(object o)
     {
+        bool enabled = Convert.ToBoolean(o);
         PostProcess.profile.TryGet(out ChromaticAberration ca);
         ca.active = enabled;
     }

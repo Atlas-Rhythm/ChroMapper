@@ -15,8 +15,6 @@ public class WaveformGenerator : MonoBehaviour {
     [GradientUsage(true)]
     public Gradient spectrogramGradient2d;
 
-    public static float UpdateTick = 0.1f;
-
     private WaveformData waveformData;
     public int WaveformType;
 
@@ -25,7 +23,7 @@ public class WaveformGenerator : MonoBehaviour {
         WaveformType = Settings.Instance.Waveform;
         waveformData = new WaveformData();
         audioManager.SetSecondPerChunk(atsc.GetSecondsFromBeat(BeatmapObjectContainerCollection.ChunkSize));
-        spectroParent.position = new Vector3(spectroParent.position.x, 0, -atsc.offsetBeat * EditorScaleController.EditorScale * 2);
+        spectroParent.localPosition = new Vector3(0, 0, -atsc.offsetBeat * EditorScaleController.EditorScale * 2);
         if (WaveformType > 0) StartCoroutine(GenerateAllWaveforms());
         else gameObject.SetActive(false);
     }
@@ -38,7 +36,6 @@ public class WaveformGenerator : MonoBehaviour {
         audioManager.Begin(WaveformType == 2, WaveformType == 2 ? spectrogramHeightGradient : spectrogramGradient2d, source.clip, waveformData, atsc, BeatmapObjectContainerCollection.ChunkSize);
 
         int chunkId;
-        HashSet<int> renderedChunks = new HashSet<int>();
 
         // Loop while we have completed calulations waiting to be rendered
         //  or there are threads still running generating new chunks
@@ -51,7 +48,6 @@ public class WaveformGenerator : MonoBehaviour {
 
                 SpectrogramChunk chunk = Instantiate(spectrogramChunkPrefab, spectroParent).GetComponent<SpectrogramChunk>();
                 chunk.UpdateMesh(toRender, waveformData.BandColors[chunkId], chunkId, this);
-                renderedChunks.Add(chunkId);
 
                 // Wait 2 frames for smoooth
                 yield return new WaitForEndOfFrame();

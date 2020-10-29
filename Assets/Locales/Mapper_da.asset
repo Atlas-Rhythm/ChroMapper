@@ -109,7 +109,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 18
-    m_Localized: "Kromatisk forvr\xE6ngning"
+    m_Localized: Chromatic Aberration
     m_Metadata:
       m_Items: []
   - m_Id: 19
@@ -577,8 +577,7 @@ MonoBehaviour:
   - m_Id: 127
     m_Localized: Controls the density of generated events.
     m_Metadata:
-      m_Items:
-      - id: 13
+      m_Items: []
   - m_Id: 128
     m_Localized: Laser Speed Easing
     m_Metadata:
@@ -631,6 +630,11 @@ MonoBehaviour:
     m_Localized: Controls amount of precision for speed values.
     m_Metadata:
       m_Items: []
+  - m_Id: 141
+    m_Localized: 'Swings Per Second: {OverallSPS:F2}'
+    m_Metadata:
+      m_Items:
+      - id: 12
   references:
     version: 1
     00000000:
@@ -684,8 +688,4 @@ MonoBehaviour:
     0000000C:
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 7f000000
-    0000000D:
-      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
-      data:
-        m_Entries: 
+        m_Entries: 8d000000
