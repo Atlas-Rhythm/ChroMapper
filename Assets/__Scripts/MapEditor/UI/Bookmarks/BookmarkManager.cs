@@ -3,11 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System.Runtime.CompilerServices;
 
 public class BookmarkManager : MonoBehaviour, CMInput.IBookmarksActions
 {
-    internal List<BookmarkContainer> bookmarkContainers = new List<BookmarkContainer>();
+    public List<BookmarkContainer> bookmarkContainers = new List<BookmarkContainer>();
     [SerializeField] private GameObject bookmarkContainerPrefab;
     public AudioTimeSyncController atsc;
 
