@@ -994,6 +994,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Press"
+                },
+                {
+                    "name": "Rotate In Place Modifier",
+                    "type": "Button",
+                    "id": "9b649bd2-55a9-455a-8be1-d4fd56ec4fc2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
                 }
             ],
             "bindings": [
@@ -1071,6 +1079,17 @@
                     "processors": "",
                     "groups": "ChroMapper Default",
                     "action": "Place 15 Degree Left Rotation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f523df17-11b6-408b-be6f-f14a35fbf6f2",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "ChroMapper Default",
+                    "action": "Rotate In Place Modifier",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

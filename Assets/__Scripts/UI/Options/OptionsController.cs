@@ -32,7 +32,7 @@ public class OptionsController : MonoBehaviour, CMInput.IPauseMenuActions
         {
             disableActionMaps = typeof(CMInput).GetNestedTypes().Where(x => x.IsInterface && x != typeof(CMInput.IPauseMenuActions));
         }
-        CMInputCallbackInstaller.DisableActionMaps(disableActionMaps);
+        CMInputCallbackInstaller.DisableActionMaps(typeof(OptionsController), disableActionMaps);
         OptionsLoadedEvent?.Invoke();
         IsActive = true;
     }
@@ -50,7 +50,7 @@ public class OptionsController : MonoBehaviour, CMInput.IPauseMenuActions
     private IEnumerator CloseOptions()
     {
         yield return StartCoroutine(Close(2, optionsCanvasGroup));
-        CMInputCallbackInstaller.ClearDisabledActionMaps(disableActionMaps);
+        CMInputCallbackInstaller.ClearDisabledActionMaps(typeof(OptionsController), disableActionMaps);
         IsActive = false;
         yield return SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName("04_Options"));
     }

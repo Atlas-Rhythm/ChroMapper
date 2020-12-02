@@ -10,7 +10,6 @@ using UnityEngine.InputSystem;
 public class AutoSaveController : MonoBehaviour, CMInput.ISavingActions
 {
     private float t;
-    [SerializeField] private Toggle autoSaveToggle;
 
     private Thread savingThread = null;
 

@@ -397,11 +397,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b4830415a7ca3d48b60ff8e6cd4d5f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  validationImg: {fileID: 439774908368387196}
+  validationImg: {fileID: 7279775832268890049}
+  input: {fileID: 1025854254668288808}
   goodSprite: {fileID: 21300124, guid: b6cbb1b9e5aaba74a8dbd0ce1f54f5bf, type: 3}
   goodColor: {r: 0.20392157, g: 0.80784315, b: 0, a: 1}
   badSprite: {fileID: 21300032, guid: b6cbb1b9e5aaba74a8dbd0ce1f54f5bf, type: 3}
   badColor: {r: 0.80784315, g: 0, b: 0, a: 1}
+  filetypeName: 
+  extensions: []
+  enableValidation: 0
 --- !u!1 &6367854295155253293
 GameObject:
   m_ObjectHideFlags: 0

@@ -21,7 +21,6 @@ public class ScaleToSpectrum : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(SpectrumManager.currentValue);
         if(SpectrumManager.currentValue > beatThreshold && SpectrumManager.lastValue < beatThreshold ||
             SpectrumManager.currentValue < beatThreshold && SpectrumManager.lastValue > beatThreshold)
         {

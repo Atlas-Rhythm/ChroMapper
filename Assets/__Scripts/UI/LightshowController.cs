@@ -10,7 +10,6 @@ public class LightshowController : MonoBehaviour, CMInput.ILightshowActions
 
     void Start()
     {
-        atsc.OnPlayToggle += PlayToggled;
         Settings.NotifyBySettingName("Lightshow", (val) => UpdateLightshow((bool)val));
         if(Settings.NonPersistentSettings.TryGetValue("Lightshow", out object value))
             UpdateLightshow((bool)value);
@@ -18,16 +17,7 @@ public class LightshowController : MonoBehaviour, CMInput.ILightshowActions
 
     void OnDestroy()
     {
-        atsc.OnPlayToggle -= PlayToggled;
         Settings.ClearSettingNotifications("Lightshow");
-    }
-
-    private void PlayToggled(bool playing)
-    {
-        if (playing)
-            StartCoroutine(WaitThatMagicNumber());
-        else
-            foreach (GameObject obj in ThingsToToggle) obj.SetActive(true);
     }
 	
     public void UpdateLightshow(bool enabled)

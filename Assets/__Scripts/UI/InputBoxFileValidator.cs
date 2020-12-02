@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class InputBoxFileValidator : MonoBehaviour
 {
     //[SerializeField] private GameObject inputMask;
-    [SerializeField] private GameObject validationImg;
+    [SerializeField] private Image validationImg;
     [SerializeField] private TMP_InputField input;
 
     [SerializeField] private Sprite goodSprite;
@@ -40,7 +40,6 @@ public class InputBoxFileValidator : MonoBehaviour
 
     public void OnUpdate()
     {
-        return;
         BeatSaberSong song = BeatSaberSongContainer.Instance?.song;
 
         string filename = input.text;

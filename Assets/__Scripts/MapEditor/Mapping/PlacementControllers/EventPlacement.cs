@@ -27,11 +27,8 @@ public class EventPlacement : PlacementController<MapEvent, BeatmapEventContaine
     [SerializeField] private EventPlacementUI eventPlacementUI;
     [SerializeField] private Toggle redEventToggle;
     [SerializeField] private ToggleColourDropdown dropdown;
-<<<<<<< HEAD
     [SerializeField] private MeshRenderer eventGridTileMesh;
-=======
     [SerializeField] private CreateEventTypeLabels labels;
->>>>>>> bc2ee03b553e4df52670204e33ba55b07b220f11
 
     private int queuedValue = MapEvent.LIGHT_VALUE_RED_ON;
     private bool negativeRotations = false;
@@ -39,6 +36,7 @@ public class EventPlacement : PlacementController<MapEvent, BeatmapEventContaine
     public bool PlacePrecisionRotation = false;
     public int PrecisionRotationValue = 0;
 
+    private bool lateRotatePlace = false;
 
     public void SetGridSize(int gridSize = 16)
     {
@@ -261,11 +259,16 @@ public class EventPlacement : PlacementController<MapEvent, BeatmapEventContaine
 
     public void OnPlace15DegreeRightRotation(InputAction.CallbackContext context)
     {
-        if (context.performed) PlaceRotationNow(true, KeybindsController.ShiftHeld);
+        if (context.performed) PlaceRotationNow(true, lateRotatePlace);
     }
 
     public void OnPlace15DegreeLeftRotation(InputAction.CallbackContext context)
     {
-        if (context.performed) PlaceRotationNow(false, KeybindsController.ShiftHeld);
+        if (context.performed) PlaceRotationNow(false, lateRotatePlace);
+    }
+
+    public void OnRotateInPlaceModifier(InputAction.CallbackContext context)
+    {
+        lateRotatePlace = context.performed;
     }
 }

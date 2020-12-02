@@ -107,7 +107,7 @@ public class SongInfoEditUI : MenuBase
     [SerializeField] Image revertInfoButtonImage;
 
     [SerializeField] Image coverImage;
-    [SerializeField] ContributorsController contributorController;
+    //[SerializeField] ContributorsController contributorController;
 
     void Start() {
         if (BeatSaberSongContainer.Instance == null) {
@@ -174,8 +174,8 @@ public class SongInfoEditUI : MenuBase
             Song.customData.Remove("_customEnvironmentHash");
         }
 
-        contributorController.Commit();
-        Song.contributors = contributorController.contributors;
+        //contributorController.Commit();
+        //Song.contributors = contributorController.contributors;
 
         Song.SaveSong();
 
@@ -227,7 +227,7 @@ public class SongInfoEditUI : MenuBase
             customPlatformsDropdown.captionText.text = "None";
         }
 
-        contributorController.UndoChanges();
+        //contributorController.UndoChanges();
 
         ReloadCover();
         ReloadAudio();
@@ -539,13 +539,13 @@ public class SongInfoEditUI : MenuBase
             PersistentUI.Instance.ShowDialogBox("SongEditMenu", "unsaveddiff.warning", callback,
             PersistentUI.DialogBoxPresetType.YesNo);
             return true;
-        }
+        }/*
         else if (contributorController.IsDirty())
         {
             PersistentUI.Instance.ShowDialogBox("SongEditMenu", "unsavedcontributor.warning", callback,
             PersistentUI.DialogBoxPresetType.YesNo);
             return true;
-        }
+        }*/
         callback(0);
         return false;
     }
@@ -559,8 +559,8 @@ public class SongInfoEditUI : MenuBase
         // Do nothing if a dialog is open
         if (PersistentUI.Instance.DialogBox_IsEnabled) return;
 
-        var wrapper = contributorController.transform.parent.gameObject;
-        wrapper.SetActive(!wrapper.activeSelf);
+        //var wrapper = contributorController.transform.parent.gameObject;
+        //wrapper.SetActive(!wrapper.activeSelf);
     }
 
     /// <summary>

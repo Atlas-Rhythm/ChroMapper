@@ -29,10 +29,10 @@ public class ColorTypeController : MonoBehaviour
             descriptor = Resources.FindObjectsOfTypeAll<PlatformDescriptor>().FirstOrDefault(x => x.isActiveAndEnabled);
             yield return new WaitForFixedUpdate();
         }
-        leftNote.color = descriptor.RedNoteColor;
-        leftLight.color = descriptor.RedColor;
-        rightNote.color = descriptor.BlueNoteColor;
-        rightLight.color = descriptor.BlueColor;
+        leftNote.color = descriptor.colors.RedNoteColor;
+        leftLight.color = descriptor.colors.RedColor;
+        rightNote.color = descriptor.colors.BlueNoteColor;
+        rightLight.color = descriptor.colors.BlueColor;
     }
 
     public void RedNote(bool active)

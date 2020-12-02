@@ -1007,6 +1007,14 @@ public class @CMInput : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""Rotate In Place Modifier"",
+                    ""type"": ""Button"",
+                    ""id"": ""9b649bd2-55a9-455a-8be1-d4fd56ec4fc2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
                 }
             ],
             ""bindings"": [
@@ -1084,6 +1092,17 @@ public class @CMInput : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""ChroMapper Default"",
                     ""action"": ""Place 15 Degree Left Rotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f523df17-11b6-408b-be6f-f14a35fbf6f2"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""ChroMapper Default"",
+                    ""action"": ""Rotate In Place Modifier"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -3174,6 +3193,7 @@ public class @CMInput : IInputActionCollection, IDisposable
         m_EventPlacement_NegativeRotationModifier = m_EventPlacement.FindAction("Negative Rotation Modifier", throwIfNotFound: true);
         m_EventPlacement_Place15DegreeRightRotation = m_EventPlacement.FindAction("Place 15 Degree Right Rotation", throwIfNotFound: true);
         m_EventPlacement_Place15DegreeLeftRotation = m_EventPlacement.FindAction("Place 15 Degree Left Rotation", throwIfNotFound: true);
+        m_EventPlacement_RotateInPlaceModifier = m_EventPlacement.FindAction("Rotate In Place Modifier", throwIfNotFound: true);
         // Workflows
         m_Workflows = asset.FindActionMap("Workflows", throwIfNotFound: true);
         m_Workflows_ChangeWorkflows = m_Workflows.FindAction("Change Workflows", throwIfNotFound: true);
@@ -3735,6 +3755,7 @@ public class @CMInput : IInputActionCollection, IDisposable
     private readonly InputAction m_EventPlacement_NegativeRotationModifier;
     private readonly InputAction m_EventPlacement_Place15DegreeRightRotation;
     private readonly InputAction m_EventPlacement_Place15DegreeLeftRotation;
+    private readonly InputAction m_EventPlacement_RotateInPlaceModifier;
     public struct EventPlacementActions
     {
         private @CMInput m_Wrapper;
@@ -3746,6 +3767,7 @@ public class @CMInput : IInputActionCollection, IDisposable
         public InputAction @NegativeRotationModifier => m_Wrapper.m_EventPlacement_NegativeRotationModifier;
         public InputAction @Place15DegreeRightRotation => m_Wrapper.m_EventPlacement_Place15DegreeRightRotation;
         public InputAction @Place15DegreeLeftRotation => m_Wrapper.m_EventPlacement_Place15DegreeLeftRotation;
+        public InputAction @RotateInPlaceModifier => m_Wrapper.m_EventPlacement_RotateInPlaceModifier;
         public InputActionMap Get() { return m_Wrapper.m_EventPlacement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -3776,6 +3798,9 @@ public class @CMInput : IInputActionCollection, IDisposable
                 @Place15DegreeLeftRotation.started -= m_Wrapper.m_EventPlacementActionsCallbackInterface.OnPlace15DegreeLeftRotation;
                 @Place15DegreeLeftRotation.performed -= m_Wrapper.m_EventPlacementActionsCallbackInterface.OnPlace15DegreeLeftRotation;
                 @Place15DegreeLeftRotation.canceled -= m_Wrapper.m_EventPlacementActionsCallbackInterface.OnPlace15DegreeLeftRotation;
+                @RotateInPlaceModifier.started -= m_Wrapper.m_EventPlacementActionsCallbackInterface.OnRotateInPlaceModifier;
+                @RotateInPlaceModifier.performed -= m_Wrapper.m_EventPlacementActionsCallbackInterface.OnRotateInPlaceModifier;
+                @RotateInPlaceModifier.canceled -= m_Wrapper.m_EventPlacementActionsCallbackInterface.OnRotateInPlaceModifier;
             }
             m_Wrapper.m_EventPlacementActionsCallbackInterface = instance;
             if (instance != null)
@@ -3801,6 +3826,9 @@ public class @CMInput : IInputActionCollection, IDisposable
                 @Place15DegreeLeftRotation.started += instance.OnPlace15DegreeLeftRotation;
                 @Place15DegreeLeftRotation.performed += instance.OnPlace15DegreeLeftRotation;
                 @Place15DegreeLeftRotation.canceled += instance.OnPlace15DegreeLeftRotation;
+                @RotateInPlaceModifier.started += instance.OnRotateInPlaceModifier;
+                @RotateInPlaceModifier.performed += instance.OnRotateInPlaceModifier;
+                @RotateInPlaceModifier.canceled += instance.OnRotateInPlaceModifier;
             }
         }
     }
@@ -5123,6 +5151,7 @@ public class @CMInput : IInputActionCollection, IDisposable
         void OnNegativeRotationModifier(InputAction.CallbackContext context);
         void OnPlace15DegreeRightRotation(InputAction.CallbackContext context);
         void OnPlace15DegreeLeftRotation(InputAction.CallbackContext context);
+        void OnRotateInPlaceModifier(InputAction.CallbackContext context);
     }
     public interface IWorkflowsActions
     {
