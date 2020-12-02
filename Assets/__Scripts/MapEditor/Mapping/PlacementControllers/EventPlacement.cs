@@ -92,6 +92,7 @@ public class EventPlacement : PlacementController<MapEvent, BeatmapEventContaine
             int propID = Mathf.FloorToInt(instantiatedContainer.transform.localPosition.x - 1);
             if (propID >= 0)
             {
+                propID = labels.EditorToGamePropID(queuedData._type, propID);
                 if (queuedData._customData == null || queuedData._customData?.Children.Count() == 0)
                 {
                     queuedData._customData = new JSONObject();
@@ -223,8 +224,14 @@ public class EventPlacement : PlacementController<MapEvent, BeatmapEventContaine
     {
         dragged._time = queued._time;
         dragged._type = queued._type;
-        //dragged._value = queued._value; //I dont think we need this, could cause confusion.
-        dragged._customData = queued._customData;
+        // Instead of copying the whole custom data, only copy prop ID
+        if (dragged._customData != null && queued._customData != null)
+        {
+            if (queued._customData.HasKey("_propID"))
+            {
+                dragged._customData["_propID"] = queued._customData["_propID"];
+            }
+        }
     }
 
     public override void ClickAndDragFinished()

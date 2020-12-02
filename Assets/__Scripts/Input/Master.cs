@@ -995,7 +995,7 @@ public class @CMInput : IInputActionCollection, IDisposable
                 {
                     ""name"": ""Place 15 Degree Right Rotation"",
                     ""type"": ""Button"",
-                    ""id"": ""723b6f71-0cbb-4208-86cd-58faace64972"",
+                    ""id"": ""244fb358-a2d5-4cf7-a01b-c8c8fa87684c"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press""
@@ -1003,7 +1003,7 @@ public class @CMInput : IInputActionCollection, IDisposable
                 {
                     ""name"": ""Place 15 Degree Left Rotation"",
                     ""type"": ""Button"",
-                    ""id"": ""228cfffb-7859-4833-91cd-3afd5b28b868"",
+                    ""id"": ""5c9b95df-fc71-41bb-911d-4c7889742f71"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press""
@@ -1011,7 +1011,7 @@ public class @CMInput : IInputActionCollection, IDisposable
                 {
                     ""name"": ""Rotate In Place Modifier"",
                     ""type"": ""Button"",
-                    ""id"": ""9b649bd2-55a9-455a-8be1-d4fd56ec4fc2"",
+                    ""id"": ""d9a4d257-8651-41a8-868c-b6f7a0bfa34a"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press""
@@ -1075,7 +1075,7 @@ public class @CMInput : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""deed87c0-d29d-48b5-bccb-88f5ae457443"",
+                    ""id"": ""ccd0c951-ea71-4a55-b959-608adb84ee3c"",
                     ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -1086,7 +1086,7 @@ public class @CMInput : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""0838f099-f949-4bec-84ce-9618a332a5e1"",
+                    ""id"": ""39dc98b7-7523-4743-baaf-88197ac8ba9b"",
                     ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -1097,7 +1097,7 @@ public class @CMInput : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""f523df17-11b6-408b-be6f-f14a35fbf6f2"",
+                    ""id"": ""f56c90b5-e7ec-4753-a879-4c465321b520"",
                     ""path"": ""<Keyboard>/shift"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -1296,7 +1296,7 @@ public class @CMInput : IInputActionCollection, IDisposable
                 {
                     ""name"": ""Swap Cursor Interval"",
                     ""type"": ""Button"",
-                    ""id"": ""60357567-32b2-4ce1-bc8b-61fbcd12e0ca"",
+                    ""id"": ""1b5c71b4-b5a9-495b-8ef0-406782c38e2d"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press""
@@ -1360,7 +1360,7 @@ public class @CMInput : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""f531e1e7-75d2-4353-ae45-1a5f05d90961"",
+                    ""id"": ""9863ae8c-58be-4df0-911c-163e8b20bad6"",
                     ""path"": ""<Keyboard>/x"",
                     ""interactions"": """",
                     ""processors"": """",

@@ -21,8 +21,8 @@ public class BeatSaberSongContainer : MonoBehaviour {
         this.song = song;
         AnimationTransitionManager.instance.TransitionAway(() =>
         {
-            SceneManager.LoadSceneAsync(2);
+            SceneManager.LoadSceneAsync("02_SongEditMenu");
         });
-        //SceneTransitionManager.Instance.LoadScene(2);
+        //SceneTransitionManager.Instance.LoadScene("02_SongEditMenu");
     }
 }

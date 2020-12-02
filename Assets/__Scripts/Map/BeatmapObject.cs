@@ -1,5 +1,6 @@
 ﻿using SimpleJSON;
 using System;
+using UnityEngine;
 
 public abstract class BeatmapObject {
 
@@ -52,8 +53,20 @@ public abstract class BeatmapObject {
     public static T GenerateCopy<T>(T originalData) where T : BeatmapObject
     {
         if (originalData is null) throw new ArgumentException("originalData is null.");
-        T objectData = Activator.CreateInstance(originalData.GetType(), new object[] { originalData.ConvertToJSON() }) as T;
-        if (originalData._customData != null) objectData._customData = originalData._customData.Clone();
+        T objectData;
+        switch (originalData)
+        {
+            case MapEvent evt:
+                objectData = new MapEvent(evt._time, evt._type, evt._value, originalData._customData?.Clone()) as T;
+                break;
+            case BeatmapNote note:
+                objectData = new BeatmapNote(note._time, note._lineIndex, note._lineLayer, note._type, note._cutDirection, originalData._customData?.Clone()) as T;
+                break;
+            default:
+                objectData = Activator.CreateInstance(originalData.GetType(), new object[] { originalData.ConvertToJSON() }) as T;
+                if (originalData._customData != null) objectData._customData = originalData._customData.Clone();
+                break;
+        }
         return objectData;
     }
 
@@ -70,7 +83,7 @@ public abstract class BeatmapObject {
     /// <returns>Whether or not they are conflicting with each other.</returns>
     public virtual bool IsConflictingWith(BeatmapObject other, bool deletion = false)
     {
-        if (_time == other._time)
+        if (Mathf.Abs(_time - other._time) < BeatmapObjectContainerCollection.Epsilon)
         {
             return IsConflictingWithObjectAtSameTime(other, deletion);
         }

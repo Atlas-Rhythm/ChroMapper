@@ -459,7 +459,7 @@ public class SongInfoEditUI : MenuBase
     {
         if (r == 0)
         {
-            SceneTransitionManager.Instance.LoadScene(1);
+            SceneTransitionManager.Instance.LoadScene("01_SongSelectMenu");
         }
     }
 
@@ -515,7 +515,7 @@ public class SongInfoEditUI : MenuBase
                 Settings.Instance.LastLoadedChar = BeatSaberSongContainer.Instance.difficultyData.parentBeatmapSet.beatmapCharacteristicName;
                 Settings.Instance.LastLoadedDiff = BeatSaberSongContainer.Instance.difficultyData.difficulty;
                 BeatSaberSongContainer.Instance.map = map;
-                SceneTransitionManager.Instance.LoadScene(3, LoadAudio(false));
+                SceneTransitionManager.Instance.LoadScene("03_Mapper", LoadAudio(false));
             }
         }
     }
@@ -539,13 +539,7 @@ public class SongInfoEditUI : MenuBase
             PersistentUI.Instance.ShowDialogBox("SongEditMenu", "unsaveddiff.warning", callback,
             PersistentUI.DialogBoxPresetType.YesNo);
             return true;
-        }/*
-        else if (contributorController.IsDirty())
-        {
-            PersistentUI.Instance.ShowDialogBox("SongEditMenu", "unsavedcontributor.warning", callback,
-            PersistentUI.DialogBoxPresetType.YesNo);
-            return true;
-        }*/
+        }
         callback(0);
         return false;
     }
@@ -561,18 +555,6 @@ public class SongInfoEditUI : MenuBase
 
         //var wrapper = contributorController.transform.parent.gameObject;
         //wrapper.SetActive(!wrapper.activeSelf);
-    }
-
-    /// <summary>
-    /// Load contributor edit screen
-    /// </summary>
-    /// <param name="r">Confirmation from the user</param>
-    private void HandleEditContributors(int r)
-    {
-        if (r == 0)
-        {
-            SceneTransitionManager.Instance.LoadScene(5);
-        }
     }
 
     /// <summary>

@@ -23,15 +23,6 @@ public class InputBoxFileValidator : MonoBehaviour
     [SerializeField] private bool enableValidation = false;
 
     private Vector2 startOffset;
-    /*
-    public void Awake()
-    {
-        var transform = inputMask.GetComponent<RectTransform>();
-        startOffset = transform.offsetMax;
-        // This will get un-done on start, but will stop negative text scroll
-        // Shouldn't really be in awake but it needs to run before SongInfoEditUI sets the text value
-        transform.offsetMax = new Vector2(startOffset.x - 36, startOffset.y);
-    }*/
 
     public void Start()
     {

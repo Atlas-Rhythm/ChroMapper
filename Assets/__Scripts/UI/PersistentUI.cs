@@ -87,6 +87,8 @@ public class PersistentUI : MonoBehaviour {
     [SerializeField]
     private MessageDisplayer bottomDisplay;
 
+    public bool enableTransitions = true;
+
     private void Start() {
         CMInputCallbackInstaller.PersistentObject(transform);
         LocalizationSettings.SelectedLocale = Locale.CreateLocale(Settings.Instance.Language);
@@ -148,7 +150,7 @@ public class PersistentUI : MonoBehaviour {
         loadingCanvasGroup.blocksRaycasts = true;
         loadingCanvasGroup.interactable = true;
         float t = 0;
-        while (t < 1) {
+        while (t < 1 && enableTransitions) {
             loadingCanvasGroup.alpha = fadeInCurve.Evaluate(t);
             t += Time.deltaTime * rate;
             yield return null;
@@ -162,7 +164,7 @@ public class PersistentUI : MonoBehaviour {
 
     IEnumerator FadeOutLoadingScreen(float rate) {
         float t = 1;
-        while (t > 0) {
+        while (t > 0 && enableTransitions) {
             loadingCanvasGroup.alpha = fadeOutCurve.Evaluate(t);
             t -= Time.deltaTime * rate;
             yield return null;

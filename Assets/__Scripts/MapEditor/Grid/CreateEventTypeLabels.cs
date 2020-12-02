@@ -11,6 +11,7 @@ public class CreateEventTypeLabels : MonoBehaviour {
     public GameObject LayerInstantiate;
     public Transform[] EventGrid;
     //[SerializeField] private DarkThemeSO darkTheme;
+	
     public RotationCallbackController RotationCallback;
     private bool loadedWithRotationEvents = false;
     [HideInInspector] public int NoRotationLaneOffset => loadedWithRotationEvents || RotationCallback.IsActive ? 0 : -2;
@@ -146,6 +147,20 @@ public class CreateEventTypeLabels : MonoBehaviour {
     public int EventTypeToLaneId(int eventType)
     {
         return laneObjs.FindIndex(it => it.Type == eventType);
+    }
+
+    public int GameToEditorPropID(int type, int propID)
+    {
+        var map = LightingManagers[type].EditorToGamePropIDMap;
+        if (!map.Any()) return propID;
+        return map.IndexOf(propID);
+    }
+
+    public int EditorToGamePropID(int type, int propID)
+    {
+        var map = LightingManagers[type].EditorToGamePropIDMap;
+        if (!map.Any()) return propID;
+        return map[propID];
     }
 
     private static int[] ModifiedToEventArray = { 14, 15, 0, 1, 2, 3, 4, 8, 9, 12, 13, 5, 6, 7, 10, 11 };

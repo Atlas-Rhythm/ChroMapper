@@ -257,15 +257,15 @@ public class PlatformDescriptor : MonoBehaviour {
         }
         
         //Check to see if we're soloing any particular event
-        if (SoloAnEventType && e._type != SoloEventType) mainColor = invertedColor = Color.black;
+        if (SoloAnEventType && e._type != SoloEventType) mainColor = invertedColor = Color.black.WithAlpha(0);
 
         IEnumerable<LightingEvent> allLights = group.ControllingLights;
         if (e._customData?.HasKey("_propID") ?? false && Settings.Instance.EmulateChromaAdvanced)
         {
-            int propID = e._customData["_propID"].AsInt;
+            int propID = group.EditorToGamePropIDMap.IndexOf(e._customData["_propID"].AsInt);
             if (propID >= 0 && propID < group.LightsGroupedByZ.Length)
             {
-                allLights = group.LightsGroupedByZ[propID];
+                allLights = group.LightsGroupedByZ[propID].Lights;
             }
             else
             {

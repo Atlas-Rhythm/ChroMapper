@@ -34,12 +34,12 @@ public class EditorButtons : MonoBehaviour
         {
             Save();
             OptionsController.IsActive = false;
-            SceneTransitionManager.Instance.LoadScene(2);
+            SceneTransitionManager.Instance.LoadScene("02_SongEditMenu");
         }
         else if (result == 1) //Middle button (ID 1) clicked; the user does not want to save before exiting.
         {
             OptionsController.IsActive = false;
-            SceneTransitionManager.Instance.LoadScene(2);
+            SceneTransitionManager.Instance.LoadScene("02_SongEditMenu");
         }
         //Right button (ID 2) would be clicked; the user does not want to exit the editor after all, so we aint doing shit.
     }

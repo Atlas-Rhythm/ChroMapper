@@ -12,6 +12,7 @@ public class EventsContainer : BeatmapObjectContainerCollection, CMInput.IEventG
     [SerializeField] private TracksManager tracksManager;
     [SerializeField] private EventPlacement eventPlacement;
     [SerializeField] private CreateEventTypeLabels labels;
+    [SerializeField] private BoxSelectionPlacementController boxSelectionPlacementController;
 
     internal PlatformDescriptor platformDescriptor;
 
@@ -30,6 +31,7 @@ public class EventsContainer : BeatmapObjectContainerCollection, CMInput.IEventG
         set
         {
             propagationEditing = value;
+            boxSelectionPlacementController.CancelPlacement();
             int propagationLength = platformDescriptor.LightingManagers[EventTypeToPropagate]?.LightsGroupedByZ?.Length ?? 0;
             labels.UpdateLabels(value, EventTypeToPropagate, value ? propagationLength + 1 : 16);
             eventPlacement.SetGridSize(value ? propagationLength + 1 : SpecialEventTypeCount + platformDescriptor.LightingManagers.Count(s => s != null));
@@ -117,18 +119,25 @@ public class EventsContainer : BeatmapObjectContainerCollection, CMInput.IEventG
     {
         foreach (BeatmapObjectContainer con in LoadedContainers.Values)
         {
+            if (!(con is BeatmapEventContainer e)) continue;
             if (propagationEditing)
             {
-                int pos = 0;
-                if (con.objectData._customData != null && con.objectData._customData["_propID"].IsNumber)
-                    pos = (con.objectData?._customData["_propID"]?.AsInt  ?? -1) + 1;
-                if ((con is BeatmapEventContainer e) && e.eventData._type != EventTypeToPropagate)
+                int pos = -1;
+                if (e.eventData._type != EventTypeToPropagate)
                 {
                     con.SafeSetActive(false);
-                    pos = -1;
                 }
                 else
                 {
+                    if (con.objectData._customData != null && con.objectData._customData["_propID"].IsNumber)
+                    {
+                        pos = con.objectData?._customData["_propID"]?.AsInt ?? -1;
+                    }
+
+                    pos = labels.GameToEditorPropID(e.eventData._type, pos);
+
+                    pos++;
+
                     con.SafeSetActive(true);
                 }
                 con.transform.localPosition = new Vector3(pos + 0.5f, 0.5f, con.transform.localPosition.z);

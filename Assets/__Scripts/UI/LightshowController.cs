@@ -19,7 +19,7 @@ public class LightshowController : MonoBehaviour, CMInput.ILightshowActions
     {
         Settings.ClearSettingNotifications("Lightshow");
     }
-	
+
     public void UpdateLightshow(bool enabled)
     {
         showObjects = enabled;

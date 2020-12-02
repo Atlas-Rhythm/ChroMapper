@@ -150,7 +150,7 @@ public class NotesContainer : BeatmapObjectContainerCollection {
         objectsAtSameTime.Clear();
         foreach (var x in LoadedContainers)
         {
-            if (!(x.Key._time - epsilon <= obj._time && x.Key._time + epsilon >= obj._time &&
+            if (!(x.Key._time - Epsilon <= obj._time && x.Key._time + Epsilon >= obj._time &&
             (x.Key as BeatmapNote)._type == (obj as BeatmapNote)._type)) continue;
 
             objectsAtSameTime.Add(x.Value);

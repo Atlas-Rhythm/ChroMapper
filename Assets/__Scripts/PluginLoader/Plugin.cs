@@ -17,6 +17,8 @@ public class Plugin
     {
         typeof(InitAttribute),
         typeof(ObjectLoadedAttribute),
+        typeof(EventPassedThresholdAttribute),
+        typeof(NotePassedThresholdAttribute),
         typeof(ExitAttribute)
     };
 

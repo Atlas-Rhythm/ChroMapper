@@ -7,6 +7,22 @@ public abstract class BeatmapObjectContainerCollection : MonoBehaviour
 {
     public static readonly int ChunkSize = 5;
 
+    public static float Epsilon = 0.001f;
+    public static float TranslucentCull = -0.001f;
+
+    private void Start()
+    {
+        UpdateEpsilon(Settings.Instance.TimeValueDecimalPrecision);
+        Settings.NotifyBySettingName("TimeValueDecimalPrecision", UpdateEpsilon);
+        Settings.NotifyBySettingName("EditorScale", UpdateEpsilon);
+    }
+
+    private void UpdateEpsilon(object precision)
+    {
+        Epsilon = 1 / Mathf.Pow(10, Settings.Instance.TimeValueDecimalPrecision);
+        TranslucentCull = -Settings.Instance.EditorScale * Epsilon;
+    }
+
     public static string TrackFilterID { get; private set; } = null;
 
     private static Dictionary<BeatmapObject.Type, BeatmapObjectContainerCollection> loadedCollections = new Dictionary<BeatmapObject.Type, BeatmapObjectContainerCollection>();
@@ -158,7 +174,6 @@ public abstract class BeatmapObjectContainerCollection : MonoBehaviour
         BeatmapObjectContainer dequeued = PooledContainers.Dequeue();
         dequeued.objectData = obj;
         dequeued.transform.localEulerAngles = Vector3.zero;
-        //dequeued.transform.SetParent(GridTransform);
         dequeued.UpdateGridPosition();
         dequeued.SafeSetActive(true);
         UpdateContainerData(dequeued, obj);
@@ -256,7 +271,7 @@ public abstract class BeatmapObjectContainerCollection : MonoBehaviour
             //Debug.Log($"Deleting container with hash code {toDelete.GetHashCode()}");
             UnsortedObjects.Remove(toDelete);
             LoadedObjects.Remove(toDelete2);
-            SelectionController.Deselect(toDelete);
+            SelectionController.Deselect(toDelete, triggersAction);
             if (triggersAction) BeatmapActionContainer.AddAction(new BeatmapObjectDeletionAction(toDelete, comment));
             RecycleContainer(toDelete);
             if (refreshesPool) RefreshPool();
