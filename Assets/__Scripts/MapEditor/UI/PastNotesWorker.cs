@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,6 +20,7 @@ public class PastNotesWorker : MonoBehaviour
     private float scale = 0;
 
     private Dictionary<int, Dictionary<GameObject, Image>> InstantiatedNotes = new Dictionary<int, Dictionary<GameObject, Image>>();
+    private List<BeatmapObject> lastGroup = new List<BeatmapObject>();
 
     private void Start()
     {
@@ -51,15 +51,28 @@ public class PastNotesWorker : MonoBehaviour
         Settings.ClearSettingNotifications("PastNotesGridScale");
     }
 
-    private bool _firstLoad = true;
-
     private void OnTimeChanged()
     {
         if (atsc.IsPlaying) return;
-        var grouping = notesContainer.LoadedObjects.GroupBy(x => x._time);
-        var lastGroup = grouping.LastOrDefault(x => x.Key < atsc.CurrentBeat);
-        if (lastGroup is null) return;
-        foreach (BeatmapObject note in lastGroup.Where(x => (x as BeatmapNote)._type != BeatmapNote.NOTE_TYPE_BOMB))
+        var time = 0f;
+        lastGroup.Clear();
+
+        foreach (var note in notesContainer.LoadedObjects)
+        {
+            if (time < note._time && note._time < atsc.CurrentBeat)
+            {
+                time = note._time;
+                lastGroup.Clear();
+                if ((note as BeatmapNote)._type != BeatmapNote.NOTE_TYPE_BOMB)
+                    lastGroup.Add(note);
+            }
+            else if (time == note._time && (note as BeatmapNote)._type != BeatmapNote.NOTE_TYPE_BOMB)
+            {
+                lastGroup.Add(note);
+            }
+        }
+
+        foreach (BeatmapObject note in lastGroup)
         {
             NotePassedThreshold(false, 0, note);
         }
@@ -98,6 +111,14 @@ public class PastNotesWorker : MonoBehaviour
             else if (gridPosY <= -1000f) gridPosY = gridPosY / 1000f + 1f;
         }
 
+        var position = new Vector3(_gridSize * gridPosX, _gridSize * gridPosY, 1);
+
+        if (InstantiatedNotes[note._type].Any(x => x.Key.activeSelf && x.Value.transform.localPosition == position))
+        {
+            // Note already visible
+            return;
+        }
+
         GameObject g; //Instead of instantiating new objects every frame (Bad on performance), we are instead using a pooled system to use
         Image img; //Already existing notes, and only create ones we need.
         if (InstantiatedNotes[note._type].Any(x => !x.Key.activeSelf))
@@ -116,7 +137,7 @@ public class PastNotesWorker : MonoBehaviour
         }
 
         var transform1 = img.transform;
-        transform1.localPosition = new Vector3(_gridSize * gridPosX, _gridSize * gridPosY, 1);
+        transform1.localPosition = position;
         float sc = scale / 10f + .06f;
         transform1.localScale = new Vector3(sc, sc); //I have to do this because the UI scaling is weird
 

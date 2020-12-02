@@ -64,7 +64,7 @@ public class NotePlacement : PlacementController<BeatmapNote, BeatmapNoteContain
         {
             if (Settings.Instance.PrecisionPlacementGrid)
             {
-                return base.IsValid || (UsePrecisionPlacement && IsActive && !NodeEditorController.IsActive);
+                return base.IsValid || (usePrecisionPlacement && IsActive && !NodeEditorController.IsActive);
             }
             else
             {
@@ -112,7 +112,7 @@ public class NotePlacement : PlacementController<BeatmapNote, BeatmapNoteContain
             }
         }
 
-        if (UsePrecisionPlacement)
+        if (usePrecisionPlacement)
         {
             queuedData._lineIndex = queuedData._lineLayer = 0;
 
@@ -150,6 +150,11 @@ public class NotePlacement : PlacementController<BeatmapNote, BeatmapNoteContain
     public void UpdateCut(int value)
     {
         queuedData._cutDirection = value;
+        if (draggedObjectContainer != null && draggedObjectContainer.mapNoteData != null)
+        {
+            draggedObjectContainer.mapNoteData._cutDirection = value;
+            noteAppearanceSO?.SetNoteAppearance(draggedObjectContainer);
+        }
         UpdateAppearance();
     }
 
@@ -306,5 +311,29 @@ public class NotePlacement : PlacementController<BeatmapNote, BeatmapNoteContain
         if (!context.performed) return;
         deleteToolController.UpdateDeletion(false);
         UpdateCut(BeatmapNote.NOTE_CUT_DIRECTION_ANY);
+    }
+
+    public void OnUpLeftNote(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            UpdateCut(BeatmapNote.NOTE_CUT_DIRECTION_UP_LEFT);
+    }
+
+    public void OnUpRightNote(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            UpdateCut(BeatmapNote.NOTE_CUT_DIRECTION_UP_RIGHT);
+    }
+
+    public void OnDownRightNote(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            UpdateCut(BeatmapNote.NOTE_CUT_DIRECTION_DOWN_RIGHT);
+    }
+
+    public void OnDownLeftNote(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            UpdateCut(BeatmapNote.NOTE_CUT_DIRECTION_DOWN_LEFT);
     }
 }

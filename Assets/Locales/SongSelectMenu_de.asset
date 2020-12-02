@@ -32,7 +32,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 4
-    m_Localized: Lieder aktualisieren
+    m_Localized: Song aktualisieren
     m_Metadata:
       m_Items: []
   - m_Id: 5
@@ -114,6 +114,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 24
     m_Localized: Speichere die info.dat vor dem bearbeiten der Map!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25
+    m_Localized: Update available
     m_Metadata:
       m_Items: []
   references:

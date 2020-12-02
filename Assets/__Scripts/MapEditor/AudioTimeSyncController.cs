@@ -29,7 +29,9 @@ public class AudioTimeSyncController : MonoBehaviour, CMInput.IPlaybackActions, 
         }
     }
 
+    private bool controlSnap = false;
     private bool preciselyControlSnap = false;
+
     private AudioClip clip;
     [HideInInspector] public BeatSaberSong song;
     private int _gridMeasureSnapping = 1;
@@ -62,6 +64,8 @@ public class AudioTimeSyncController : MonoBehaviour, CMInput.IPlaybackActions, 
     private float offsetMS;
     public float offsetBeat { get; private set; } = -1;
     public float gridStartPosition { get; private set; } = -1;
+
+    private float songSpeed = 10f;
     private bool levelLoaded = false;
     
     public Action OnTimeChanged;
@@ -89,10 +93,16 @@ public class AudioTimeSyncController : MonoBehaviour, CMInput.IPlaybackActions, 
             }
             GridMeasureSnappingChanged?.Invoke(gridMeasureSnapping);
             LoadInitialMap.LevelLoadedEvent += OnLevelLoaded;
+            Settings.NotifyBySettingName("SongSpeed", UpdateSongSpeed);
         }
         catch (Exception e) {
             Debug.LogException(e);
         }
+    }
+
+    private void UpdateSongSpeed(object obj)
+    {
+        songSpeed = (float)obj;
     }
 
     private void OnLevelLoaded()
@@ -111,7 +121,24 @@ public class AudioTimeSyncController : MonoBehaviour, CMInput.IPlaybackActions, 
             if (!levelLoaded) return;
             if (IsPlaying)
             {
-                CurrentSeconds = songAudioSource.time + offsetMS;
+                float time = currentSeconds;
+
+                float correction = 1f;
+
+                // Sync correction
+                if (CurrentSeconds > 1)
+                {
+                    correction = songAudioSource.time / CurrentSeconds;
+                }
+
+                if (Mathf.Abs(correction - 1) >= 0.001f)
+                {
+                    time = songAudioSource.time;
+                    correction = 1;
+                }
+
+                CurrentSeconds = time + (correction * (Time.deltaTime * (songSpeed / 10f)));
+
                 if (!songAudioSource.isPlaying) TogglePlaying();
             }
 
@@ -139,7 +166,7 @@ public class AudioTimeSyncController : MonoBehaviour, CMInput.IPlaybackActions, 
         IsPlaying = !IsPlaying;
         if (IsPlaying)
         {
-            if (songAudioSource.time >= songAudioSource.clip.length)
+            if (songAudioSource.time >= songAudioSource.clip.length - 0.1f)
             {
                 Debug.LogError(":hyperPepega: :mega: STOP TRYING TO PLAY THE SONG AT THE VERY END");
             }
@@ -155,6 +182,17 @@ public class AudioTimeSyncController : MonoBehaviour, CMInput.IPlaybackActions, 
             SnapToGrid();
         }
         if (OnPlayToggle != null) OnPlayToggle(IsPlaying);
+    }
+
+    public void SnapToGrid(float seconds)
+    {
+        if (IsPlaying) return;
+        var beatTime = GetBeatFromSeconds(seconds);
+        currentBeat = bpmChangesContainer.FindRoundedBPMTime(beatTime) + offsetBeat;
+        currentSeconds = GetSecondsFromBeat(currentBeat);
+        songAudioSource.time = CurrentSeconds + offsetMS;
+        ValidatePosition();
+        UpdateMovables();
     }
 
     public void SnapToGrid(bool positionValidated = false) {
@@ -204,16 +242,16 @@ public class AudioTimeSyncController : MonoBehaviour, CMInput.IPlaybackActions, 
 
     public void OnResetTime(InputAction.CallbackContext context)
     {
-        if (context.performed) ResetTime();
+        if (context.performed && !IsPlaying) ResetTime();
     }
 
     public void OnChangeTimeandPrecision(InputAction.CallbackContext context)
     {
         if (!KeybindsController.IsMouseInWindow || customStandaloneInputModule.IsPointerOverGameObject<GraphicRaycaster>(-1, true)) return;
         float value = context.ReadValue<float>();
-        if (!KeybindsController.AltHeld && context.performed)
+        if (context.performed)
         {
-            if (KeybindsController.CtrlHeld)
+            if (controlSnap)
             {
                 float scrollDirection;
                 if (Settings.Instance.InvertPrecisionScroll) scrollDirection = value > 0 ? 0.5f : 2;
@@ -267,7 +305,12 @@ public class AudioTimeSyncController : MonoBehaviour, CMInput.IPlaybackActions, 
         }
     }
 
-    public void OnPreciselyControlSnapwhileScrolling(InputAction.CallbackContext context)
+    public void OnChangePrecisionModifier(InputAction.CallbackContext context)
+    {
+        controlSnap = context.performed;
+    }
+
+    public void OnPreciseSnapModification(InputAction.CallbackContext context)
     {
         preciselyControlSnap = context.performed;
     }

@@ -46,7 +46,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - Vector1_694F4424: 0
+<<<<<<< HEAD
     - Vector1_92D1193A: -0.87
+=======
+    - Vector1_92D1193A: 0.5
+>>>>>>> bc2ee03b553e4df52670204e33ba55b07b220f11
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -58,7 +62,7 @@ Material:
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _GridSpacing: 1
-    - _GridThickness: 0.1
+    - _GridThickness: 0.05
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Offset: 0

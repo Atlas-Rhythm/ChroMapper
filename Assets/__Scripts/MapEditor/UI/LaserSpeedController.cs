@@ -6,11 +6,13 @@ using UnityEngine.InputSystem.Controls;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.UI;
 
-public class LaserSpeedController : MonoBehaviour
+public class LaserSpeedController : MonoBehaviour, CMInput.ILaserSpeedActions
 {
     [SerializeField] private TMP_InputField laserSpeed;
     private float timeSinceLastInput = 0;
     private float delayBeforeReset = 0.5f;
+
+    private bool activated = false;
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +29,7 @@ public class LaserSpeedController : MonoBehaviour
 
     private void TryGetButtonControl(InputEventPtr eventPtr, InputDevice device)
     {
-        if (!eventPtr.IsA<StateEvent>() && !eventPtr.IsA<DeltaStateEvent>())
+        if (!activated || (!eventPtr.IsA<StateEvent>() && !eventPtr.IsA<DeltaStateEvent>()))
             return;
         var controls = device.allControls;
         var buttonPressPoint = InputSystem.settings.defaultButtonPressPoint;
@@ -43,7 +45,7 @@ public class LaserSpeedController : MonoBehaviour
 
     private void OnChangeLaserSpeed(ButtonControl control)
     {
-        if (!KeybindsController.CtrlHeld) return;
+        if (laserSpeed.isFocused) return;
         string num = control.name.Split("numpad".ToCharArray()).Last();
         if (int.TryParse(num, out int digit))
         {
@@ -58,5 +60,10 @@ public class LaserSpeedController : MonoBehaviour
     void OnDestroy()
     {
         InputSystem.onEvent -= TryGetButtonControl;
+    }
+
+    public void OnActivateTopRowInput(InputAction.CallbackContext context)
+    {
+        activated = context.performed;
     }
 }

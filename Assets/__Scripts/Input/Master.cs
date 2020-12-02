@@ -97,6 +97,22 @@ public class @CMInput : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Second Set Modifier"",
+                    ""type"": ""Button"",
+                    ""id"": ""7a88eefa-a24b-474d-bf6e-94546642f826"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Overwrite Location Modifier"",
+                    ""type"": ""Button"",
+                    ""id"": ""d07f611a-4dad-4460-90c3-bed5e359444b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -238,7 +254,7 @@ public class @CMInput : IInputActionCollection, IDisposable
                     ""path"": ""<Keyboard>/f5"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""ChroMapper Default"",
                     ""action"": ""Location 1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -249,7 +265,7 @@ public class @CMInput : IInputActionCollection, IDisposable
                     ""path"": ""<Keyboard>/f6"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""ChroMapper Default"",
                     ""action"": ""Location 2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -271,8 +287,30 @@ public class @CMInput : IInputActionCollection, IDisposable
                     ""path"": ""<Keyboard>/f8"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""ChroMapper Default"",
                     ""action"": ""Location 4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5d5b5bc0-ba34-4f29-a577-b221c6fb3e3c"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""ChroMapper Default"",
+                    ""action"": ""Second Set Modifier"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5b920061-f2e4-4f27-8854-cc74b3ad2567"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""ChroMapper Default"",
+                    ""action"": ""Overwrite Location Modifier"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -320,6 +358,28 @@ public class @CMInput : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""f23fa707-1a17-4b14-84ad-c47826b4f3f5"",
                     ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""ChroMapper Default"",
+                    ""action"": ""Control Modifier"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6de791ad-e805-48fb-9996-766bc48ed508"",
+                    ""path"": ""<Keyboard>/leftCtrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Control Modifier"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""391d2675-e019-4314-96fb-6681421f4e8c"",
+                    ""path"": ""<Keyboard>/rightCtrl"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""ChroMapper Default"",
@@ -575,6 +635,14 @@ public class @CMInput : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Precision Placement Toggle"",
+                    ""type"": ""Button"",
+                    ""id"": ""c9b513cc-9aed-4742-af25-61c6d1f08dbe"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -665,6 +733,39 @@ public class @CMInput : IInputActionCollection, IDisposable
                     ""action"": ""Initiate Click and Drag at Time"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Keyboard"",
+                    ""id"": ""84bd3ec2-98c9-496e-8e72-54ccf08eab16"",
+                    ""path"": ""ButtonWithOneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Precision Placement Toggle"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""c673c6c7-af39-46bf-bc72-0129677a657c"",
+                    ""path"": ""<Keyboard>/alt"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""ChroMapper Default"",
+                    ""action"": ""Precision Placement Toggle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""button"",
+                    ""id"": ""f2026a00-08ce-4543-844d-7641edf3f02f"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""ChroMapper Default"",
+                    ""action"": ""Precision Placement Toggle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -709,6 +810,38 @@ public class @CMInput : IInputActionCollection, IDisposable
                     ""type"": ""Button"",
                     ""id"": ""2235cb33-d8e5-4ee9-bfad-a0e197fdd475"",
                     ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Up Left Note"",
+                    ""type"": ""Button"",
+                    ""id"": ""7f5e8c8d-3b2f-409d-9668-c7c4a9df525a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Up Right Note"",
+                    ""type"": ""Button"",
+                    ""id"": ""4d74a4f6-9e93-4c6c-9a37-8105e93970ac"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Down Right Note"",
+                    ""type"": ""Button"",
+                    ""id"": ""ce5e5868-b0ad-4ff9-907e-9a85015e8e30"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Down Left Note"",
+                    ""type"": ""Button"",
+                    ""id"": ""e4a4c2c7-8c29-41f4-a5b8-a720c348738d"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
                 }
@@ -766,6 +899,50 @@ public class @CMInput : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""ChroMapper Default"",
                     ""action"": ""Dot Note"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""47cdcf1d-35d4-4c49-872f-f8c074dd4246"",
+                    ""path"": ""<Keyboard>/numpad7"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Up Left Note"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4579eacc-45b1-4f2c-9935-82866456f92c"",
+                    ""path"": ""<Keyboard>/numpad9"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Up Right Note"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""47dba21a-8205-445b-9cbc-7b80065723e8"",
+                    ""path"": ""<Keyboard>/numpad3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Down Right Note"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d29a6dd2-8cb0-44de-a8f8-76cbede9c430"",
+                    ""path"": ""<Keyboard>/numpad1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Down Left Note"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1484,7 +1661,15 @@ public class @CMInput : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Precisely Control Snap while Scrolling"",
+                    ""name"": ""Change Precision Modifier"",
+                    ""type"": ""Button"",
+                    ""id"": ""77c42d52-fde6-407d-baa5-a18d9ce1a755"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Precise Snap Modification"",
                     ""type"": ""Button"",
                     ""id"": ""6710a953-988b-430d-94ad-561bcd9b5c2a"",
                     ""expectedControlType"": ""Button"",
@@ -1505,37 +1690,26 @@ public class @CMInput : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""Keyboard"",
-                    ""id"": ""2e7190d6-50db-435c-9fa0-b0ea34b04ccf"",
-                    ""path"": ""ButtonWithOneModifier"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Precisely Control Snap while Scrolling"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""modifier"",
-                    ""id"": ""332976f3-263a-439f-acf1-f5e9719fe034"",
-                    ""path"": ""<Keyboard>/ctrl"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Precisely Control Snap while Scrolling"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""button"",
-                    ""id"": ""5cf61f5a-2cdf-41ed-8648-9b45a05d4b2a"",
+                    ""name"": """",
+                    ""id"": ""93928bfb-c637-475e-a029-b96ccfdacd36"",
                     ""path"": ""<Keyboard>/shift"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Precisely Control Snap while Scrolling"",
+                    ""groups"": ""ChroMapper Default"",
+                    ""action"": ""Precise Snap Modification"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": true
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""37dfc13c-313e-467d-9a85-bf32c835a7d0"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""ChroMapper Default"",
+                    ""action"": ""Change Precision Modifier"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1550,6 +1724,14 @@ public class @CMInput : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""Mass Select Modifier"",
+                    ""type"": ""Button"",
+                    ""id"": ""3266236c-fda3-4697-bd0e-2a659c9cb072"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 },
                 {
                     ""name"": ""Quick Delete"",
@@ -1716,6 +1898,17 @@ public class @CMInput : IInputActionCollection, IDisposable
                     ""action"": ""Jump to Object Time"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7a3763f3-e3a9-400d-b578-9bbf4142d1e4"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""ChroMapper Default"",
+                    ""action"": ""Mass Select Modifier"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1742,15 +1935,37 @@ public class @CMInput : IInputActionCollection, IDisposable
             ],
             ""bindings"": [
                 {
-                    ""name"": """",
-                    ""id"": ""7a4c3196-f21c-4291-a92d-1cca3a61bdbb"",
+                    ""name"": ""Keyboard"",
+                    ""id"": ""1171f62c-0f8d-4675-acfd-6179c6acc22e"",
+                    ""path"": ""ButtonWithOneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Update Note Direction"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""c671d9c9-3509-4aab-aa3f-6b774b73fab2"",
+                    ""path"": ""<Keyboard>/alt"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""ChroMapper Default"",
+                    ""action"": ""Update Note Direction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""button"",
+                    ""id"": ""6a07e536-7c00-4341-85fd-f27f37e449b1"",
                     ""path"": ""<Mouse>/scroll/y"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""ChroMapper Default"",
                     ""action"": ""Update Note Direction"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": false
+                    ""isPartOfComposite"": true
                 },
                 {
                     ""name"": """",
@@ -1799,15 +2014,37 @@ public class @CMInput : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""a92dd98a-8921-4318-9713-72d1039da0bd"",
+                    ""name"": ""Keyboard"",
+                    ""id"": ""a644b0b6-5e6b-46fe-a1b4-65550b15a973"",
+                    ""path"": ""ButtonWithOneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""+Change Wall Duration"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""572079c8-8d93-4a2f-bb9e-7c28b1ab8df0"",
+                    ""path"": ""<Keyboard>/alt"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""ChroMapper Default"",
+                    ""action"": ""+Change Wall Duration"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""button"",
+                    ""id"": ""b1fe3a7b-ae79-4c48-ad32-b51015c775b3"",
                     ""path"": ""<Mouse>/scroll/y"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""ChroMapper Default"",
                     ""action"": ""+Change Wall Duration"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": false
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -1845,15 +2082,37 @@ public class @CMInput : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""09d87f71-afca-418b-b67b-3992407c2c6d"",
+                    ""name"": ""Keyboard"",
+                    ""id"": ""66e94709-0de5-4c2b-8dce-4655c335b6f2"",
+                    ""path"": ""ButtonWithOneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Tweak Event Value"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""a012cecc-290c-4dd4-9ace-cd99f0ec9f0e"",
+                    ""path"": ""<Keyboard>/alt"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""ChroMapper Default"",
+                    ""action"": ""Tweak Event Value"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""button"",
+                    ""id"": ""abcf4a70-1b75-4b22-a957-130910706481"",
                     ""path"": ""<Mouse>/scroll/y"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""ChroMapper Default"",
                     ""action"": ""Tweak Event Value"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": false
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -2120,22 +2379,6 @@ public class @CMInput : IInputActionCollection, IDisposable
                     ""interactions"": ""Press""
                 },
                 {
-                    ""name"": ""Shift in Time"",
-                    ""type"": ""Button"",
-                    ""id"": ""14a1a829-ac3b-4625-b373-d4e43706ec8b"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": ""Press""
-                },
-                {
-                    ""name"": ""Shift in Place"",
-                    ""type"": ""Button"",
-                    ""id"": ""27818e31-e5a6-4b4d-806a-f8de698ba4ee"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": ""Press""
-                },
-                {
                     ""name"": ""Cut"",
                     ""type"": ""Button"",
                     ""id"": ""e9677e31-a29a-40d9-9831-3b0bf425e410"",
@@ -2158,6 +2401,38 @@ public class @CMInput : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""Overwrite Paste"",
+                    ""type"": ""Button"",
+                    ""id"": ""17cb35a5-a1b3-4c1f-a450-ceb25a448d18"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""Shifting Movement"",
+                    ""type"": ""Button"",
+                    ""id"": ""27818e31-e5a6-4b4d-806a-f8de698ba4ee"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""Activate Shift in Time"",
+                    ""type"": ""Button"",
+                    ""id"": ""cb168158-3262-4a23-bc37-4217c8213895"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""Activate Shift in Place"",
+                    ""type"": ""Button"",
+                    ""id"": ""b2cb2cac-5832-474b-a652-497dd6f3e167"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
                 }
             ],
             ""bindings"": [
@@ -2171,94 +2446,6 @@ public class @CMInput : IInputActionCollection, IDisposable
                     ""action"": ""Delete Objects"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""Keyboard"",
-                    ""id"": ""eb79eb6e-e652-45f9-b920-af291f3284a7"",
-                    ""path"": ""1DAxis(whichSideWins=1)"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Shift in Time"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""negative"",
-                    ""id"": ""1cd9d133-0d2e-407e-9691-531420b903d0"",
-                    ""path"": ""<Keyboard>/downArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""ChroMapper Default"",
-                    ""action"": ""Shift in Time"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""positive"",
-                    ""id"": ""71df5f1d-8b1b-4b58-8cd8-2cd449d6893f"",
-                    ""path"": ""<Keyboard>/upArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""ChroMapper Default"",
-                    ""action"": ""Shift in Time"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""Keyboard"",
-                    ""id"": ""9c22b812-71a8-4961-ab13-212454782e02"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Shift in Place"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""dca471d5-701d-4735-92fe-974ad1bf6c91"",
-                    ""path"": ""<Keyboard>/upArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""ChroMapper Default"",
-                    ""action"": ""Shift in Place"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""fe41e156-034e-45cf-9ad0-7a2e76986029"",
-                    ""path"": ""<Keyboard>/downArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""ChroMapper Default"",
-                    ""action"": ""Shift in Place"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""b813d17f-c262-4b3c-a28f-072c8647364a"",
-                    ""path"": ""<Keyboard>/leftArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""ChroMapper Default"",
-                    ""action"": ""Shift in Place"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""5de7b57b-9115-406b-add2-c8b5877a39af"",
-                    ""path"": ""<Keyboard>/rightArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""ChroMapper Default"",
-                    ""action"": ""Shift in Place"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
                 },
                 {
                     ""name"": ""Keyboard"",
@@ -2369,6 +2556,127 @@ public class @CMInput : IInputActionCollection, IDisposable
                     ""action"": ""Delete Objects"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Keyboard"",
+                    ""id"": ""93c4668a-e8a6-470a-86e4-7dc07939d1ca"",
+                    ""path"": ""ButtonWithTwoModifiers"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Overwrite Paste"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier1"",
+                    ""id"": ""bbc0d7ac-92d8-4532-a7ea-c8a98ac9ab3f"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""ChroMapper Default"",
+                    ""action"": ""Overwrite Paste"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""modifier2"",
+                    ""id"": ""8e309fc0-65b8-4871-ac4c-4a7abdf9b864"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""ChroMapper Default"",
+                    ""action"": ""Overwrite Paste"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""button"",
+                    ""id"": ""c4e04efa-cef2-47ac-a794-a622a9eab834"",
+                    ""path"": ""<Keyboard>/v"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""ChroMapper Default"",
+                    ""action"": ""Overwrite Paste"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ec81f6a1-21c7-4033-8a43-fef8947eeb20"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""ChroMapper Default"",
+                    ""action"": ""Activate Shift in Time"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a07ec705-330a-4539-b6c3-42eb63fe6fc6"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""ChroMapper Default"",
+                    ""action"": ""Activate Shift in Place"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Keyboard"",
+                    ""id"": ""9c22b812-71a8-4961-ab13-212454782e02"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""ChroMapper Default"",
+                    ""action"": ""Shifting Movement"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""dca471d5-701d-4735-92fe-974ad1bf6c91"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""ChroMapper Default"",
+                    ""action"": ""Shifting Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""fe41e156-034e-45cf-9ad0-7a2e76986029"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""ChroMapper Default"",
+                    ""action"": ""Shifting Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""b813d17f-c262-4b3c-a28f-072c8647364a"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""ChroMapper Default"",
+                    ""action"": ""Shifting Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""5de7b57b-9115-406b-add2-c8b5877a39af"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""ChroMapper Default"",
+                    ""action"": ""Shifting Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -2525,7 +2833,7 @@ public class @CMInput : IInputActionCollection, IDisposable
                     ""path"": ""<Keyboard>/ctrl"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""ChroMapper Default"",
                     ""action"": ""Replace BPM"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -2533,10 +2841,10 @@ public class @CMInput : IInputActionCollection, IDisposable
                 {
                     ""name"": ""button"",
                     ""id"": ""414dede3-0ceb-4e97-b164-772b756aeebd"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""path"": ""<Mouse>/middleButton"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""ChroMapper Default"",
                     ""action"": ""Replace BPM"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -2636,7 +2944,7 @@ public class @CMInput : IInputActionCollection, IDisposable
                     ""path"": ""<Keyboard>/tab"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""ChroMapper Default"",
                     ""action"": ""Tab"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -2647,7 +2955,7 @@ public class @CMInput : IInputActionCollection, IDisposable
                     ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""ChroMapper Default"",
                     ""action"": ""Leave Menu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -2685,7 +2993,7 @@ public class @CMInput : IInputActionCollection, IDisposable
                     ""path"": ""<Keyboard>/shift"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""ChroMapper Default"",
                     ""action"": ""Quick Strobe Gen"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -2696,10 +3004,113 @@ public class @CMInput : IInputActionCollection, IDisposable
                     ""path"": ""<Keyboard>/c"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""ChroMapper Default"",
                     ""action"": ""Quick Strobe Gen"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                }
+            ]
+        },
+        {
+            ""name"": ""Lightshow"",
+            ""id"": ""07e9d807-3a95-41bd-af6c-113dd7b0c5f8"",
+            ""actions"": [
+                {
+                    ""name"": ""Toggle Lightshow Mode"",
+                    ""type"": ""Button"",
+                    ""id"": ""1a8334f3-ea56-4d8f-bf47-67256e7f54d1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": ""Keyboard"",
+                    ""id"": ""29fd0416-32e6-4bc6-8b5f-5627f59692d0"",
+                    ""path"": ""ButtonWithOneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Toggle Lightshow Mode"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""1b8324be-8c1b-417f-86b4-e3dd813fe0cc"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""ChroMapper Default"",
+                    ""action"": ""Toggle Lightshow Mode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""button"",
+                    ""id"": ""ce1fbafc-3563-4c29-acf9-0f60f28ec188"",
+                    ""path"": ""<Keyboard>/l"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""ChroMapper Default"",
+                    ""action"": ""Toggle Lightshow Mode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                }
+            ]
+        },
+        {
+            ""name"": ""Box Select"",
+            ""id"": ""ce387cfe-7aed-46ef-ab8b-e0cf196f6a96"",
+            ""actions"": [
+                {
+                    ""name"": ""Activate Box Select"",
+                    ""type"": ""Button"",
+                    ""id"": ""1bfcb620-0275-4b3e-a89d-2e5d52203c8d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""f6185091-72dd-4efb-ab34-6ea3096834c6"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""ChroMapper Default"",
+                    ""action"": ""Activate Box Select"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Laser Speed"",
+            ""id"": ""5fff65ed-e6d6-44dc-af70-a7c7944dc3e1"",
+            ""actions"": [
+                {
+                    ""name"": ""Activate Top Row Input"",
+                    ""type"": ""Button"",
+                    ""id"": ""ac441c0b-6cdd-45a8-ae25-6816a6f90fc6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""686cfa90-5acd-4657-988e-536cf40a9f8b"",
+                    ""path"": ""<Keyboard>/alt"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""ChroMapper Default"",
+                    ""action"": ""Activate Top Row Input"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -2724,6 +3135,8 @@ public class @CMInput : IInputActionCollection, IDisposable
         m_Camera_Location2 = m_Camera.FindAction("Location 2", throwIfNotFound: true);
         m_Camera_Location3 = m_Camera.FindAction("Location 3", throwIfNotFound: true);
         m_Camera_Location4 = m_Camera.FindAction("Location 4", throwIfNotFound: true);
+        m_Camera_SecondSetModifier = m_Camera.FindAction("Second Set Modifier", throwIfNotFound: true);
+        m_Camera_OverwriteLocationModifier = m_Camera.FindAction("Overwrite Location Modifier", throwIfNotFound: true);
         // +Utils
         m_Utils = asset.FindActionMap("+Utils", throwIfNotFound: true);
         m_Utils_ControlModifier = m_Utils.FindAction("Control Modifier", throwIfNotFound: true);
@@ -2740,6 +3153,7 @@ public class @CMInput : IInputActionCollection, IDisposable
         m_PlacementControllers_InitiateClickandDrag = m_PlacementControllers.FindAction("Initiate Click and Drag", throwIfNotFound: true);
         m_PlacementControllers_InitiateClickandDragatTime = m_PlacementControllers.FindAction("Initiate Click and Drag at Time", throwIfNotFound: true);
         m_PlacementControllers_MousePositionUpdate = m_PlacementControllers.FindAction("+Mouse Position Update", throwIfNotFound: true);
+        m_PlacementControllers_PrecisionPlacementToggle = m_PlacementControllers.FindAction("Precision Placement Toggle", throwIfNotFound: true);
         // Note Placement
         m_NotePlacement = asset.FindActionMap("Note Placement", throwIfNotFound: true);
         m_NotePlacement_DownNote = m_NotePlacement.FindAction("Down Note", throwIfNotFound: true);
@@ -2747,6 +3161,10 @@ public class @CMInput : IInputActionCollection, IDisposable
         m_NotePlacement_UpNote = m_NotePlacement.FindAction("Up Note", throwIfNotFound: true);
         m_NotePlacement_LeftNote = m_NotePlacement.FindAction("Left Note", throwIfNotFound: true);
         m_NotePlacement_DotNote = m_NotePlacement.FindAction("Dot Note", throwIfNotFound: true);
+        m_NotePlacement_UpLeftNote = m_NotePlacement.FindAction("Up Left Note", throwIfNotFound: true);
+        m_NotePlacement_UpRightNote = m_NotePlacement.FindAction("Up Right Note", throwIfNotFound: true);
+        m_NotePlacement_DownRightNote = m_NotePlacement.FindAction("Down Right Note", throwIfNotFound: true);
+        m_NotePlacement_DownLeftNote = m_NotePlacement.FindAction("Down Left Note", throwIfNotFound: true);
         // Event Placement
         m_EventPlacement = asset.FindActionMap("Event Placement", throwIfNotFound: true);
         m_EventPlacement_Rotation15Degrees = m_EventPlacement.FindAction("Rotation: 15 Degrees", throwIfNotFound: true);
@@ -2797,10 +3215,12 @@ public class @CMInput : IInputActionCollection, IDisposable
         // Timeline
         m_Timeline = asset.FindActionMap("Timeline", throwIfNotFound: true);
         m_Timeline_ChangeTimeandPrecision = m_Timeline.FindAction("+Change Time and Precision", throwIfNotFound: true);
-        m_Timeline_PreciselyControlSnapwhileScrolling = m_Timeline.FindAction("Precisely Control Snap while Scrolling", throwIfNotFound: true);
+        m_Timeline_ChangePrecisionModifier = m_Timeline.FindAction("Change Precision Modifier", throwIfNotFound: true);
+        m_Timeline_PreciseSnapModification = m_Timeline.FindAction("Precise Snap Modification", throwIfNotFound: true);
         // Beatmap Objects
         m_BeatmapObjects = asset.FindActionMap("Beatmap Objects", throwIfNotFound: true);
         m_BeatmapObjects_SelectObjects = m_BeatmapObjects.FindAction("Select Objects", throwIfNotFound: true);
+        m_BeatmapObjects_MassSelectModifier = m_BeatmapObjects.FindAction("Mass Select Modifier", throwIfNotFound: true);
         m_BeatmapObjects_QuickDelete = m_BeatmapObjects.FindAction("Quick Delete", throwIfNotFound: true);
         m_BeatmapObjects_DeleteTool = m_BeatmapObjects.FindAction("Delete Tool", throwIfNotFound: true);
         m_BeatmapObjects_MousePositionUpdate = m_BeatmapObjects.FindAction("+Mouse Position Update", throwIfNotFound: true);
@@ -2837,11 +3257,13 @@ public class @CMInput : IInputActionCollection, IDisposable
         // Modifying Selection
         m_ModifyingSelection = asset.FindActionMap("Modifying Selection", throwIfNotFound: true);
         m_ModifyingSelection_DeleteObjects = m_ModifyingSelection.FindAction("Delete Objects", throwIfNotFound: true);
-        m_ModifyingSelection_ShiftinTime = m_ModifyingSelection.FindAction("Shift in Time", throwIfNotFound: true);
-        m_ModifyingSelection_ShiftinPlace = m_ModifyingSelection.FindAction("Shift in Place", throwIfNotFound: true);
         m_ModifyingSelection_Cut = m_ModifyingSelection.FindAction("Cut", throwIfNotFound: true);
         m_ModifyingSelection_Paste = m_ModifyingSelection.FindAction("Paste", throwIfNotFound: true);
         m_ModifyingSelection_Copy = m_ModifyingSelection.FindAction("Copy", throwIfNotFound: true);
+        m_ModifyingSelection_OverwritePaste = m_ModifyingSelection.FindAction("Overwrite Paste", throwIfNotFound: true);
+        m_ModifyingSelection_ShiftingMovement = m_ModifyingSelection.FindAction("Shifting Movement", throwIfNotFound: true);
+        m_ModifyingSelection_ActivateShiftinTime = m_ModifyingSelection.FindAction("Activate Shift in Time", throwIfNotFound: true);
+        m_ModifyingSelection_ActivateShiftinPlace = m_ModifyingSelection.FindAction("Activate Shift in Place", throwIfNotFound: true);
         // UI Mode
         m_UIMode = asset.FindActionMap("UI Mode", throwIfNotFound: true);
         m_UIMode_ToggleUIMode = m_UIMode.FindAction("Toggle UI Mode", throwIfNotFound: true);
@@ -2867,6 +3289,15 @@ public class @CMInput : IInputActionCollection, IDisposable
         // Strobe Generator
         m_StrobeGenerator = asset.FindActionMap("Strobe Generator", throwIfNotFound: true);
         m_StrobeGenerator_QuickStrobeGen = m_StrobeGenerator.FindAction("Quick Strobe Gen", throwIfNotFound: true);
+        // Lightshow
+        m_Lightshow = asset.FindActionMap("Lightshow", throwIfNotFound: true);
+        m_Lightshow_ToggleLightshowMode = m_Lightshow.FindAction("Toggle Lightshow Mode", throwIfNotFound: true);
+        // Box Select
+        m_BoxSelect = asset.FindActionMap("Box Select", throwIfNotFound: true);
+        m_BoxSelect_ActivateBoxSelect = m_BoxSelect.FindAction("Activate Box Select", throwIfNotFound: true);
+        // Laser Speed
+        m_LaserSpeed = asset.FindActionMap("Laser Speed", throwIfNotFound: true);
+        m_LaserSpeed_ActivateTopRowInput = m_LaserSpeed.FindAction("Activate Top Row Input", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -2926,6 +3357,8 @@ public class @CMInput : IInputActionCollection, IDisposable
     private readonly InputAction m_Camera_Location2;
     private readonly InputAction m_Camera_Location3;
     private readonly InputAction m_Camera_Location4;
+    private readonly InputAction m_Camera_SecondSetModifier;
+    private readonly InputAction m_Camera_OverwriteLocationModifier;
     public struct CameraActions
     {
         private @CMInput m_Wrapper;
@@ -2940,6 +3373,8 @@ public class @CMInput : IInputActionCollection, IDisposable
         public InputAction @Location2 => m_Wrapper.m_Camera_Location2;
         public InputAction @Location3 => m_Wrapper.m_Camera_Location3;
         public InputAction @Location4 => m_Wrapper.m_Camera_Location4;
+        public InputAction @SecondSetModifier => m_Wrapper.m_Camera_SecondSetModifier;
+        public InputAction @OverwriteLocationModifier => m_Wrapper.m_Camera_OverwriteLocationModifier;
         public InputActionMap Get() { return m_Wrapper.m_Camera; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -2979,6 +3414,12 @@ public class @CMInput : IInputActionCollection, IDisposable
                 @Location4.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnLocation4;
                 @Location4.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnLocation4;
                 @Location4.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnLocation4;
+                @SecondSetModifier.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnSecondSetModifier;
+                @SecondSetModifier.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnSecondSetModifier;
+                @SecondSetModifier.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnSecondSetModifier;
+                @OverwriteLocationModifier.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnOverwriteLocationModifier;
+                @OverwriteLocationModifier.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnOverwriteLocationModifier;
+                @OverwriteLocationModifier.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnOverwriteLocationModifier;
             }
             m_Wrapper.m_CameraActionsCallbackInterface = instance;
             if (instance != null)
@@ -3013,6 +3454,12 @@ public class @CMInput : IInputActionCollection, IDisposable
                 @Location4.started += instance.OnLocation4;
                 @Location4.performed += instance.OnLocation4;
                 @Location4.canceled += instance.OnLocation4;
+                @SecondSetModifier.started += instance.OnSecondSetModifier;
+                @SecondSetModifier.performed += instance.OnSecondSetModifier;
+                @SecondSetModifier.canceled += instance.OnSecondSetModifier;
+                @OverwriteLocationModifier.started += instance.OnOverwriteLocationModifier;
+                @OverwriteLocationModifier.performed += instance.OnOverwriteLocationModifier;
+                @OverwriteLocationModifier.canceled += instance.OnOverwriteLocationModifier;
             }
         }
     }
@@ -3123,6 +3570,7 @@ public class @CMInput : IInputActionCollection, IDisposable
     private readonly InputAction m_PlacementControllers_InitiateClickandDrag;
     private readonly InputAction m_PlacementControllers_InitiateClickandDragatTime;
     private readonly InputAction m_PlacementControllers_MousePositionUpdate;
+    private readonly InputAction m_PlacementControllers_PrecisionPlacementToggle;
     public struct PlacementControllersActions
     {
         private @CMInput m_Wrapper;
@@ -3131,6 +3579,7 @@ public class @CMInput : IInputActionCollection, IDisposable
         public InputAction @InitiateClickandDrag => m_Wrapper.m_PlacementControllers_InitiateClickandDrag;
         public InputAction @InitiateClickandDragatTime => m_Wrapper.m_PlacementControllers_InitiateClickandDragatTime;
         public InputAction @MousePositionUpdate => m_Wrapper.m_PlacementControllers_MousePositionUpdate;
+        public InputAction @PrecisionPlacementToggle => m_Wrapper.m_PlacementControllers_PrecisionPlacementToggle;
         public InputActionMap Get() { return m_Wrapper.m_PlacementControllers; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -3152,6 +3601,9 @@ public class @CMInput : IInputActionCollection, IDisposable
                 @MousePositionUpdate.started -= m_Wrapper.m_PlacementControllersActionsCallbackInterface.OnMousePositionUpdate;
                 @MousePositionUpdate.performed -= m_Wrapper.m_PlacementControllersActionsCallbackInterface.OnMousePositionUpdate;
                 @MousePositionUpdate.canceled -= m_Wrapper.m_PlacementControllersActionsCallbackInterface.OnMousePositionUpdate;
+                @PrecisionPlacementToggle.started -= m_Wrapper.m_PlacementControllersActionsCallbackInterface.OnPrecisionPlacementToggle;
+                @PrecisionPlacementToggle.performed -= m_Wrapper.m_PlacementControllersActionsCallbackInterface.OnPrecisionPlacementToggle;
+                @PrecisionPlacementToggle.canceled -= m_Wrapper.m_PlacementControllersActionsCallbackInterface.OnPrecisionPlacementToggle;
             }
             m_Wrapper.m_PlacementControllersActionsCallbackInterface = instance;
             if (instance != null)
@@ -3168,6 +3620,9 @@ public class @CMInput : IInputActionCollection, IDisposable
                 @MousePositionUpdate.started += instance.OnMousePositionUpdate;
                 @MousePositionUpdate.performed += instance.OnMousePositionUpdate;
                 @MousePositionUpdate.canceled += instance.OnMousePositionUpdate;
+                @PrecisionPlacementToggle.started += instance.OnPrecisionPlacementToggle;
+                @PrecisionPlacementToggle.performed += instance.OnPrecisionPlacementToggle;
+                @PrecisionPlacementToggle.canceled += instance.OnPrecisionPlacementToggle;
             }
         }
     }
@@ -3181,6 +3636,10 @@ public class @CMInput : IInputActionCollection, IDisposable
     private readonly InputAction m_NotePlacement_UpNote;
     private readonly InputAction m_NotePlacement_LeftNote;
     private readonly InputAction m_NotePlacement_DotNote;
+    private readonly InputAction m_NotePlacement_UpLeftNote;
+    private readonly InputAction m_NotePlacement_UpRightNote;
+    private readonly InputAction m_NotePlacement_DownRightNote;
+    private readonly InputAction m_NotePlacement_DownLeftNote;
     public struct NotePlacementActions
     {
         private @CMInput m_Wrapper;
@@ -3190,6 +3649,10 @@ public class @CMInput : IInputActionCollection, IDisposable
         public InputAction @UpNote => m_Wrapper.m_NotePlacement_UpNote;
         public InputAction @LeftNote => m_Wrapper.m_NotePlacement_LeftNote;
         public InputAction @DotNote => m_Wrapper.m_NotePlacement_DotNote;
+        public InputAction @UpLeftNote => m_Wrapper.m_NotePlacement_UpLeftNote;
+        public InputAction @UpRightNote => m_Wrapper.m_NotePlacement_UpRightNote;
+        public InputAction @DownRightNote => m_Wrapper.m_NotePlacement_DownRightNote;
+        public InputAction @DownLeftNote => m_Wrapper.m_NotePlacement_DownLeftNote;
         public InputActionMap Get() { return m_Wrapper.m_NotePlacement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -3214,6 +3677,18 @@ public class @CMInput : IInputActionCollection, IDisposable
                 @DotNote.started -= m_Wrapper.m_NotePlacementActionsCallbackInterface.OnDotNote;
                 @DotNote.performed -= m_Wrapper.m_NotePlacementActionsCallbackInterface.OnDotNote;
                 @DotNote.canceled -= m_Wrapper.m_NotePlacementActionsCallbackInterface.OnDotNote;
+                @UpLeftNote.started -= m_Wrapper.m_NotePlacementActionsCallbackInterface.OnUpLeftNote;
+                @UpLeftNote.performed -= m_Wrapper.m_NotePlacementActionsCallbackInterface.OnUpLeftNote;
+                @UpLeftNote.canceled -= m_Wrapper.m_NotePlacementActionsCallbackInterface.OnUpLeftNote;
+                @UpRightNote.started -= m_Wrapper.m_NotePlacementActionsCallbackInterface.OnUpRightNote;
+                @UpRightNote.performed -= m_Wrapper.m_NotePlacementActionsCallbackInterface.OnUpRightNote;
+                @UpRightNote.canceled -= m_Wrapper.m_NotePlacementActionsCallbackInterface.OnUpRightNote;
+                @DownRightNote.started -= m_Wrapper.m_NotePlacementActionsCallbackInterface.OnDownRightNote;
+                @DownRightNote.performed -= m_Wrapper.m_NotePlacementActionsCallbackInterface.OnDownRightNote;
+                @DownRightNote.canceled -= m_Wrapper.m_NotePlacementActionsCallbackInterface.OnDownRightNote;
+                @DownLeftNote.started -= m_Wrapper.m_NotePlacementActionsCallbackInterface.OnDownLeftNote;
+                @DownLeftNote.performed -= m_Wrapper.m_NotePlacementActionsCallbackInterface.OnDownLeftNote;
+                @DownLeftNote.canceled -= m_Wrapper.m_NotePlacementActionsCallbackInterface.OnDownLeftNote;
             }
             m_Wrapper.m_NotePlacementActionsCallbackInterface = instance;
             if (instance != null)
@@ -3233,6 +3708,18 @@ public class @CMInput : IInputActionCollection, IDisposable
                 @DotNote.started += instance.OnDotNote;
                 @DotNote.performed += instance.OnDotNote;
                 @DotNote.canceled += instance.OnDotNote;
+                @UpLeftNote.started += instance.OnUpLeftNote;
+                @UpLeftNote.performed += instance.OnUpLeftNote;
+                @UpLeftNote.canceled += instance.OnUpLeftNote;
+                @UpRightNote.started += instance.OnUpRightNote;
+                @UpRightNote.performed += instance.OnUpRightNote;
+                @UpRightNote.canceled += instance.OnUpRightNote;
+                @DownRightNote.started += instance.OnDownRightNote;
+                @DownRightNote.performed += instance.OnDownRightNote;
+                @DownRightNote.canceled += instance.OnDownRightNote;
+                @DownLeftNote.started += instance.OnDownLeftNote;
+                @DownLeftNote.performed += instance.OnDownLeftNote;
+                @DownLeftNote.canceled += instance.OnDownLeftNote;
             }
         }
     }
@@ -3699,13 +4186,15 @@ public class @CMInput : IInputActionCollection, IDisposable
     private readonly InputActionMap m_Timeline;
     private ITimelineActions m_TimelineActionsCallbackInterface;
     private readonly InputAction m_Timeline_ChangeTimeandPrecision;
-    private readonly InputAction m_Timeline_PreciselyControlSnapwhileScrolling;
+    private readonly InputAction m_Timeline_ChangePrecisionModifier;
+    private readonly InputAction m_Timeline_PreciseSnapModification;
     public struct TimelineActions
     {
         private @CMInput m_Wrapper;
         public TimelineActions(@CMInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @ChangeTimeandPrecision => m_Wrapper.m_Timeline_ChangeTimeandPrecision;
-        public InputAction @PreciselyControlSnapwhileScrolling => m_Wrapper.m_Timeline_PreciselyControlSnapwhileScrolling;
+        public InputAction @ChangePrecisionModifier => m_Wrapper.m_Timeline_ChangePrecisionModifier;
+        public InputAction @PreciseSnapModification => m_Wrapper.m_Timeline_PreciseSnapModification;
         public InputActionMap Get() { return m_Wrapper.m_Timeline; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -3718,9 +4207,12 @@ public class @CMInput : IInputActionCollection, IDisposable
                 @ChangeTimeandPrecision.started -= m_Wrapper.m_TimelineActionsCallbackInterface.OnChangeTimeandPrecision;
                 @ChangeTimeandPrecision.performed -= m_Wrapper.m_TimelineActionsCallbackInterface.OnChangeTimeandPrecision;
                 @ChangeTimeandPrecision.canceled -= m_Wrapper.m_TimelineActionsCallbackInterface.OnChangeTimeandPrecision;
-                @PreciselyControlSnapwhileScrolling.started -= m_Wrapper.m_TimelineActionsCallbackInterface.OnPreciselyControlSnapwhileScrolling;
-                @PreciselyControlSnapwhileScrolling.performed -= m_Wrapper.m_TimelineActionsCallbackInterface.OnPreciselyControlSnapwhileScrolling;
-                @PreciselyControlSnapwhileScrolling.canceled -= m_Wrapper.m_TimelineActionsCallbackInterface.OnPreciselyControlSnapwhileScrolling;
+                @ChangePrecisionModifier.started -= m_Wrapper.m_TimelineActionsCallbackInterface.OnChangePrecisionModifier;
+                @ChangePrecisionModifier.performed -= m_Wrapper.m_TimelineActionsCallbackInterface.OnChangePrecisionModifier;
+                @ChangePrecisionModifier.canceled -= m_Wrapper.m_TimelineActionsCallbackInterface.OnChangePrecisionModifier;
+                @PreciseSnapModification.started -= m_Wrapper.m_TimelineActionsCallbackInterface.OnPreciseSnapModification;
+                @PreciseSnapModification.performed -= m_Wrapper.m_TimelineActionsCallbackInterface.OnPreciseSnapModification;
+                @PreciseSnapModification.canceled -= m_Wrapper.m_TimelineActionsCallbackInterface.OnPreciseSnapModification;
             }
             m_Wrapper.m_TimelineActionsCallbackInterface = instance;
             if (instance != null)
@@ -3728,9 +4220,12 @@ public class @CMInput : IInputActionCollection, IDisposable
                 @ChangeTimeandPrecision.started += instance.OnChangeTimeandPrecision;
                 @ChangeTimeandPrecision.performed += instance.OnChangeTimeandPrecision;
                 @ChangeTimeandPrecision.canceled += instance.OnChangeTimeandPrecision;
-                @PreciselyControlSnapwhileScrolling.started += instance.OnPreciselyControlSnapwhileScrolling;
-                @PreciselyControlSnapwhileScrolling.performed += instance.OnPreciselyControlSnapwhileScrolling;
-                @PreciselyControlSnapwhileScrolling.canceled += instance.OnPreciselyControlSnapwhileScrolling;
+                @ChangePrecisionModifier.started += instance.OnChangePrecisionModifier;
+                @ChangePrecisionModifier.performed += instance.OnChangePrecisionModifier;
+                @ChangePrecisionModifier.canceled += instance.OnChangePrecisionModifier;
+                @PreciseSnapModification.started += instance.OnPreciseSnapModification;
+                @PreciseSnapModification.performed += instance.OnPreciseSnapModification;
+                @PreciseSnapModification.canceled += instance.OnPreciseSnapModification;
             }
         }
     }
@@ -3740,6 +4235,7 @@ public class @CMInput : IInputActionCollection, IDisposable
     private readonly InputActionMap m_BeatmapObjects;
     private IBeatmapObjectsActions m_BeatmapObjectsActionsCallbackInterface;
     private readonly InputAction m_BeatmapObjects_SelectObjects;
+    private readonly InputAction m_BeatmapObjects_MassSelectModifier;
     private readonly InputAction m_BeatmapObjects_QuickDelete;
     private readonly InputAction m_BeatmapObjects_DeleteTool;
     private readonly InputAction m_BeatmapObjects_MousePositionUpdate;
@@ -3749,6 +4245,7 @@ public class @CMInput : IInputActionCollection, IDisposable
         private @CMInput m_Wrapper;
         public BeatmapObjectsActions(@CMInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @SelectObjects => m_Wrapper.m_BeatmapObjects_SelectObjects;
+        public InputAction @MassSelectModifier => m_Wrapper.m_BeatmapObjects_MassSelectModifier;
         public InputAction @QuickDelete => m_Wrapper.m_BeatmapObjects_QuickDelete;
         public InputAction @DeleteTool => m_Wrapper.m_BeatmapObjects_DeleteTool;
         public InputAction @MousePositionUpdate => m_Wrapper.m_BeatmapObjects_MousePositionUpdate;
@@ -3765,6 +4262,9 @@ public class @CMInput : IInputActionCollection, IDisposable
                 @SelectObjects.started -= m_Wrapper.m_BeatmapObjectsActionsCallbackInterface.OnSelectObjects;
                 @SelectObjects.performed -= m_Wrapper.m_BeatmapObjectsActionsCallbackInterface.OnSelectObjects;
                 @SelectObjects.canceled -= m_Wrapper.m_BeatmapObjectsActionsCallbackInterface.OnSelectObjects;
+                @MassSelectModifier.started -= m_Wrapper.m_BeatmapObjectsActionsCallbackInterface.OnMassSelectModifier;
+                @MassSelectModifier.performed -= m_Wrapper.m_BeatmapObjectsActionsCallbackInterface.OnMassSelectModifier;
+                @MassSelectModifier.canceled -= m_Wrapper.m_BeatmapObjectsActionsCallbackInterface.OnMassSelectModifier;
                 @QuickDelete.started -= m_Wrapper.m_BeatmapObjectsActionsCallbackInterface.OnQuickDelete;
                 @QuickDelete.performed -= m_Wrapper.m_BeatmapObjectsActionsCallbackInterface.OnQuickDelete;
                 @QuickDelete.canceled -= m_Wrapper.m_BeatmapObjectsActionsCallbackInterface.OnQuickDelete;
@@ -3784,6 +4284,9 @@ public class @CMInput : IInputActionCollection, IDisposable
                 @SelectObjects.started += instance.OnSelectObjects;
                 @SelectObjects.performed += instance.OnSelectObjects;
                 @SelectObjects.canceled += instance.OnSelectObjects;
+                @MassSelectModifier.started += instance.OnMassSelectModifier;
+                @MassSelectModifier.performed += instance.OnMassSelectModifier;
+                @MassSelectModifier.canceled += instance.OnMassSelectModifier;
                 @QuickDelete.started += instance.OnQuickDelete;
                 @QuickDelete.performed += instance.OnQuickDelete;
                 @QuickDelete.canceled += instance.OnQuickDelete;
@@ -4109,21 +4612,25 @@ public class @CMInput : IInputActionCollection, IDisposable
     private readonly InputActionMap m_ModifyingSelection;
     private IModifyingSelectionActions m_ModifyingSelectionActionsCallbackInterface;
     private readonly InputAction m_ModifyingSelection_DeleteObjects;
-    private readonly InputAction m_ModifyingSelection_ShiftinTime;
-    private readonly InputAction m_ModifyingSelection_ShiftinPlace;
     private readonly InputAction m_ModifyingSelection_Cut;
     private readonly InputAction m_ModifyingSelection_Paste;
     private readonly InputAction m_ModifyingSelection_Copy;
+    private readonly InputAction m_ModifyingSelection_OverwritePaste;
+    private readonly InputAction m_ModifyingSelection_ShiftingMovement;
+    private readonly InputAction m_ModifyingSelection_ActivateShiftinTime;
+    private readonly InputAction m_ModifyingSelection_ActivateShiftinPlace;
     public struct ModifyingSelectionActions
     {
         private @CMInput m_Wrapper;
         public ModifyingSelectionActions(@CMInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @DeleteObjects => m_Wrapper.m_ModifyingSelection_DeleteObjects;
-        public InputAction @ShiftinTime => m_Wrapper.m_ModifyingSelection_ShiftinTime;
-        public InputAction @ShiftinPlace => m_Wrapper.m_ModifyingSelection_ShiftinPlace;
         public InputAction @Cut => m_Wrapper.m_ModifyingSelection_Cut;
         public InputAction @Paste => m_Wrapper.m_ModifyingSelection_Paste;
         public InputAction @Copy => m_Wrapper.m_ModifyingSelection_Copy;
+        public InputAction @OverwritePaste => m_Wrapper.m_ModifyingSelection_OverwritePaste;
+        public InputAction @ShiftingMovement => m_Wrapper.m_ModifyingSelection_ShiftingMovement;
+        public InputAction @ActivateShiftinTime => m_Wrapper.m_ModifyingSelection_ActivateShiftinTime;
+        public InputAction @ActivateShiftinPlace => m_Wrapper.m_ModifyingSelection_ActivateShiftinPlace;
         public InputActionMap Get() { return m_Wrapper.m_ModifyingSelection; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -4136,12 +4643,6 @@ public class @CMInput : IInputActionCollection, IDisposable
                 @DeleteObjects.started -= m_Wrapper.m_ModifyingSelectionActionsCallbackInterface.OnDeleteObjects;
                 @DeleteObjects.performed -= m_Wrapper.m_ModifyingSelectionActionsCallbackInterface.OnDeleteObjects;
                 @DeleteObjects.canceled -= m_Wrapper.m_ModifyingSelectionActionsCallbackInterface.OnDeleteObjects;
-                @ShiftinTime.started -= m_Wrapper.m_ModifyingSelectionActionsCallbackInterface.OnShiftinTime;
-                @ShiftinTime.performed -= m_Wrapper.m_ModifyingSelectionActionsCallbackInterface.OnShiftinTime;
-                @ShiftinTime.canceled -= m_Wrapper.m_ModifyingSelectionActionsCallbackInterface.OnShiftinTime;
-                @ShiftinPlace.started -= m_Wrapper.m_ModifyingSelectionActionsCallbackInterface.OnShiftinPlace;
-                @ShiftinPlace.performed -= m_Wrapper.m_ModifyingSelectionActionsCallbackInterface.OnShiftinPlace;
-                @ShiftinPlace.canceled -= m_Wrapper.m_ModifyingSelectionActionsCallbackInterface.OnShiftinPlace;
                 @Cut.started -= m_Wrapper.m_ModifyingSelectionActionsCallbackInterface.OnCut;
                 @Cut.performed -= m_Wrapper.m_ModifyingSelectionActionsCallbackInterface.OnCut;
                 @Cut.canceled -= m_Wrapper.m_ModifyingSelectionActionsCallbackInterface.OnCut;
@@ -4151,6 +4652,18 @@ public class @CMInput : IInputActionCollection, IDisposable
                 @Copy.started -= m_Wrapper.m_ModifyingSelectionActionsCallbackInterface.OnCopy;
                 @Copy.performed -= m_Wrapper.m_ModifyingSelectionActionsCallbackInterface.OnCopy;
                 @Copy.canceled -= m_Wrapper.m_ModifyingSelectionActionsCallbackInterface.OnCopy;
+                @OverwritePaste.started -= m_Wrapper.m_ModifyingSelectionActionsCallbackInterface.OnOverwritePaste;
+                @OverwritePaste.performed -= m_Wrapper.m_ModifyingSelectionActionsCallbackInterface.OnOverwritePaste;
+                @OverwritePaste.canceled -= m_Wrapper.m_ModifyingSelectionActionsCallbackInterface.OnOverwritePaste;
+                @ShiftingMovement.started -= m_Wrapper.m_ModifyingSelectionActionsCallbackInterface.OnShiftingMovement;
+                @ShiftingMovement.performed -= m_Wrapper.m_ModifyingSelectionActionsCallbackInterface.OnShiftingMovement;
+                @ShiftingMovement.canceled -= m_Wrapper.m_ModifyingSelectionActionsCallbackInterface.OnShiftingMovement;
+                @ActivateShiftinTime.started -= m_Wrapper.m_ModifyingSelectionActionsCallbackInterface.OnActivateShiftinTime;
+                @ActivateShiftinTime.performed -= m_Wrapper.m_ModifyingSelectionActionsCallbackInterface.OnActivateShiftinTime;
+                @ActivateShiftinTime.canceled -= m_Wrapper.m_ModifyingSelectionActionsCallbackInterface.OnActivateShiftinTime;
+                @ActivateShiftinPlace.started -= m_Wrapper.m_ModifyingSelectionActionsCallbackInterface.OnActivateShiftinPlace;
+                @ActivateShiftinPlace.performed -= m_Wrapper.m_ModifyingSelectionActionsCallbackInterface.OnActivateShiftinPlace;
+                @ActivateShiftinPlace.canceled -= m_Wrapper.m_ModifyingSelectionActionsCallbackInterface.OnActivateShiftinPlace;
             }
             m_Wrapper.m_ModifyingSelectionActionsCallbackInterface = instance;
             if (instance != null)
@@ -4158,12 +4671,6 @@ public class @CMInput : IInputActionCollection, IDisposable
                 @DeleteObjects.started += instance.OnDeleteObjects;
                 @DeleteObjects.performed += instance.OnDeleteObjects;
                 @DeleteObjects.canceled += instance.OnDeleteObjects;
-                @ShiftinTime.started += instance.OnShiftinTime;
-                @ShiftinTime.performed += instance.OnShiftinTime;
-                @ShiftinTime.canceled += instance.OnShiftinTime;
-                @ShiftinPlace.started += instance.OnShiftinPlace;
-                @ShiftinPlace.performed += instance.OnShiftinPlace;
-                @ShiftinPlace.canceled += instance.OnShiftinPlace;
                 @Cut.started += instance.OnCut;
                 @Cut.performed += instance.OnCut;
                 @Cut.canceled += instance.OnCut;
@@ -4173,6 +4680,18 @@ public class @CMInput : IInputActionCollection, IDisposable
                 @Copy.started += instance.OnCopy;
                 @Copy.performed += instance.OnCopy;
                 @Copy.canceled += instance.OnCopy;
+                @OverwritePaste.started += instance.OnOverwritePaste;
+                @OverwritePaste.performed += instance.OnOverwritePaste;
+                @OverwritePaste.canceled += instance.OnOverwritePaste;
+                @ShiftingMovement.started += instance.OnShiftingMovement;
+                @ShiftingMovement.performed += instance.OnShiftingMovement;
+                @ShiftingMovement.canceled += instance.OnShiftingMovement;
+                @ActivateShiftinTime.started += instance.OnActivateShiftinTime;
+                @ActivateShiftinTime.performed += instance.OnActivateShiftinTime;
+                @ActivateShiftinTime.canceled += instance.OnActivateShiftinTime;
+                @ActivateShiftinPlace.started += instance.OnActivateShiftinPlace;
+                @ActivateShiftinPlace.performed += instance.OnActivateShiftinPlace;
+                @ActivateShiftinPlace.canceled += instance.OnActivateShiftinPlace;
             }
         }
     }
@@ -4440,6 +4959,105 @@ public class @CMInput : IInputActionCollection, IDisposable
         }
     }
     public StrobeGeneratorActions @StrobeGenerator => new StrobeGeneratorActions(this);
+
+    // Lightshow
+    private readonly InputActionMap m_Lightshow;
+    private ILightshowActions m_LightshowActionsCallbackInterface;
+    private readonly InputAction m_Lightshow_ToggleLightshowMode;
+    public struct LightshowActions
+    {
+        private @CMInput m_Wrapper;
+        public LightshowActions(@CMInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @ToggleLightshowMode => m_Wrapper.m_Lightshow_ToggleLightshowMode;
+        public InputActionMap Get() { return m_Wrapper.m_Lightshow; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(LightshowActions set) { return set.Get(); }
+        public void SetCallbacks(ILightshowActions instance)
+        {
+            if (m_Wrapper.m_LightshowActionsCallbackInterface != null)
+            {
+                @ToggleLightshowMode.started -= m_Wrapper.m_LightshowActionsCallbackInterface.OnToggleLightshowMode;
+                @ToggleLightshowMode.performed -= m_Wrapper.m_LightshowActionsCallbackInterface.OnToggleLightshowMode;
+                @ToggleLightshowMode.canceled -= m_Wrapper.m_LightshowActionsCallbackInterface.OnToggleLightshowMode;
+            }
+            m_Wrapper.m_LightshowActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @ToggleLightshowMode.started += instance.OnToggleLightshowMode;
+                @ToggleLightshowMode.performed += instance.OnToggleLightshowMode;
+                @ToggleLightshowMode.canceled += instance.OnToggleLightshowMode;
+            }
+        }
+    }
+    public LightshowActions @Lightshow => new LightshowActions(this);
+
+    // Box Select
+    private readonly InputActionMap m_BoxSelect;
+    private IBoxSelectActions m_BoxSelectActionsCallbackInterface;
+    private readonly InputAction m_BoxSelect_ActivateBoxSelect;
+    public struct BoxSelectActions
+    {
+        private @CMInput m_Wrapper;
+        public BoxSelectActions(@CMInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @ActivateBoxSelect => m_Wrapper.m_BoxSelect_ActivateBoxSelect;
+        public InputActionMap Get() { return m_Wrapper.m_BoxSelect; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(BoxSelectActions set) { return set.Get(); }
+        public void SetCallbacks(IBoxSelectActions instance)
+        {
+            if (m_Wrapper.m_BoxSelectActionsCallbackInterface != null)
+            {
+                @ActivateBoxSelect.started -= m_Wrapper.m_BoxSelectActionsCallbackInterface.OnActivateBoxSelect;
+                @ActivateBoxSelect.performed -= m_Wrapper.m_BoxSelectActionsCallbackInterface.OnActivateBoxSelect;
+                @ActivateBoxSelect.canceled -= m_Wrapper.m_BoxSelectActionsCallbackInterface.OnActivateBoxSelect;
+            }
+            m_Wrapper.m_BoxSelectActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @ActivateBoxSelect.started += instance.OnActivateBoxSelect;
+                @ActivateBoxSelect.performed += instance.OnActivateBoxSelect;
+                @ActivateBoxSelect.canceled += instance.OnActivateBoxSelect;
+            }
+        }
+    }
+    public BoxSelectActions @BoxSelect => new BoxSelectActions(this);
+
+    // Laser Speed
+    private readonly InputActionMap m_LaserSpeed;
+    private ILaserSpeedActions m_LaserSpeedActionsCallbackInterface;
+    private readonly InputAction m_LaserSpeed_ActivateTopRowInput;
+    public struct LaserSpeedActions
+    {
+        private @CMInput m_Wrapper;
+        public LaserSpeedActions(@CMInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @ActivateTopRowInput => m_Wrapper.m_LaserSpeed_ActivateTopRowInput;
+        public InputActionMap Get() { return m_Wrapper.m_LaserSpeed; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(LaserSpeedActions set) { return set.Get(); }
+        public void SetCallbacks(ILaserSpeedActions instance)
+        {
+            if (m_Wrapper.m_LaserSpeedActionsCallbackInterface != null)
+            {
+                @ActivateTopRowInput.started -= m_Wrapper.m_LaserSpeedActionsCallbackInterface.OnActivateTopRowInput;
+                @ActivateTopRowInput.performed -= m_Wrapper.m_LaserSpeedActionsCallbackInterface.OnActivateTopRowInput;
+                @ActivateTopRowInput.canceled -= m_Wrapper.m_LaserSpeedActionsCallbackInterface.OnActivateTopRowInput;
+            }
+            m_Wrapper.m_LaserSpeedActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @ActivateTopRowInput.started += instance.OnActivateTopRowInput;
+                @ActivateTopRowInput.performed += instance.OnActivateTopRowInput;
+                @ActivateTopRowInput.canceled += instance.OnActivateTopRowInput;
+            }
+        }
+    }
+    public LaserSpeedActions @LaserSpeed => new LaserSpeedActions(this);
     private int m_ChroMapperDefaultSchemeIndex = -1;
     public InputControlScheme ChroMapperDefaultScheme
     {
@@ -4461,6 +5079,8 @@ public class @CMInput : IInputActionCollection, IDisposable
         void OnLocation2(InputAction.CallbackContext context);
         void OnLocation3(InputAction.CallbackContext context);
         void OnLocation4(InputAction.CallbackContext context);
+        void OnSecondSetModifier(InputAction.CallbackContext context);
+        void OnOverwriteLocationModifier(InputAction.CallbackContext context);
     }
     public interface IUtilsActions
     {
@@ -4480,6 +5100,7 @@ public class @CMInput : IInputActionCollection, IDisposable
         void OnInitiateClickandDrag(InputAction.CallbackContext context);
         void OnInitiateClickandDragatTime(InputAction.CallbackContext context);
         void OnMousePositionUpdate(InputAction.CallbackContext context);
+        void OnPrecisionPlacementToggle(InputAction.CallbackContext context);
     }
     public interface INotePlacementActions
     {
@@ -4488,6 +5109,10 @@ public class @CMInput : IInputActionCollection, IDisposable
         void OnUpNote(InputAction.CallbackContext context);
         void OnLeftNote(InputAction.CallbackContext context);
         void OnDotNote(InputAction.CallbackContext context);
+        void OnUpLeftNote(InputAction.CallbackContext context);
+        void OnUpRightNote(InputAction.CallbackContext context);
+        void OnDownRightNote(InputAction.CallbackContext context);
+        void OnDownLeftNote(InputAction.CallbackContext context);
     }
     public interface IEventPlacementActions
     {
@@ -4548,11 +5173,13 @@ public class @CMInput : IInputActionCollection, IDisposable
     public interface ITimelineActions
     {
         void OnChangeTimeandPrecision(InputAction.CallbackContext context);
-        void OnPreciselyControlSnapwhileScrolling(InputAction.CallbackContext context);
+        void OnChangePrecisionModifier(InputAction.CallbackContext context);
+        void OnPreciseSnapModification(InputAction.CallbackContext context);
     }
     public interface IBeatmapObjectsActions
     {
         void OnSelectObjects(InputAction.CallbackContext context);
+        void OnMassSelectModifier(InputAction.CallbackContext context);
         void OnQuickDelete(InputAction.CallbackContext context);
         void OnDeleteTool(InputAction.CallbackContext context);
         void OnMousePositionUpdate(InputAction.CallbackContext context);
@@ -4598,11 +5225,13 @@ public class @CMInput : IInputActionCollection, IDisposable
     public interface IModifyingSelectionActions
     {
         void OnDeleteObjects(InputAction.CallbackContext context);
-        void OnShiftinTime(InputAction.CallbackContext context);
-        void OnShiftinPlace(InputAction.CallbackContext context);
         void OnCut(InputAction.CallbackContext context);
         void OnPaste(InputAction.CallbackContext context);
         void OnCopy(InputAction.CallbackContext context);
+        void OnOverwritePaste(InputAction.CallbackContext context);
+        void OnShiftingMovement(InputAction.CallbackContext context);
+        void OnActivateShiftinTime(InputAction.CallbackContext context);
+        void OnActivateShiftinPlace(InputAction.CallbackContext context);
     }
     public interface IUIModeActions
     {
@@ -4635,5 +5264,17 @@ public class @CMInput : IInputActionCollection, IDisposable
     public interface IStrobeGeneratorActions
     {
         void OnQuickStrobeGen(InputAction.CallbackContext context);
+    }
+    public interface ILightshowActions
+    {
+        void OnToggleLightshowMode(InputAction.CallbackContext context);
+    }
+    public interface IBoxSelectActions
+    {
+        void OnActivateBoxSelect(InputAction.CallbackContext context);
+    }
+    public interface ILaserSpeedActions
+    {
+        void OnActivateTopRowInput(InputAction.CallbackContext context);
     }
 }

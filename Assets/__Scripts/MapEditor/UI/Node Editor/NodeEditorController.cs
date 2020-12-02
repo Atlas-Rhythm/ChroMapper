@@ -17,7 +17,6 @@ public class NodeEditorController : MonoBehaviour, CMInput.INodeEditorActions
     [SerializeField] private Button closeButton;
 
     public static bool IsActive;
-    public bool AdvancedSetting => Settings.Instance.NodeEditor_Enabled;
     private bool firstActive = true;
 
     private string oldInputText;
@@ -56,7 +55,7 @@ public class NodeEditorController : MonoBehaviour, CMInput.INodeEditorActions
 
     private void Update()
     {
-        if (!AdvancedSetting || UIMode.SelectedMode != UIModeType.NORMAL) return;
+        if (!Settings.Instance.NodeEditor_Enabled || UIMode.SelectedMode != UIModeType.NORMAL) return;
         if (SelectionController.SelectedObjects.Count == 0 && IsActive)
         {
             if (!Settings.Instance.NodeEditor_UseKeybind)
@@ -91,7 +90,7 @@ public class NodeEditorController : MonoBehaviour, CMInput.INodeEditorActions
         if (!SelectionController.HasSelectedObjects() || container is null) return;
         BeatmapActionContainer.RemoveAllActionsOfType<NodeEditorTextChangedAction>();
         if (SelectionController.SelectedObjects.Count > 1) {
-            if (!Settings.Instance.NodeEditor_UseKeybind && !AdvancedSetting)
+            if (!Settings.Instance.NodeEditor_UseKeybind && !Settings.Instance.NodeEditor_Enabled)
             {
                 StopAllCoroutines();
                 Close();
@@ -148,9 +147,12 @@ public class NodeEditorController : MonoBehaviour, CMInput.INodeEditorActions
     {
         if (IsActive)
         {
-            CMInputCallbackInstaller.DisableActionMaps(actionMapsDisabled);
-            CMInputCallbackInstaller.DisableActionMaps(new[] { typeof(CMInput.INodeEditorActions) });
             if (!nodeEditorInputField.isFocused) return;
+            if (!CMInputCallbackInstaller.IsActionMapDisabled(actionMapsDisabled[0]))
+            {
+                CMInputCallbackInstaller.DisableActionMaps(typeof(NodeEditorController), new[] { typeof(CMInput.INodeEditorActions) });
+                CMInputCallbackInstaller.DisableActionMaps(typeof(NodeEditorController), actionMapsDisabled);
+            }
             BeatmapAction lastAction = BeatmapActionContainer.GetLastAction();
             if (lastAction != null && lastAction is NodeEditorTextChangedAction textChangedAction)
             {
@@ -172,7 +174,8 @@ public class NodeEditorController : MonoBehaviour, CMInput.INodeEditorActions
 
     public void NodeEditor_EndEdit(string nodeText)
     {
-        CMInputCallbackInstaller.ClearDisabledActionMaps(new[] { typeof(CMInput.INodeEditorActions) });
+        CMInputCallbackInstaller.ClearDisabledActionMaps(typeof(NodeEditorController), new[] { typeof(CMInput.INodeEditorActions) });
+        CMInputCallbackInstaller.ClearDisabledActionMaps(typeof(NodeEditorController), actionMapsDisabled);
         try
         {
             if (!isEditing || !IsActive || SelectionController.SelectedObjects.Count != 1) return;
@@ -223,8 +226,8 @@ public class NodeEditorController : MonoBehaviour, CMInput.INodeEditorActions
 
     public void Close()
     {
-        CMInputCallbackInstaller.ClearDisabledActionMaps(new[] { typeof(CMInput.INodeEditorActions) });
-        CMInputCallbackInstaller.ClearDisabledActionMaps(actionMapsDisabled);
+        CMInputCallbackInstaller.ClearDisabledActionMaps(typeof(NodeEditorController), new[] { typeof(CMInput.INodeEditorActions) });
+        CMInputCallbackInstaller.ClearDisabledActionMaps(typeof(NodeEditorController), actionMapsDisabled);
         StartCoroutine(UpdateGroup(false, transform as RectTransform));
         isEditing = false;
     }
@@ -232,19 +235,19 @@ public class NodeEditorController : MonoBehaviour, CMInput.INodeEditorActions
     public void OnToggleNodeEditor(InputAction.CallbackContext context)
     {
         if (nodeEditorInputField.isFocused) return;
-        if (Settings.Instance.NodeEditor_UseKeybind && AdvancedSetting && context.performed && !PersistentUI.Instance.InputBox_IsEnabled)
+        if (Settings.Instance.NodeEditor_UseKeybind && context.performed && !PersistentUI.Instance.InputBox_IsEnabled)
         {
             StopAllCoroutines();
             if (IsActive)
             {
-                CMInputCallbackInstaller.ClearDisabledActionMaps(new[] { typeof(CMInput.INodeEditorActions) });
-                CMInputCallbackInstaller.ClearDisabledActionMaps(actionMapsDisabled);
+                CMInputCallbackInstaller.ClearDisabledActionMaps(typeof(NodeEditorController), new[] { typeof(CMInput.INodeEditorActions) });
+                CMInputCallbackInstaller.ClearDisabledActionMaps(typeof(NodeEditorController), actionMapsDisabled);
                 BeatmapActionContainer.RemoveAllActionsOfType<NodeEditorTextChangedAction>();
             }
             else
             {
                 closeButton.gameObject.SetActive(true);
-                CMInputCallbackInstaller.DisableActionMaps(actionMapsDisabled);
+                CMInputCallbackInstaller.DisableActionMaps(typeof(NodeEditorController), actionMapsDisabled);
             }
             StartCoroutine(UpdateGroup(!IsActive, transform as RectTransform));
         }

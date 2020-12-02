@@ -21,6 +21,8 @@ public class SelectionController : MonoBehaviour, CMInput.ISelectingActions, CMI
     public static Action<BeatmapObject> ObjectWasSelectedEvent;
     public static Action<IEnumerable<BeatmapObject>> SelectionPastedEvent;
 
+    private static SelectionController instance;
+
     [SerializeField] private AudioTimeSyncController atsc;
     [SerializeField] private Material selectionMaterial;
     [SerializeField] private Transform moveableGridTransform;
@@ -29,7 +31,10 @@ public class SelectionController : MonoBehaviour, CMInput.ISelectingActions, CMI
     [SerializeField] private TracksManager tracksManager;
     [SerializeField] private EventPlacement eventPlacement;
 
-    private static SelectionController instance;
+    [SerializeField] private CreateEventTypeLabels labels;
+
+    private bool shiftInTime = false;
+    private bool shiftInPlace = false;
 
     // Use this for initialization
     void Start()
@@ -139,8 +144,13 @@ public class SelectionController : MonoBehaviour, CMInput.ISelectingActions, CMI
     public static void Select(BeatmapObject obj, bool AddsToSelection = false, bool AutomaticallyRefreshes = true, bool AddActionEvent = true)
     {
         if (!AddsToSelection) DeselectAll(); //This SHOULD deselect every object unless you otherwise specify, but it aint working.
+        var collection = BeatmapObjectContainerCollection.GetCollectionForType(obj.beatmapType);
+
+        if (!collection.LoadedObjects.Contains(obj))
+            return;
+
         SelectedObjects.Add(obj);
-        if (BeatmapObjectContainerCollection.GetCollectionForType(obj.beatmapType).LoadedContainers.TryGetValue(obj, out BeatmapObjectContainer container))
+        if (collection.LoadedContainers.TryGetValue(obj, out BeatmapObjectContainer container))
         {
             container.SetOutlineColor(instance.selectedColor);
         }
@@ -338,7 +348,10 @@ public class SelectionController : MonoBehaviour, CMInput.ISelectingActions, CMI
         {
             tracksManager.RefreshTracks();
         }
-        if (triggersAction) BeatmapActionContainer.AddAction(new SelectionPastedAction(pasted, totalRemoved));
+        if (triggersAction)
+        {
+            BeatmapActionContainer.AddAction(new SelectionPastedAction(pasted.Select(o => BeatmapObject.GenerateCopy(o)), totalRemoved));
+        }
         SelectionPastedEvent?.Invoke(pasted);
         RefreshSelectionMaterial(false);
 
@@ -368,7 +381,7 @@ public class SelectionController : MonoBehaviour, CMInput.ISelectingActions, CMI
                 notesContainer.RefreshSpecialAngles(data, false, false);
             }
 
-            allActions.Add(new BeatmapObjectModifiedAction(BeatmapObject.GenerateCopy(data), original));
+            allActions.Add(new BeatmapObjectModifiedAction(data, original, "", false));
         }
         BeatmapActionContainer.AddAction(new ActionCollectionAction(allActions, false, "Shifted a selection of objects."));
         BeatmapObjectContainerCollection.RefreshAllPools();
@@ -376,9 +389,7 @@ public class SelectionController : MonoBehaviour, CMInput.ISelectingActions, CMI
 
     public void ShiftSelection(int leftRight, int upDown)
     {
-        List<BeatmapAction> allActions = new List<BeatmapAction>();
-        foreach(BeatmapObject data in SelectedObjects)
-        {
+        List<BeatmapObjectModifiedAction> allActions = SelectedObjects.AsParallel().Select(data => {
             BeatmapObject original = BeatmapObject.GenerateCopy(data);
             if (data is BeatmapNote note)
             {
@@ -473,23 +484,29 @@ public class SelectionController : MonoBehaviour, CMInput.ISelectingActions, CMI
                     }
                     else
                     {
-                        int modified = BeatmapEventContainer.EventTypeToModifiedType(e._type);
+                        int modified = labels.EventTypeToLaneId(e._type);
                         modified += leftRight;
                         if (modified < 0) modified = 0;
-                        if (modified > 15) modified = 15;
-                        e._type = BeatmapEventContainer.ModifiedTypeToEventType(modified);
+                        int laneCount = labels.MaxLaneId();
+                        if (modified > laneCount) modified = laneCount;
+                        e._type = labels.LaneIdToEventType(modified);
                     }
                 }
             }
+
+            return new BeatmapObjectModifiedAction(data, original, "", false);
+        }).ToList();
+
+        foreach (var obj in allActions)
+        {
+            var data = obj.GetEdited();
             BeatmapObjectContainerCollection collection = BeatmapObjectContainerCollection.GetCollectionForType(data.beatmapType);
             if (collection.LoadedContainers.TryGetValue(data, out BeatmapObjectContainer con))
             {
                 con.UpdateGridPosition();
             }
-            allActions.Add(new BeatmapObjectModifiedAction(BeatmapObject.GenerateCopy(data), original));
-            if (eventPlacement.objectContainerCollection.PropagationEditing) 
-                eventPlacement.objectContainerCollection.PropagationEditing = eventPlacement.objectContainerCollection.PropagationEditing;
         }
+
         foreach (BeatmapObject unique in SelectedObjects.DistinctBy(x => x.beatmapType))
         {
             BeatmapObjectContainerCollection.GetCollectionForType(unique.beatmapType).RefreshPool(true);
@@ -536,7 +553,12 @@ public class SelectionController : MonoBehaviour, CMInput.ISelectingActions, CMI
 
     public void OnPaste(InputAction.CallbackContext context)
     {
-        if (context.performed) Paste(true, KeybindsController.ShiftHeld);
+        if (context.performed) Paste(true, false);
+    }
+
+    public void OnOverwritePaste(InputAction.CallbackContext context)
+    {
+        if (context.performed) Paste(true, true);
     }
 
     public void OnDeleteObjects(InputAction.CallbackContext context)
@@ -554,19 +576,29 @@ public class SelectionController : MonoBehaviour, CMInput.ISelectingActions, CMI
         if (context.performed) Copy(true);
     }
 
-    public void OnShiftinTime(InputAction.CallbackContext context)
+    public void OnShiftingMovement(InputAction.CallbackContext context)
     {
-        if (!context.performed || !KeybindsController.ShiftHeld) return;
-        float value = context.ReadValue<float>();
-        MoveSelection(value * (1f / atsc.gridMeasureSnapping));
-    }
-
-    public void OnShiftinPlace(InputAction.CallbackContext context)
-    {
-        if (!context.performed || !KeybindsController.CtrlHeld) return;
+        if (!context.performed) return;
         Vector2 movement = context.ReadValue<Vector2>();
-        Debug.Log(movement);
-        ShiftSelection(Mathf.RoundToInt(movement.x), Mathf.RoundToInt(movement.y));
+
+        if (shiftInPlace)
+        {
+            ShiftSelection(Mathf.RoundToInt(movement.x), Mathf.RoundToInt(movement.y));
+        }
+
+        if (shiftInTime)
+        {
+            MoveSelection(movement.y * (1f / atsc.gridMeasureSnapping));
+        }
     }
 
+    public void OnActivateShiftinTime(InputAction.CallbackContext context)
+    {
+        shiftInTime = context.performed;
+    }
+
+    public void OnActivateShiftinPlace(InputAction.CallbackContext context)
+    {
+        shiftInPlace = context.performed;
+    }
 }

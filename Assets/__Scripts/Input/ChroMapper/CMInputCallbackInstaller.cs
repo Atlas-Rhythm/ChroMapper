@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -27,8 +26,8 @@ public class CMInputCallbackInstaller : MonoBehaviour
 
     //Because I would like all actions to fully complete before being disabled,
     //we will use a queue that will then be cleared and processed on the next frame.
-    private List<IEnumerable<Type>> queuedToDisable = new List<IEnumerable<Type>>();
-    private List<IEnumerable<Type>> queuedToEnable = new List<IEnumerable<Type>>();
+    private List<QueueInfo> queuedToDisable = new List<QueueInfo>();
+    private List<QueueInfo> queuedToEnable = new List<QueueInfo>();
 
     private List<Transform> persistentObjects = new List<Transform>();
 
@@ -38,16 +37,16 @@ public class CMInputCallbackInstaller : MonoBehaviour
     private CMInput input; //Singular CMInput object that will be shared to every class that requires it.
     private BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.InvokeMethod;
 
-    public static void DisableActionMaps(IEnumerable<Type> interfaceTypesToDisable)
+    public static void DisableActionMaps(Type you, IEnumerable<Type> interfaceTypesToDisable)
     {
         //To preserve actions occuring on the same frame, we
         //add it to a queue thats cleared and processed on the next frame.
-        instance.queuedToDisable.Add(interfaceTypesToDisable);
+        instance.queuedToDisable.Add(new QueueInfo(you, interfaceTypesToDisable));
     }
 
-    public static void ClearDisabledActionMaps(IEnumerable<Type> interfaceTypesToEnable)
+    public static void ClearDisabledActionMaps(Type you, IEnumerable<Type> interfaceTypesToEnable)
     {
-        instance.queuedToEnable.Add(interfaceTypesToEnable);
+        instance.queuedToEnable.Add(new QueueInfo(you, interfaceTypesToEnable));
     }
 
     public static bool IsActionMapDisabled(Type actionMap) => instance.disabledEventHandlers.Any(x => x.InterfaceType == actionMap);
@@ -101,12 +100,13 @@ public class CMInputCallbackInstaller : MonoBehaviour
     {
         if (queuedToDisable.Any())
         {
-            foreach (IEnumerable<Type> types in queuedToDisable)
+            foreach (QueueInfo queueInfo in queuedToDisable)
             {
-                foreach (Type interfaceType in types)
+                foreach (Type interfaceType in queueInfo.toChange)
                 {
                     foreach (EventHandler eventHandler in allEventHandlers.Where(x => x.InterfaceType == interfaceType))
                     {
+                        eventHandler.Blockers.Add(queueInfo.owner);
                         if (eventHandler.IsDisabled) continue;
                         eventHandler.DisableEventHandler();
                         disabledEventHandlers.Add(eventHandler);
@@ -117,12 +117,14 @@ public class CMInputCallbackInstaller : MonoBehaviour
         }
         if (queuedToEnable.Any())
         {
-            foreach (IEnumerable<Type> types in queuedToEnable)
+            foreach (QueueInfo queueInfo in queuedToEnable)
             {
-                foreach (Type interfaceType in types)
+                foreach (Type interfaceType in queueInfo.toChange)
                 {
-                    foreach (EventHandler eventHandler in disabledEventHandlers.ToList().Where(x => x.InterfaceType == interfaceType))
+                    foreach (EventHandler eventHandler in allEventHandlers.Where(x => x.InterfaceType == interfaceType && x.IsDisabled))
                     {
+                        eventHandler.Blockers.Remove(queueInfo.owner);
+                        if (eventHandler.Blockers.Count > 0) continue;
                         eventHandler.EnableEventHandler();
                         disabledEventHandlers.Remove(eventHandler);
                     }
@@ -278,6 +280,7 @@ public class CMInputCallbackInstaller : MonoBehaviour
         public object EventObject;
         public Delegate Handler;
         public Type InterfaceType;
+        public HashSet<Type> Blockers = new HashSet<Type>();
 
         public EventHandler(EventInfo eventInfo, object eventObject, Delegate handler, Type interfaceType)
         {
@@ -302,6 +305,18 @@ public class CMInputCallbackInstaller : MonoBehaviour
         public override int GetHashCode()
         {
             return InterfaceType.GetHashCode();
+        }
+    }
+
+    private class QueueInfo
+    {
+        public Type owner;
+        public IEnumerable<Type> toChange;
+
+        public QueueInfo(Type owner, IEnumerable<Type> toChange)
+        {
+            this.owner = owner;
+            this.toChange = toChange;
         }
     }
 }

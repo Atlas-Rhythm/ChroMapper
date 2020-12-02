@@ -27,12 +27,14 @@ public class EventPlacement : PlacementController<MapEvent, BeatmapEventContaine
     [SerializeField] private EventPlacementUI eventPlacementUI;
     [SerializeField] private Toggle redEventToggle;
     [SerializeField] private ToggleColourDropdown dropdown;
+<<<<<<< HEAD
     [SerializeField] private MeshRenderer eventGridTileMesh;
+=======
+    [SerializeField] private CreateEventTypeLabels labels;
+>>>>>>> bc2ee03b553e4df52670204e33ba55b07b220f11
 
     private int queuedValue = MapEvent.LIGHT_VALUE_RED_ON;
     private bool negativeRotations = false;
-
-    public override bool IsValid => base.IsValid || (KeybindsController.ShiftHeld && queuedData.IsRotationEvent);
 
     public bool PlacePrecisionRotation = false;
     public int PrecisionRotationValue = 0;
@@ -46,12 +48,12 @@ public class EventPlacement : PlacementController<MapEvent, BeatmapEventContaine
             {
                 case "Event Grid Front Scaling Offset":
                     Vector3 newFrontScale = eachChild.transform.localScale;
-                    newFrontScale.x = (gridSize / 10f) + 0.01f;
+                    newFrontScale.x = gridSize / 10f;
                     eachChild.transform.localScale = newFrontScale;
                     break;
                 case "Event Interface Scaling Offset":
                     Vector3 newInterfaceScale = eachChild.transform.localScale;
-                    newInterfaceScale.x = (gridSize / 10f) + 0.01f;
+                    newInterfaceScale.x = gridSize / 10f;
                     eachChild.transform.localScale = newInterfaceScale;
                     break;
                 default:
@@ -83,7 +85,7 @@ public class EventPlacement : PlacementController<MapEvent, BeatmapEventContaine
             instantiatedContainer.transform.localPosition.z);
         if (!objectContainerCollection.PropagationEditing)
         {
-            queuedData._type = BeatmapEventContainer.ModifiedTypeToEventType(Mathf.FloorToInt(instantiatedContainer.transform.localPosition.x) );
+            queuedData._type = labels.LaneIdToEventType(Mathf.FloorToInt(instantiatedContainer.transform.localPosition.x));
             queuedData._customData?.Remove("_propID");
         }
         else
@@ -99,6 +101,16 @@ public class EventPlacement : PlacementController<MapEvent, BeatmapEventContaine
                 queuedData._customData?.Add("_propID", propID);
             }
             else queuedData._customData?.Remove("_propID");
+        }
+
+        if (CanPlaceChromaEvents && !queuedData.IsUtilityEvent && dropdown.Visible && queuedData._value != MapEvent.LIGHT_VALUE_OFF)
+        {
+            if (queuedData._customData == null) queuedData._customData = new JSONObject();
+            queuedData._customData["_color"] = colorPicker.CurrentColor;
+        }
+        else
+        {
+            queuedData._customData?.Remove("_color");
         }
 
         UpdateQueuedValue(queuedValue);
@@ -160,19 +172,7 @@ public class EventPlacement : PlacementController<MapEvent, BeatmapEventContaine
                 return;
             }
         }
-        if (KeybindsController.ShiftHeld) return;
         queuedData._time = RoundedTime;
-
-
-        if (CanPlaceChromaEvents && !queuedData.IsUtilityEvent && dropdown.Visible && queuedData._value != MapEvent.LIGHT_VALUE_OFF)
-        {
-            if (queuedData._customData == null) queuedData._customData = new JSONObject();
-            queuedData._customData["_color"] = colorPicker.CurrentColor;
-        }
-        else
-        {
-            queuedData._customData?.Remove("_color");
-        }
 
         if (!PlacePrecisionRotation)
         {

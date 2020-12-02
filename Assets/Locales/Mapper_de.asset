@@ -157,38 +157,6 @@ MonoBehaviour:
     m_Localized: Verlasse ChroMapper!
     m_Metadata:
       m_Items: []
-  - m_Id: 32
-    m_Localized: "Hier bei Chroma\xAE sch\xE4tzen wir deine Augen Rezeptoren dinger.\n\nEin
-      j\xFCngster Trend der Duochromitis hat die VR-Community im letzten Jahr geplagt
-      und wir haben uns entschlossen, das Spielfeld auszugleichen.\n\nChroma\xAE
-      und sein gro\xDFer Bruder ChromaToggle\u2122, kann dich aus deinem traurigen,
-      Regenbogenlosen Leben in eine Welt der PentachromeTM-Magie bringen. Erlebe
-      die Freude bis zu sechs verschiedene Bl\xF6cke, in einer Halsbrecherischen
-      Geschwindigkeit, auf dich zufliegen zu sehen! Wenn das nicht genug ist f\xFCr
-      dich, bieten wir sogar eine Kakophonie von Technicolour\xA9-Lichtern, um deine
-      Augen in die Knie zu zwingen!\n\nF\xFCr etwas so brillantes und Friedensnobelpreis
-      verdienendes wie Chroma Suite\u2122 braucht es spezialisierte Software, um
-      mit diesen Biestern der technologischen Entwicklung umzugehen. Das ist, wo
-      ChroMapper\xAE ins Spiel kommt!\n\nChroMapper\u2122 macht es dem durchschnittlichem
-      Joe leicht, die Kraft von Chroma\xA9 RGB\u2122 zu nutzen, um Lichtshows und
-      Maps zu erstellen, die ihren duochromatischen Gegenst\xFCcken weit \xFCberlegen
-      sind! Reality Check through The Skull? Packe Chroma auf diesen Mofo und du
-      hast eine Map die Cube Community w\xFCrdig ist!\n\nAlso, worauf wartest Du?
-      H\xF6re auf in deiner traurigen zwei-Farben-Welt zu leben und trete mit uns,
-      erleuchteten Individuen, mit der Kraft von Chroma\xAE RGB und ChroMapper\u2122!\n\n=====================================\n\nWillkommen
-      bei ChroMapper!\n\nChroMapper ist ein in-Entwicklungs-, Unity-basierter Mapper
-      f\xFCr Beat Saber der sich auf die erweiterte Maperstellung spezialisiert hat.
-      Bereite dich vor, die Augen von dir selbst und anderen mit m\xE4chtigen Lichtshows
-      und Wandmaps zu f\xFCllen, die jeden auf deine Beat Saver Seite st\xFCrzen
-      lassen w\xFCrden!\n\nChroMapper ist nicht perfekt; Bugs, Probleme und andere
-      Unannehmlichkeiten k\xF6nnen auftreten. Wenn du einige davon findest, gehe
-      bitte zu #cm-bug-reports im ChroMapper Discord, oder #cm-Vorschl\xE4ge, wenn
-      du Ideen oder Verbesserungsvorschl\xE4ge zum ChroMapper hast. Du hast kein
-      Discord? Verwende das ChroMapper GitHub Repository!\n\nDie Steuerelemente wurden
-      in den Einstellungen in den Abschnitt \"Tastaturbelegung\" verschoben. Bitte
-      gehe dorthin, um alle Tastenkombinationen anzuzeigen!"
-    m_Metadata:
-      m_Items: []
   - m_Id: 33
     m_Localized: Rotationen aktualisieren
     m_Metadata:
@@ -399,7 +367,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 86
-    m_Localized: Flip Colors
+    m_Localized: Farben spiegeln
     m_Metadata:
       m_Items: []
   - m_Id: 87
@@ -590,31 +558,32 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 132
-    m_Localized: Spin Direction
+    m_Localized: Drehrichtung
     m_Metadata:
       m_Items: []
   - m_Id: 133
-    m_Localized: Controls which direction the lasers will spin.
+    m_Localized: Bestimmt, in welche Richtung sich der Laser dreht
     m_Metadata:
       m_Items: []
   - m_Id: 134
-    m_Localized: Clockwise
+    m_Localized: Im Uhrzeigersinn
     m_Metadata:
       m_Items: []
   - m_Id: 135
-    m_Localized: Counter-Clockwise
+    m_Localized: Gegen den Uhrzeigersinn
     m_Metadata:
       m_Items: []
   - m_Id: 136
-    m_Localized: Random
+    m_Localized: "Zuf\xE4llig"
     m_Metadata:
       m_Items: []
   - m_Id: 137
-    m_Localized: Unique Laser Directions
+    m_Localized: Unterschiedliche Laserdrehrichtung
     m_Metadata:
       m_Items: []
   - m_Id: 138
-    m_Localized: Ensures that Left and Right lasers will rotate in opposide directions.
+    m_Localized: Stellt sicher, dass sich der linke und der rechte Laser in entgegengesetzte
+      Richtungen drehen
     m_Metadata:
       m_Items: []
   - m_Id: 139
@@ -626,10 +595,44 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 141
-    m_Localized: 'Swings Per Second: {OverallSPS:F2}'
+    m_Localized: "Schw\xFCnge pro Sekunde: {OverallSPS:F2}"
     m_Metadata:
       m_Items:
       - id: 12
+  - m_Id: 143
+    m_Localized: Chroma Step Gradient
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32
+    m_Localized: "Here at Chroma\xAE we value your eye-cone thingies.\r\n\r\nA recent
+      trend of duochromitis has plagued the VR community this last year, and we've
+      decided to balance the playing field.\r\n\r\nChroma\xAE, and it's big brother
+      ChromaToggle\u2122, can bring you up from your sad, rainbowless life into a
+      world of Pentachrome\u2122 magic. Experience the joy of having up to six different
+      colours of blocks flying towards you at break neck speed! If that's not enough
+      for you, we even offer a cacophony of Technicolour\xA9 lightwaves, to bring
+      your eyes to their knees!\r\n\r\nNow, with something as brilliant and Nobel
+      Peace Price worthy as the Chroma Suite\u2122, specialized software needs to
+      be created to handle these beasts of technological engineering. That's where
+      ChroMapper\xAE comes into play!\r\n\r\nChroMapper\u2122 makes it easy for the
+      everyday Joe to use the power of Chroma\xA9 RGB\u2122 to create lightshows
+      and maps that are far superior to their duochromatic counterparts! Reality
+      Check Through The Skull? Slap some Chroma on that mofo and you've got yourself
+      a map worthy of Cube Community!\r\n\r\nSo, what are you waiting for? Stop living
+      in your sad two-color world and join us enlightened individuals with the power
+      of Chroma\xAE RGB and ChroMapper\u2122!\r\n\r\n=========================================\r\n\r\nWelcome
+      to ChroMapper!\r\n\r\nChroMapper is an in-development, Unity based mapper for
+      Beat Saber which specializes in advanced map creation. Prepare to fill the
+      eyes of yourself and others with powerful lightshows and wall maps that would
+      make everyone flock to your Beat Saver page!\r\n\r\nChroMapper is not perfect;
+      bugs, issues, and other misconveniences can happen. If you encounter some of
+      these, please go to #cm-bug-reports in the ChroMapper discord, or #cm-suggestions
+      if you want to have ideas to add to, or improve, the ChroMapper. Somehow don't
+      have Discord? Use the ChroMapper GitHub repository!\r\n\r\nControls have been
+      relocated to the \"Keybinds\" section in the Settings menu. Please go there
+      to view all the keybinds!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 1
     00000000:

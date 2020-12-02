@@ -15,25 +15,8 @@ public class CM_DialogBox : MonoBehaviour
     [SerializeField] private TMP_FontAsset defaultFont;
     private Action<int> resultAction;
 
-    private Type[] disabledActionMaps = new Type[]
-    {
-        typeof(CMInput.IPlacementControllersActions),
-        typeof(CMInput.INotePlacementActions),
-        typeof(CMInput.IEventPlacementActions),
-        typeof(CMInput.ISavingActions),
-        typeof(CMInput.IPlatformSoloLightGroupActions),
-        typeof(CMInput.IPlaybackActions),
-        typeof(CMInput.IPlatformDisableableObjectsActions),
-        typeof(CMInput.INoteObjectsActions),
-        typeof(CMInput.IEventObjectsActions),
-        typeof(CMInput.IObstacleObjectsActions),
-        typeof(CMInput.ICustomEventsContainerActions),
-        typeof(CMInput.IBPMTapperActions),
-        typeof(CMInput.IModifyingSelectionActions),
-        typeof(CMInput.IEventUIActions),
-        typeof(CMInput.IBookmarksActions),
-        typeof(CMInput.ICameraActions),
-    };
+
+    private IEnumerable<Type> disabledActionMaps = typeof(CMInput).GetNestedTypes().Where(t => t.IsInterface && t != typeof(CMInput.IUtilsActions) && t != typeof(CMInput.IMenusExtendedActions));
 
     private void Start()
     {
@@ -47,7 +30,7 @@ public class CM_DialogBox : MonoBehaviour
     {
         if (IsEnabled)
             throw new Exception("Dialog box is already enabled! Please wait until this Dialog Box has been disabled.");
-        CMInputCallbackInstaller.DisableActionMaps(disabledActionMaps);
+        CMInputCallbackInstaller.DisableActionMaps(typeof(CM_DialogBox), disabledActionMaps);
         UpdateGroup(true);
         CameraController.ClearCameraMovement();
 
@@ -107,7 +90,7 @@ public class CM_DialogBox : MonoBehaviour
 
     public void SendResult(int buttonID)
     {
-        CMInputCallbackInstaller.ClearDisabledActionMaps(disabledActionMaps);
+        CMInputCallbackInstaller.ClearDisabledActionMaps(typeof(CM_DialogBox), disabledActionMaps);
         UpdateGroup(false);
         resultAction?.Invoke(buttonID);
     }

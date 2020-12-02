@@ -5,11 +5,13 @@ using SimpleJSON;
 public class TrackLaneRingsRotationEffect : MonoBehaviour
 {
     [SerializeField] public TrackLaneRingsManager manager;
+    [SerializeField] public TrackLaneRingsManager mirrorManager;
     [SerializeField] public float startupRotationAngle = 45;
     [SerializeField] public float startupRotationStep = 5;
     [SerializeField] public float startupRotationPropagationSpeed = 1;
     [SerializeField] public float startupRotationFlexySpeed = 1;
     [SerializeField] public float rotationStep = 90;
+    [SerializeField] public bool counterSpin = false;
 
     private List<RingRotationEffect> activeEffects;
     private List<RingRotationEffect> effectsPool;
@@ -30,13 +32,19 @@ public class TrackLaneRingsRotationEffect : MonoBehaviour
     private void FixedUpdate()
     {
         TrackLaneRing[] rings = manager.rings;
+        TrackLaneRing[] mirrorRings = mirrorManager?.rings;
         for (int i = activeEffects.Count - 1; i >= 0; i--)
         {
             RingRotationEffect effect = activeEffects[i];
-            float progress = effect.progressPos;
+            int progress = (int) effect.progressPos;
             while (progress < effect.progressPos + effect.rotationPropagationSpeed && progress < rings.Length)
             {
-                rings[Mathf.RoundToInt(progress)].SetRotation(effect.rotationAngle + progress * effect.rotationStep, effect.rotationFlexySpeed);
+                float destZ = effect.rotationAngle + progress * effect.rotationStep;
+                rings[progress].SetRotation(destZ, effect.rotationFlexySpeed);
+
+                if (mirrorRings != null)
+                    mirrorRings[progress].SetRotation(destZ, effect.rotationFlexySpeed);
+
                 progress++;
             }
             effect.progressPos += effect.rotationPropagationSpeed;
@@ -72,6 +80,7 @@ public class TrackLaneRingsRotationEffect : MonoBehaviour
             if (customData.HasKey("_propMult")) effect.rotationPropagationSpeed *= customData["_propMult"];
             if (customData.HasKey("_speedMult")) effect.rotationFlexySpeed *= customData["_speedMult"];
             if (customData.HasKey("_direction")) multiplier = customData["_direction"] == 0 ? 1 : -1;
+            if (counterSpin && customData.HasKey("_counterSpin") && customData["_counterSpin"].AsBool) multiplier *= -1;
         }
         effect.rotationAngle = angle  + (rotationStep * multiplier);
         activeEffects.Add(effect);

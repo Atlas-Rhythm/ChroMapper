@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/_Animations.meta
 guid: 487b946dcb4280f40b40dde40a742e1d
+=======
+guid: ca5d5276219a4a745804492664d2e2b3
+>>>>>>> bc2ee03b553e4df52670204e33ba55b07b220f11:Assets/Locales/en-OWO.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

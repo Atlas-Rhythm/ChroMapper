@@ -8,8 +8,8 @@ public class BeatmapBPMChange : BeatmapObject
     {
         _time = RetrieveRequiredNode(node, "_time").AsFloat;
         _BPM = RetrieveRequiredNode(node, "_BPM").AsFloat;
-        _beatsPerBar = 4;
-        _metronomeOffset = 4;
+        _beatsPerBar = RetrieveRequiredNode(node, "_beatsPerBar").AsFloat;
+        _metronomeOffset = RetrieveRequiredNode(node, "_metronomeOffset").AsFloat;
     }
 
     public BeatmapBPMChange(float BPM, float time)
@@ -27,6 +27,7 @@ public class BeatmapBPMChange : BeatmapObject
         node["_BPM"] = _BPM;
         node["_beatsPerBar"] = _beatsPerBar;
         node["_metronomeOffset"] = _metronomeOffset;
+        node["_customData"] = _customData;
         return node;
     }
 
